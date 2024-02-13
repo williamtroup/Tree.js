@@ -1,0 +1,53 @@
+/*
+ * Tree.js Library v0.1.0
+ *
+ * Copyright 2024 Bunoon
+ * Released under the MIT License
+ */
+ 
+
+:root {
+    // Colors
+    --notes-js-color-black: #3b3a3a;
+    --notes-js-color-white: #F5F5F5;
+
+    // Borders
+    --notes-js-border-radius: 0.5rem;
+    --notes-js-border-style-scrollbar: inset 0 0 6px var(--notes-js-color-dark-gray);
+    --notes-js-border-size: 0.5px;
+
+    // Transitions
+    --notes-js-transition: all .3s;
+}
+
+
+/*
+    -------------------------------------------------------------------------
+    Tree.js - Custom Scroll Bar
+    -------------------------------------------------------------------------
+*/
+
+.custom-scroll-bars {
+    &::-webkit-scrollbar {
+        width: 12px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        -webkit-box-shadow: var(--notes-js-border-style-scrollbar);
+        box-shadow: var(--notes-js-border-style-scrollbar);
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        -webkit-box-shadow: var(--notes-js-border-style-scrollbar);
+        box-shadow: var(--notes-js-border-style-scrollbar);
+        background: var(--notes-js-color-white);
+
+        &:hover {
+            background-color: var(--notes-js-color-white);
+        }
+
+        &:active {
+            background-color: var(--notes-js-color-lighter-gray);
+        }
+    }
+}

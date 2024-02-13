@@ -1,0 +1,25 @@
+{
+    "name": "jtree.js",
+    "title": "Tree.js",
+    "description": "A lightweight, and easy-to-use, JavaScript library.",
+    "version": "0.1.0",
+    "main": "dist/tree.js",
+    "homepage": "https://www.william-troup.com/notes-js/",
+    "author": {
+      "name": "Bunoon"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/williamtroup/Tree.js"
+    },
+    "keywords": [
+      "javascript",
+      "css",
+      "html5",
+      "Tree.js"
+    ],
+    "bugs": {
+      "url": "https://github.com/williamtroup/Tree.js/issues"
+    },
+    "license": "MIT"
+  }

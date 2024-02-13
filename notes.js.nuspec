@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>jTree.js</id>
+        <version>0.1.0</version>
+        <title>Tree.js</title>
+        <description>A lightweight, and easy-to-use, JavaScript library.</description>
+        <authors>William Troup</authors>
+        <projectUrl>https://www.william-troup.com/notes-js/</projectUrl>
+        <repository type="git" url="https://github.com/williamtroup/Tree.js" branch="main" />
+        <readme>README_NUGET.md</readme>
+        <license type="expression">MIT</license>
+        <tags>javascript css html5 Tree.js</tags>
+        <icon>docs\images\icon.png</icon>
+        <copyright>William Troup</copyright>
+    </metadata>
+    <files>
+        <file src="**" target="/" exclude=".git\**;.vscode\**" />
+    </files>
+</package>
