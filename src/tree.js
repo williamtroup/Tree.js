@@ -26,7 +26,7 @@
         },
 
         // Variables: Attribute Names
-        _attribute_Name_Options = "data-Notes-options";
+        _attribute_Name_Options = "data-tree-options";
 
     
     /*
@@ -322,8 +322,8 @@
             render();
         } );
 
-        if ( !isDefined( _parameter_Window.$notes ) ) {
-            _parameter_Window.$notes = this;
+        if ( !isDefined( _parameter_Window.$tree ) ) {
+            _parameter_Window.$tree = this;
         }
 
     } ) ( document, window );
