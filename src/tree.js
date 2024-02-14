@@ -229,16 +229,16 @@
         bindingOptions.currentView.rows = createElement( bindingOptions.currentView.element, "div", "box-rows" );
     }
 
-    function renderControlRowsAndBoxes( bindingOptions, container, data, clearContent ) {
-        clearContent = isDefined( clearContent ) ? clearContent : true;
+    function renderControlRowsAndBoxes( bindingOptions, container, data, isChildren ) {
+        isChildren = isDefined( isChildren ) ? isChildren : false;
 
-        var rowData = getRowsAndBoxes( bindingOptions, data ),
+        var rowData = getRowsAndBoxes( bindingOptions, data, isChildren ),
             boxWidth = null,
             rowIndex = !bindingOptions.swapSizes ? rowData.totalRows : 1,
             rowWidth = null,
             dividedBoxHeight = bindingOptions.maximumBoxHeight / rowData.totalRows;
 
-        if ( clearContent ) {
+        if ( !isChildren ) {
             container.innerHTML = _string.empty;
         }
 
@@ -266,7 +266,7 @@
                     }
     
                     for ( var boxIndex = 0; boxIndex < boxesLength; boxIndex++ ) {
-                        renderBox( bindingOptions, boxRow, boxHeight, boxWidth, rowData.boxesPerRow[ rowKey ][ boxIndex ] );
+                        renderBox( bindingOptions, boxRow, boxHeight, boxWidth, rowData.boxesPerRow[ rowKey ][ boxIndex ], isChildren );
                     }
                 }
     
@@ -283,7 +283,7 @@
         }
     }
 
-    function renderBox( bindingOptions, boxRow, boxHeight, boxWidth, boxDetails ) {
+    function renderBox( bindingOptions, boxRow, boxHeight, boxWidth, boxDetails, isChild ) {
         var box = createElement( boxRow, "div", "box" );
         box.style.height = boxHeight + "px";
 
@@ -327,8 +327,8 @@
             createElementWithHTML( box, "p", "description", boxDetails.description );
         }
 
-        if ( isDefinedArray( boxDetails.children ) && boxDetails.children.length > 0 ) {
-            renderControlRowsAndBoxes( bindingOptions, box, boxDetails.children, false );
+        if ( !isChild && isDefinedArray( boxDetails.children ) && boxDetails.children.length > 0 ) {
+            renderControlRowsAndBoxes( bindingOptions, box, boxDetails.children, true );
         }
     }
 
@@ -393,8 +393,8 @@
      * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
      */
 
-    function getRowsAndBoxes( bindingOptions, data ) {
-        var boxesDetails = getBoxesAndMaximumPerRow( bindingOptions, data ),
+    function getRowsAndBoxes( bindingOptions, data, isChildren ) {
+        var boxesDetails = getBoxesAndMaximumPerRow( bindingOptions, data, isChildren ),
             boxesPerRow = {},
             largestAmountOfBoxesOnARow = 0;
 
@@ -440,14 +440,14 @@
         };
     }
 
-    function getBoxesAndMaximumPerRow( bindingOptions, data ) {
+    function getBoxesAndMaximumPerRow( bindingOptions, data, isChildren ) {
         var boxes = [],
             dataLength = data.length;
 
         for ( var dataIndex = 0; dataIndex < dataLength; dataIndex++ ) {
             var dataItem = data[ dataIndex ];
 
-            if ( !isDefinedString( dataItem.category ) || !isDefinedString( bindingOptions.currentView.category ) || bindingOptions.currentView.category === dataItem.category ) {
+            if ( isChildren || !isDefinedString( dataItem.category ) || !isDefinedString( bindingOptions.currentView.category ) || bindingOptions.currentView.category === dataItem.category ) {
                 boxes.push( dataItem );
             }
         }
