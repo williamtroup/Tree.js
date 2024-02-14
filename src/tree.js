@@ -237,7 +237,7 @@
             totalBoxes = totalItems / totalRows;
         }
 
-        return totalBoxes;
+        return _parameter_Math.round( totalBoxes );
     }
 
 
