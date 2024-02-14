@@ -110,6 +110,9 @@ div.tree-js {
                 margin: calc( var(--tree-js-spacing) / 2 );
                 flex-basis: 100%;
                 transition: var(--tree-js-transition);
+                white-space: wrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
 
                 &:first-child {
                     margin-left: 0;

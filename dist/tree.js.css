@@ -86,6 +86,9 @@ div.tree-js div.box-rows div.box-row div.box {
   margin: calc(var(--tree-js-spacing) / 2);
   flex-basis: 100%;
   transition: var(--tree-js-transition);
+  white-space: wrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 div.tree-js div.box-rows div.box-row div.box:first-child {
   margin-left: 0;

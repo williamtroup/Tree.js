@@ -144,41 +144,43 @@
         container.innerHTML = _string.empty;
 
         for ( var rowKey in rowData.boxesPerRow ) {
-            var boxHeight = dividedBoxHeight * rowIndex;
-
             if ( rowData.boxesPerRow.hasOwnProperty( rowKey ) ) {
-                var boxRow = createElement( container, "div", "box-row" ),
-                    boxesLength = rowData.boxesPerRow[ rowKey ].length;
+                var boxHeight = dividedBoxHeight * rowIndex;
 
-                if ( !isDefinedNumber( rowWidth ) ) {
-                    rowWidth = boxRow.offsetWidth;
-                }
-
-                boxRow.style.width = rowWidth + "px";
-
-                if ( !bindingOptions.showBoxGaps ) {
-                    addClass( boxRow, "box-row-no-spacing" );
-
-                } else {
-                    if ( !isDefinedNumber( boxWidth ) ) {
-                        boxWidth = ( boxRow.offsetWidth / rowData.largestAmountOfBoxesOnARow ) - bindingOptions.spacing;
+                if ( rowData.boxesPerRow.hasOwnProperty( rowKey ) ) {
+                    var boxRow = createElement( container, "div", "box-row" ),
+                        boxesLength = rowData.boxesPerRow[ rowKey ].length;
+    
+                    if ( !isDefinedNumber( rowWidth ) ) {
+                        rowWidth = boxRow.offsetWidth;
+                    }
+    
+                    boxRow.style.width = rowWidth + "px";
+    
+                    if ( !bindingOptions.showBoxGaps ) {
+                        addClass( boxRow, "box-row-no-spacing" );
+    
+                    } else {
+                        if ( !isDefinedNumber( boxWidth ) ) {
+                            boxWidth = ( boxRow.offsetWidth / rowData.largestAmountOfBoxesOnARow ) - bindingOptions.spacing;
+                        }
+                    }
+    
+                    for ( var boxIndex = 0; boxIndex < boxesLength; boxIndex++ ) {
+                        renderBox( bindingOptions, boxRow, boxHeight, boxWidth, rowData.boxesPerRow[ rowKey ][ boxIndex ] );
                     }
                 }
-
-                for ( var boxIndex = 0; boxIndex < boxesLength; boxIndex++ ) {
-                    renderBox( bindingOptions, boxRow, boxHeight, boxWidth, rowData.boxesPerRow[ rowKey ][ boxIndex ] );
+    
+                if ( !bindingOptions.swapSizes ) {
+                    rowIndex--;
+                } else {
+                    rowIndex++;
                 }
-            }
-
-            if ( !bindingOptions.swapSizes ) {
-                rowIndex--;
-            } else {
-                rowIndex++;
             }
         }
 
         if ( bindingOptions.reverseOrder ) {
-            reverseElementsOrder( boxRows );
+            reverseElementsOrder( container );
         }
     }
 
@@ -189,7 +191,7 @@
         if ( isDefinedFunction( bindingOptions.onBoxClick ) ) {
             box.onclick = function( e ) {
                 fireCustomTrigger( bindingOptions.onBoxClick, boxDetails );
-            }
+            };
 
         } else {
             addClass( box, "no-click" );
@@ -221,7 +223,7 @@
             return b.value - a.value;
         } );
 
-        var rowNumber = 1
+        var rowNumber = 1,
             startIndex = 0,
             endIndex = totalBoxesForFirstRow,
             dataLength = data.length;
@@ -443,6 +445,11 @@
 
     function addClass( element, className ) {
         element.className += _string.space + className;
+    }
+
+    function cancelBubble( e ) {
+        e.preventDefault();
+        e.cancelBubble = true;
     }
 
 
