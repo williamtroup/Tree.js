@@ -25,6 +25,9 @@
             space: " "
         },
 
+        // Variables: Elements
+        _elements_Type = {},
+        
         // Variables: Attribute Names
         _attribute_Name_Options = "data-tree-options";
 
@@ -107,6 +110,63 @@
         bindingOptions.currentView.element.removeAttribute( _attribute_Name_Options );
         bindingOptions.currentView.element.innerHTML = _string.empty;
         bindingOptions.currentView.element.className = "tree-js";
+
+        renderControlToolTip( bindingOptions );
+    }
+
+
+    /*
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     * Render:  ToolTip
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     */
+
+    function renderControlToolTip( bindingOptions ) {
+        if ( !isDefined( bindingOptions.currentView.tooltip ) ) {
+            bindingOptions.currentView.tooltip = createElement( _parameter_Document.body, "div", "tree-js-tooltip" );
+            bindingOptions.currentView.tooltip.style.display = "none";
+    
+            _parameter_Document.body.addEventListener( "mousemove", function() {
+                hideToolTip( bindingOptions );
+            } );
+    
+            _parameter_Document.addEventListener( "scroll", function() {
+                hideToolTip( bindingOptions );
+            } );
+        }
+    }
+
+    function addToolTip( element, bindingOptions, text ) {
+        if ( element !== null ) {
+            element.onmousemove = function( e ) {
+                showToolTip( e, bindingOptions, text );
+            };
+        }
+    }
+
+    function showToolTip( e, bindingOptions, text ) {
+        cancelBubble( e );
+        hideToolTip( bindingOptions );
+
+        bindingOptions.currentView.tooltipTimer = setTimeout( function() {
+            bindingOptions.currentView.tooltip.innerHTML = text;
+            bindingOptions.currentView.tooltip.style.display = "block";
+
+            showElementAtMousePosition( e, bindingOptions.currentView.tooltip );
+        }, bindingOptions.tooltipDelay );
+    }
+
+    function hideToolTip( bindingOptions ) {
+        if ( isDefined( bindingOptions.currentView.tooltip ) ) {
+            if ( isDefined( bindingOptions.currentView.tooltipTimer ) ) {
+                clearTimeout( bindingOptions.currentView.tooltipTimer );
+                bindingOptions.currentView.tooltipTimer = null;
+            }
+    
+            if ( bindingOptions.currentView.tooltip.style.display === "block" ) {
+                bindingOptions.currentView.tooltip.style.display = "none";
+            }
+        }
     }
 
 
@@ -130,6 +190,40 @@
         options.onRenderComplete = getDefaultFunction( options.onRenderComplete, null );
 
         return options;
+    }
+
+
+    /*
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     * Element Handling
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     */
+
+    function createElement( container, type, className ) {
+        var result = null,
+            nodeType = type.toLowerCase(),
+            isText = nodeType === "text";
+
+        if ( !_elements_Type.hasOwnProperty( nodeType ) ) {
+            _elements_Type[ nodeType ] = isText ? _parameter_Document.createTextNode( _string.empty ) : _parameter_Document.createElement( nodeType );
+        }
+
+        result = _elements_Type[ nodeType ].cloneNode( false );
+
+        if ( isDefined( className ) ) {
+            result.className = className;
+        }
+
+        container.appendChild( result );
+
+        return result;
+    }
+
+    function createElementWithHTML( container, type, className, html ) {
+        var element = createElement( container, type, className );
+        element.innerHTML = html;
+
+        return element;
     }
 
 

@@ -113,3 +113,44 @@ div.tree-js {
         }
     }
 }
+
+
+/*
+    -------------------------------------------------------------------------
+    Tree.js - ToolTip
+    -------------------------------------------------------------------------
+*/
+
+div.tree-js-tooltip {
+    @include no-selection-allowed;
+    @include box-sizing;
+    font-family: var(--tree-js-default-font);
+    animation: fade-in-animation var(--tree-js-animation-length);
+    position: absolute;
+    background-color: var(--tree-js-tooltip-background-color);
+    border: var(--tree-js-border-size) solid var(--tree-js-tooltip-border-color);
+    color: var(--tree-js-tooltip-text-color);
+    border-radius: var(--tree-js-border-radius);
+    z-index: 2000;
+    max-width: 300px;
+    padding: var(--tree-js-spacing);
+    font-size: var(--tree-js-spacing-font-size);
+    font-weight: var(--tree-js-text-bold-weight);
+    display: none;
+}
+
+
+/*
+    -------------------------------------------------------------------------
+    Tree.js - Animations
+    -------------------------------------------------------------------------
+*/
+
+@keyframes fade-in-animation {
+    0% { 
+        opacity: 0;
+    }
+    100% { 
+        opacity: 1;
+    }
+}

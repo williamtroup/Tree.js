@@ -84,4 +84,47 @@ div.tree-js *::before, div.tree-js *::after {
 }
 .custom-scroll-bars::-webkit-scrollbar-thumb:active {
   background-color: var(--tree-js-color-lighter-gray);
+}
+
+/*
+    -------------------------------------------------------------------------
+    Tree.js - ToolTip
+    -------------------------------------------------------------------------
+*/
+div.tree-js-tooltip {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  cursor: default;
+  box-sizing: border-box;
+  line-height: normal;
+  font-family: var(--tree-js-default-font);
+  animation: fade-in-animation var(--tree-js-animation-length);
+  position: absolute;
+  background-color: var(--tree-js-tooltip-background-color);
+  border: var(--tree-js-border-size) solid var(--tree-js-tooltip-border-color);
+  color: var(--tree-js-tooltip-text-color);
+  border-radius: var(--tree-js-border-radius);
+  z-index: 2000;
+  max-width: 300px;
+  padding: var(--tree-js-spacing);
+  font-size: var(--tree-js-spacing-font-size);
+  font-weight: var(--tree-js-text-bold-weight);
+  display: none;
+}
+
+/*
+    -------------------------------------------------------------------------
+    Tree.js - Animations
+    -------------------------------------------------------------------------
+*/
+@keyframes fade-in-animation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }/*# sourceMappingURL=tree.js.css.map */
