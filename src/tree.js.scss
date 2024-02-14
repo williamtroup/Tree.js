@@ -295,7 +295,7 @@ div.tree-js {
                 padding: var(--tree-js-spacing);
                 margin: calc( var(--tree-js-spacing) / 2 );
                 flex-basis: 100%;
-                transition: var(--tree-js-transition);
+                transition: opacity .3s;
                 white-space: wrap;
                 text-align: left;
                 overflow-y: scroll;
