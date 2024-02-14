@@ -143,9 +143,23 @@
                 }
 
                 for ( var boxIndex = 0; boxIndex < boxesLength; boxIndex++ ) {
-                    var box = createElement( boxRow, "div", "box" );
+                    var boxDetails = rowData.boxesPerRow[ rowKey ][ boxIndex ],
+                        box = createElement( boxRow, "div", "box" );
+
                     box.style.width = boxWidth + "px";
                     box.style.height = boxHeight + "px";
+
+                    if ( isDefinedString( boxDetails.backgroundColor ) ) {
+                        box.style.backgroundColor = boxDetails.backgroundColor;
+                    }
+
+                    if ( isDefinedString( boxDetails.textColor ) ) {
+                        box.style.color = boxDetails.textColor;
+                    }
+
+                    if ( isDefinedString( boxDetails.borderColor ) ) {
+                        box.style.borderColor = boxDetails.borderColor;
+                    }
                 }
             }
 
