@@ -15,6 +15,8 @@
     var // Variables: Constructor Parameters
         _parameter_Document = null,
         _parameter_Window = null,
+        _parameter_Math = null,
+        _parameter_JSON = null,
 
         // Variables: Configuration
         _configuration = {},
@@ -112,6 +114,96 @@
         bindingOptions.currentView.element.className = "tree-js";
 
         renderControlToolTip( bindingOptions );
+        renderRowsAndBoxes( bindingOptions, bindingOptions.data );
+    }
+
+
+    /*
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     * Render:  Rows & Boxes
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     */
+
+    function renderRowsAndBoxes( bindingOptions, data ) {
+        var rowData = getRowsAndBoxes( bindingOptions, data ),
+            boxRows = createElement( bindingOptions.currentView.element, "div", "box-rows" ),
+            boxWidth = null;
+
+        for ( var rowKey in rowData.boxesPerRow ) {
+            if ( rowData.boxesPerRow.hasOwnProperty( rowKey ) ) {
+                var boxRow = createElement( boxRows, "div", "box-row" ),
+                    boxesLength = rowData.boxesPerRow[ rowKey ].length;
+
+                if ( !isDefinedNumber( boxWidth ) ) {
+                    boxWidth = ( boxRow.offsetWidth / rowData.largestAmountOfBoxesOnARow ) - bindingOptions.spacing;
+                }
+
+                for ( var boxIndex = 0; boxIndex < boxesLength; boxIndex++ ) {
+                    var box = createElement( boxRow, "div", "box" );
+                    box.style.width = boxWidth + "px";
+                }
+            }
+        }
+    }
+
+    function getRowsAndBoxes( bindingOptions, data ) {
+        var totalBoxesForFirstRow = getTotalBoxesForFirstRow( bindingOptions, data ),
+            boxesPerRow = {},
+            largestAmountOfBoxesOnARow = 0;
+
+        data = data.sort( function( a, b ) {
+            return b.value - a.value;
+        } );
+
+        var rowNumber = 1
+            startIndex = 0,
+            endIndex = totalBoxesForFirstRow,
+            dataLength = data.length;
+
+        while ( true ) {
+            var breakOnceProcessed = false;
+
+            boxesPerRow[ rowNumber ] = [];
+
+            if ( endIndex > dataLength ) {
+                endIndex = dataLength;
+                breakOnceProcessed = true;
+            }
+
+            for ( var arrayIndex = startIndex; arrayIndex < endIndex; arrayIndex++ ) {
+                boxesPerRow[ rowNumber ].push( data[ arrayIndex ] );
+            }
+
+            largestAmountOfBoxesOnARow = _parameter_Math.max( boxesPerRow[ rowNumber ].length, largestAmountOfBoxesOnARow );
+
+            if ( breakOnceProcessed ) {
+                break;
+
+            } else {
+                startIndex = endIndex;
+                endIndex += totalBoxesForFirstRow + ( rowNumber * 2 );
+                rowNumber++;
+            }
+        }
+
+        return {
+            boxesPerRow: boxesPerRow,
+            largestAmountOfBoxesOnARow: largestAmountOfBoxesOnARow
+        };
+    }
+
+    function getTotalBoxesForFirstRow( bindingOptions, data ) {
+        var totalItems = data.length,
+            totalRows = bindingOptions.maximumRows,
+            totalBoxes = totalItems / totalRows;
+
+        while ( totalBoxes < 1.0 ) {
+            totalRows--;
+
+            totalBoxes = totalItems / totalRows;
+        }
+
+        return totalBoxes;
     }
 
 
@@ -364,7 +456,7 @@
 
         try {
             if ( isDefinedString( objectString ) ) {
-                result = JSON.parse( objectString );
+                result = _parameter_JSON.parse( objectString );
             }
 
         } catch ( e1 ) {
@@ -407,7 +499,7 @@
                 result.push( "-" );
             }
 
-            var character = Math.floor( Math.random() * 16 ).toString( 16 );
+            var character = _parameter_Math.floor( _parameter_Math.random() * 16 ).toString( 16 );
             result.push( character );
         }
 
@@ -472,9 +564,11 @@
      * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
      */
 
-    ( function ( documentObject, windowObject ) {
+    ( function ( documentObject, windowObject, mathObject, jsonObject ) {
         _parameter_Document = documentObject;
         _parameter_Window = windowObject;
+        _parameter_Math = mathObject;
+        _parameter_JSON = jsonObject;
 
         buildDefaultConfiguration();
 
@@ -486,5 +580,5 @@
             _parameter_Window.$tree = this;
         }
 
-    } ) ( document, window );
+    } ) ( document, window, Math, JSON );
 } )();
