@@ -304,9 +304,9 @@
 
     function buildAttributeOptions( newOptions ) {
         var options = !isDefinedObject( newOptions ) ? {} : newOptions;
+        options.data = getDefaultArray( options.data, null );
         options.maximumRows = getDefaultNumber( options.maximumRows, 10 );
         options.spacing = getDefaultNumber( options.spacing, 10 );
-        options.data = getDefaultArray( options.data, null );
         options.maximumBoxHeight = getDefaultNumber( options.maximumBoxHeight, 200 );
         options.reverseOrder = getDefaultBoolean( options.reverseOrder, false );
         options.showBoxGaps = getDefaultBoolean( options.showBoxGaps, true );
