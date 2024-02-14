@@ -113,7 +113,8 @@ div.tree-js div.box-rows div.box-row div.box:last-child {
   margin-right: 0;
 }
 div.tree-js div.box-rows div.box-row div.box:hover {
-  opacity: 0.7;
+  cursor: pointer;
+  opacity: 0.8;
 }
 div.tree-js div.box-rows div.box-row:first-child div.box {
   margin-top: 0;
