@@ -47,7 +47,8 @@ div.tree-js {
   padding: var(--tree-js-spacing);
   font-size: var(--tree-js-spacing-font-size);
   width: 100%;
-  max-width: 700px;
+  max-width: 1024px;
+  overflow: hidden;
   margin: 0 !important;
 }
 div.tree-js div.no-click {
@@ -84,12 +85,16 @@ div.tree-js div.box-rows div.box-row div.box {
   padding: var(--tree-js-spacing);
   margin: calc(var(--tree-js-spacing) / 2);
   flex-basis: 100%;
+  transition: var(--tree-js-transition);
 }
 div.tree-js div.box-rows div.box-row div.box:first-child {
   margin-left: 0;
 }
 div.tree-js div.box-rows div.box-row div.box:last-child {
   margin-right: 0;
+}
+div.tree-js div.box-rows div.box-row div.box:hover {
+  opacity: 0.7;
 }
 div.tree-js div.box-rows div.box-row:first-child div.box {
   margin-top: 0;

@@ -110,11 +110,17 @@
 
     function renderControlContainer( bindingOptions ) {
         bindingOptions.currentView.element.removeAttribute( _attribute_Name_Options );
+        bindingOptions.currentView.rows = null;
         bindingOptions.currentView.element.innerHTML = _string.empty;
         bindingOptions.currentView.element.className = "tree-js";
 
         renderControlToolTip( bindingOptions );
-        renderRowsAndBoxes( bindingOptions, bindingOptions.data );
+        renderRows( bindingOptions );
+        renderRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, bindingOptions.data );
+
+        _parameter_Window.addEventListener( "resize", function() {
+            renderRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, bindingOptions.data );
+        } );
     }
 
 
@@ -124,19 +130,31 @@
      * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
      */
 
-    function renderRowsAndBoxes( bindingOptions, data ) {
+    function renderRows( bindingOptions ) {
+        bindingOptions.currentView.rows = createElement( bindingOptions.currentView.element, "div", "box-rows" );
+    }
+
+    function renderRowsAndBoxes( bindingOptions, container, data ) {
         var rowData = getRowsAndBoxes( bindingOptions, data ),
-            boxRows = createElement( bindingOptions.currentView.element, "div", "box-rows" ),
             boxWidth = null,
             rowIndex = !bindingOptions.swapSizes ? rowData.totalRows : 1,
+            rowWidth = null,
             dividedBoxHeight = bindingOptions.maximumBoxHeight / rowData.totalRows;
+
+        container.innerHTML = _string.empty;
 
         for ( var rowKey in rowData.boxesPerRow ) {
             var boxHeight = dividedBoxHeight * rowIndex;
 
             if ( rowData.boxesPerRow.hasOwnProperty( rowKey ) ) {
-                var boxRow = createElement( boxRows, "div", "box-row" ),
+                var boxRow = createElement( container, "div", "box-row" ),
                     boxesLength = rowData.boxesPerRow[ rowKey ].length;
+
+                if ( !isDefinedNumber( rowWidth ) ) {
+                    rowWidth = boxRow.offsetWidth;
+                }
+
+                boxRow.style.width = rowWidth + "px";
 
                 if ( !bindingOptions.showBoxGaps ) {
                     addClass( boxRow, "box-row-no-spacing" );
@@ -148,26 +166,7 @@
                 }
 
                 for ( var boxIndex = 0; boxIndex < boxesLength; boxIndex++ ) {
-                    var boxDetails = rowData.boxesPerRow[ rowKey ][ boxIndex ],
-                        box = createElement( boxRow, "div", "box" );
-
-                    box.style.height = boxHeight + "px";
-
-                    if ( isDefinedNumber( boxWidth ) ) {
-                        box.style.width = boxWidth + "px";
-                    }
-
-                    if ( isDefinedString( boxDetails.backgroundColor ) ) {
-                        box.style.backgroundColor = boxDetails.backgroundColor;
-                    }
-
-                    if ( isDefinedString( boxDetails.textColor ) ) {
-                        box.style.color = boxDetails.textColor;
-                    }
-
-                    if ( isDefinedString( boxDetails.borderColor ) ) {
-                        box.style.borderColor = boxDetails.borderColor;
-                    }
+                    renderBox( bindingOptions, boxRow, boxHeight, boxWidth, rowData.boxesPerRow[ rowKey ][ boxIndex ] );
                 }
             }
 
@@ -180,6 +179,36 @@
 
         if ( bindingOptions.reverseOrder ) {
             reverseElementsOrder( boxRows );
+        }
+    }
+
+    function renderBox( bindingOptions, boxRow, boxHeight, boxWidth, boxDetails ) {
+        var box = createElement( boxRow, "div", "box" );
+        box.style.height = boxHeight + "px";
+
+        if ( isDefinedFunction( bindingOptions.onBoxClick ) ) {
+            box.onclick = function( e ) {
+                fireCustomTrigger( bindingOptions.onBoxClick, boxDetails );
+            }
+
+        } else {
+            addClass( box, "no-click" );
+        }
+
+        if ( isDefinedNumber( boxWidth ) ) {
+            box.style.width = boxWidth + "px";
+        }
+
+        if ( isDefinedString( boxDetails.backgroundColor ) ) {
+            box.style.backgroundColor = boxDetails.backgroundColor;
+        }
+
+        if ( isDefinedString( boxDetails.textColor ) ) {
+            box.style.color = boxDetails.textColor;
+        }
+
+        if ( isDefinedString( boxDetails.borderColor ) ) {
+            box.style.borderColor = boxDetails.borderColor;
         }
     }
 
@@ -322,6 +351,7 @@
     function buildAttributeOptionCustomTriggers( options ) {
         options.onBeforeRender = getDefaultFunction( options.onBeforeRender, null );
         options.onRenderComplete = getDefaultFunction( options.onRenderComplete, null );
+        options.onBoxClick = getDefaultFunction( options.onBoxClick, null );
 
         return options;
     }

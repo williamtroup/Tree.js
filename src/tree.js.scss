@@ -65,7 +65,8 @@ div.tree-js {
     padding: var(--tree-js-spacing);
     font-size: var(--tree-js-spacing-font-size);
     width: 100%;
-    max-width: 700px;
+    max-width: 1024px;
+    overflow: hidden;
     margin: 0 !important;
     
     div.no-click {
@@ -108,6 +109,7 @@ div.tree-js {
                 padding: var(--tree-js-spacing);
                 margin: calc( var(--tree-js-spacing) / 2 );
                 flex-basis: 100%;
+                transition: var(--tree-js-transition);
 
                 &:first-child {
                     margin-left: 0;
@@ -115,6 +117,10 @@ div.tree-js {
         
                 &:last-child {
                     margin-right: 0;
+                }
+
+                &:hover {
+                    opacity: 0.7;
                 }
             }
     
