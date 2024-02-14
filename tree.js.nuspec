@@ -6,7 +6,7 @@
         <title>Tree.js</title>
         <description>A lightweight, and easy-to-use, JavaScript library.</description>
         <authors>William Troup</authors>
-        <projectUrl>https://www.william-troup.com/notes-js/</projectUrl>
+        <projectUrl>https://www.william-troup.com/tree-js/</projectUrl>
         <repository type="git" url="https://github.com/williamtroup/Tree.js" branch="main" />
         <readme>README_NUGET.md</readme>
         <license type="expression">MIT</license>

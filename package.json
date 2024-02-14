@@ -4,7 +4,7 @@
     "description": "A lightweight, and easy-to-use, JavaScript library.",
     "version": "0.1.0",
     "main": "dist/tree.js",
-    "homepage": "https://www.william-troup.com/notes-js/",
+    "homepage": "https://www.william-troup.com/tree-js/",
     "author": {
       "name": "Bunoon"
     },
