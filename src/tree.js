@@ -138,16 +138,24 @@
                 var boxRow = createElement( boxRows, "div", "box-row" ),
                     boxesLength = rowData.boxesPerRow[ rowKey ].length;
 
-                if ( !isDefinedNumber( boxWidth ) ) {
-                    boxWidth = ( boxRow.offsetWidth / rowData.largestAmountOfBoxesOnARow ) - bindingOptions.spacing;
+                if ( !bindingOptions.showBoxGaps ) {
+                    addClass( boxRow, "box-row-no-spacing" );
+
+                } else {
+                    if ( !isDefinedNumber( boxWidth ) ) {
+                        boxWidth = ( boxRow.offsetWidth / rowData.largestAmountOfBoxesOnARow ) - bindingOptions.spacing;
+                    }
                 }
 
                 for ( var boxIndex = 0; boxIndex < boxesLength; boxIndex++ ) {
                     var boxDetails = rowData.boxesPerRow[ rowKey ][ boxIndex ],
                         box = createElement( boxRow, "div", "box" );
 
-                    box.style.width = boxWidth + "px";
                     box.style.height = boxHeight + "px";
+
+                    if ( isDefinedNumber( boxWidth ) ) {
+                        box.style.width = boxWidth + "px";
+                    }
 
                     if ( isDefinedString( boxDetails.backgroundColor ) ) {
                         box.style.backgroundColor = boxDetails.backgroundColor;
@@ -301,6 +309,7 @@
         options.data = getDefaultArray( options.data, null );
         options.maximumBoxHeight = getDefaultNumber( options.maximumBoxHeight, 200 );
         options.reverseOrder = getDefaultBoolean( options.reverseOrder, false );
+        options.showBoxGaps = getDefaultBoolean( options.showBoxGaps, true );
 
         return buildAttributeOptionCustomTriggers( options );
     }
@@ -395,6 +404,10 @@
         for ( ; childrenLength--; ) {
             parent.appendChild( children[ childrenLength ] );
         }
+    }
+
+    function addClass( element, className ) {
+        element.className += _string.space + className;
     }
 
 

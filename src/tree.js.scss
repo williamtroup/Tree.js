@@ -90,6 +90,11 @@ div.tree-js {
 
 div.tree-js {
     div.box-rows {
+        div.box-row-no-spacing {
+            display: flex;
+            justify-content: space-between;
+        }
+
         div.box-row {
             text-align: center;
     
@@ -102,6 +107,15 @@ div.tree-js {
                 border: var(--tree-js-border-size) solid rgba( 80, 200, 120, 0.7 );
                 padding: var(--tree-js-spacing);
                 margin: calc( var(--tree-js-spacing) / 2 );
+                flex-basis: 100%;
+
+                &:first-child {
+                    margin-left: 0;
+                }
+        
+                &:last-child {
+                    margin-right: 0;
+                }
             }
     
             &:first-child {

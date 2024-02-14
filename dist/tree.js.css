@@ -67,6 +67,10 @@ div.tree-js *::before, div.tree-js *::after {
     Tree.js - Rows & Boxes
     -------------------------------------------------------------------------
 */
+div.tree-js div.box-rows div.box-row-no-spacing {
+  display: flex;
+  justify-content: space-between;
+}
 div.tree-js div.box-rows div.box-row {
   text-align: center;
 }
@@ -79,6 +83,13 @@ div.tree-js div.box-rows div.box-row div.box {
   border: var(--tree-js-border-size) solid rgba(80, 200, 120, 0.7);
   padding: var(--tree-js-spacing);
   margin: calc(var(--tree-js-spacing) / 2);
+  flex-basis: 100%;
+}
+div.tree-js div.box-rows div.box-row div.box:first-child {
+  margin-left: 0;
+}
+div.tree-js div.box-rows div.box-row div.box:last-child {
+  margin-right: 0;
 }
 div.tree-js div.box-rows div.box-row:first-child div.box {
   margin-top: 0;
