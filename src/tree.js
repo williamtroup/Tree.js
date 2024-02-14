@@ -99,6 +99,7 @@
         bindingOptions.currentView.category = categories.length > 0 ? categories[ 0 ] : null;
         bindingOptions.currentView.categories = categories;
         bindingOptions.currentView.categoryText = null;
+        bindingOptions.currentView.categoryIndex = 0;
 
         return bindingOptions;
     }
@@ -147,6 +148,12 @@
                 back = createElementWithHTML( controls, "button", "back", _configuration.backButtonText );
             
             back.onclick = function() {
+                if ( bindingOptions.currentView.categoryIndex > 0 ) {
+                    bindingOptions.currentView.categoryIndex--;
+                    bindingOptions.currentView.category = bindingOptions.currentView.categories[ bindingOptions.currentView.categoryIndex ];
+
+                    renderControlContainer( bindingOptions );
+                }
             };
 
             bindingOptions.currentView.categoryText = createElementWithHTML( controls, "div", "category-text", bindingOptions.currentView.category );
@@ -179,6 +186,12 @@
             var next = createElementWithHTML( controls, "button", "next", _configuration.nextButtonText );
 
             next.onclick = function() {
+                if ( bindingOptions.currentView.categoryIndex < categoriesLength - 1 ) {
+                    bindingOptions.currentView.categoryIndex++;
+                    bindingOptions.currentView.category = bindingOptions.currentView.categories[ bindingOptions.currentView.categoryIndex ];
+
+                    renderControlContainer( bindingOptions );
+                }
             };
         }
     }
