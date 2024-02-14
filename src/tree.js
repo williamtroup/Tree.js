@@ -331,7 +331,7 @@
 
             if ( !isChild ) {
                 titleBar.onclick = cancelBubble;
-                
+
                 titleBar.ondblclick = function( e ) {
                     cancelBubble( e );
 
@@ -352,7 +352,7 @@
             createElementWithHTML( box, "p", "description", boxDetails.description );
         }
 
-        if ( !isChild && isDefinedArray( boxDetails.children ) && boxDetails.children.length > 0 ) {
+        if ( !isChild && isDefinedArray( boxDetails.children ) && boxDetails.children.length > 0 && ( !isDefinedBoolean( boxDetails.showChildren ) || boxDetails.showChildren ) ) {
             renderControlRowsAndBoxes( bindingOptions, box, boxDetails.children, true );
         }
     }
