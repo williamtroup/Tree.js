@@ -16,7 +16,17 @@ Fires before the rendering an element.
 Fires when the rendering of an element is complete.
 <br>
 ***Parameter:*** element: '*object*' - The DOM element that was rendered.
+<br>
+<br>
 
+
+## For Clicking:
+
+### options.onBoxClick( *boxDetails* ):
+Fires when a box is clicked.
+<br>
+***Parameter:*** boxDetails: '*Object*' - The details of the box that was clicked.
+<br>
 <br>
 
 

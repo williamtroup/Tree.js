@@ -6,6 +6,8 @@
  */
 :root {
   --tree-js-default-font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --tree-js-text-bold-weight: 400;
+  --tree-js-title-bold-weight: 900;
   --tree-js-color-black: #3b3a3a;
   --tree-js-color-white: #F5F5F5;
   --tree-js-container-background-color: #22272e;
@@ -65,6 +67,27 @@ div.tree-js *::before, div.tree-js *::after {
 
 /*
     -------------------------------------------------------------------------
+    Tree.js - Title Bar
+    -------------------------------------------------------------------------
+*/
+div.tree-js div.title-bar {
+  display: flex;
+  margin-bottom: calc(var(--tree-js-spacing) + var(--tree-js-spacing) / 2);
+}
+div.tree-js div.title-bar div.title {
+  text-align: left;
+  width: auto;
+  font-weight: var(--tree-js-title-bold-weight);
+  font-size: 1.2rem;
+}
+div.tree-js div.title-bar div.controls {
+  margin-left: var(--tree-js-spacing);
+  flex-grow: 1;
+  text-align: right;
+}
+
+/*
+    -------------------------------------------------------------------------
     Tree.js - Rows & Boxes
     -------------------------------------------------------------------------
 */
@@ -96,11 +119,11 @@ div.tree-js div.box-rows div.box-row div.box h1.name {
   padding: 0 !important;
   margin-bottom: var(--tree-js-spacing) !important;
   font-size: 1rem !important;
-  font-weight: 900 !important;
+  font-weight: var(--tree-js-title-bold-weight) !important;
 }
 div.tree-js div.box-rows div.box-row div.box h1.name span.value {
   float: right;
-  font-weight: 300 !important;
+  font-weight: var(--tree-js-text-bold-weight) !important;
 }
 div.tree-js div.box-rows div.box-row div.box p.description {
   margin: 0 !important;

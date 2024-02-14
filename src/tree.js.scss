@@ -11,6 +11,8 @@
 :root {
     // Fonts
     --tree-js-default-font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --tree-js-text-bold-weight: 400;
+    --tree-js-title-bold-weight: 900;
 
     // Colors
     --tree-js-color-black: #3b3a3a;
@@ -83,6 +85,34 @@ div.tree-js {
     }
 }
 
+
+/*
+    -------------------------------------------------------------------------
+    Tree.js - Title Bar
+    -------------------------------------------------------------------------
+*/
+
+div.tree-js {
+    div.title-bar {
+        display: flex;
+        margin-bottom: calc( var(--tree-js-spacing) + var(--tree-js-spacing) / 2 );
+
+        div.title {
+            text-align: left;
+            width: auto;
+            font-weight: var(--tree-js-title-bold-weight);
+            font-size: 1.2rem;
+        }
+
+        div.controls {
+            margin-left: var(--tree-js-spacing);
+            flex-grow: 1;
+            text-align: right;
+        }
+    }
+}
+
+
 /*
     -------------------------------------------------------------------------
     Tree.js - Rows & Boxes
@@ -120,11 +150,11 @@ div.tree-js {
                     padding: 0 !important;;
                     margin-bottom: var(--tree-js-spacing) !important;
                     font-size: 1rem !important;
-                    font-weight: 900 !important;
+                    font-weight: var(--tree-js-title-bold-weight) !important;
 
                     span.value {
                         float: right;
-                        font-weight: 300 !important;
+                        font-weight: var(--tree-js-text-bold-weight) !important;
                     }
                 }
 

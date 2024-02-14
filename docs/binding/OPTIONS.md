@@ -24,7 +24,7 @@ Below are all the JSON properties that can be passed in the "data-tree-options" 
 
 | Type: | Name: | Description: |
 | --- | --- | --- |
-| *string* | copyButtonText | The text that should be displayed for the "Copy" button. |
+| *string* | titleText | States ... (defaults to "Tree.js"). |
 
 <br/>
 

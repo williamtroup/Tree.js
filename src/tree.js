@@ -115,8 +115,9 @@
         bindingOptions.currentView.element.className = "tree-js";
 
         renderControlToolTip( bindingOptions );
-        renderRows( bindingOptions );
-        renderRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, bindingOptions.data );
+        renderControlTitleBar( bindingOptions );
+        renderControlRows( bindingOptions );
+        renderControlRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, bindingOptions.data );
 
         _parameter_Window.addEventListener( "resize", function() {
             renderRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, bindingOptions.data );
@@ -126,15 +127,30 @@
 
     /*
      * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     * Render:  Title Bar
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     */
+
+    function renderControlTitleBar( bindingOptions ) {
+        var titleBar = createElement( bindingOptions.currentView.element, "div", "title-bar" );
+        
+        createElementWithHTML( titleBar, "div", "title", bindingOptions.titleText );
+
+        var controls = createElement( titleBar, "div", "controls" );
+    }
+
+
+    /*
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
      * Render:  Rows & Boxes
      * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
      */
 
-    function renderRows( bindingOptions ) {
+    function renderControlRows( bindingOptions ) {
         bindingOptions.currentView.rows = createElement( bindingOptions.currentView.element, "div", "box-rows" );
     }
 
-    function renderRowsAndBoxes( bindingOptions, container, data ) {
+    function renderControlRowsAndBoxes( bindingOptions, container, data ) {
         var rowData = getRowsAndBoxes( bindingOptions, data ),
             boxWidth = null,
             rowIndex = !bindingOptions.swapSizes ? rowData.totalRows : 1,
@@ -359,7 +375,16 @@
         options.showBoxGaps = getDefaultBoolean( options.showBoxGaps, true );
         options.swapSizes = getDefaultBoolean( options.swapSizes, false );
 
-        return buildAttributeOptionCustomTriggers( options );
+        options = buildAttributeOptionCustomTriggers( options );
+        options = buildAttributeOptionStrings( options );
+
+        return options;
+    }
+
+    function buildAttributeOptionStrings( options ) {
+        options.titleText = getDefaultString( options.titleText, "Tree.js" );
+
+        return options;
     }
 
     function buildAttributeOptionCustomTriggers( options ) {
