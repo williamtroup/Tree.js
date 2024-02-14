@@ -98,6 +98,7 @@
         var options = !isDefinedObject( newOptions ) ? {} : newOptions;
         options.maximumColumns = getDefaultNumber( options.maximumColumns, 10 );
         options.spacing = getDefaultNumber( options.spacing, 10 );
+        options.data = getDefaultArray( options.data, null );
 
         return buildAttributeOptionCustomTriggers( options );
     }

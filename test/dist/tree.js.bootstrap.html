@@ -17,6 +17,7 @@
         </div>
 
         <div class="contents">
+            <div id="tree-map-1" data-tree-options="bindingOptions"></div>
         </div>
 
         <div class="contents">
@@ -37,6 +38,56 @@
             $tree.setConfiguration( {
                 safeMode: false
             } );
+        }
+
+        function bindingOptions() {
+            return {
+                data: [
+                    {
+                        name: "Data Set 1",
+                        description: "This is a description for Data Set 1.",
+                        backgroundColor: "darkgreen",
+                        textColor: "white",
+                        borderColor: "white",
+                        value: 50,
+                        visible: true,
+                        category: "Category 1",
+                        children: null
+                    },
+                    {
+                        name: "Data Set 2",
+                        description: "This is a description for Data Set 2.",
+                        backgroundColor: "darkblue",
+                        textColor: "white",
+                        borderColor: "white",
+                        value: 30,
+                        visible: true,
+                        category: "Category 1",
+                        children: null
+                    },
+                    {
+                        name: "Data Set 3",
+                        description: "This is a description for Data Set 3.",
+                        backgroundColor: "darkblue",
+                        textColor: "white",
+                        borderColor: "white",
+                        value: 15,
+                        visible: true,
+                        category: "Category 1",
+                        children: [
+                            {
+                                name: "Inner Data Set 1",
+                                description: "This is a description for Inner Data Set 1.",
+                                backgroundColor: "darkred",
+                                textColor: "white",
+                                borderColor: "white",
+                                value: 15,
+                                visible: true
+                            }
+                        ]
+                    }
+                ]
+            }
         }
     </script>
 </html>
