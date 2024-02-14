@@ -11,6 +11,8 @@ Below are all the JSON properties that can be passed in the "data-tree-options" 
 | *number* | maximumRows | States ... (defaults to 10). |
 | *number* | spacing | States ... (defaults to 10). |
 | *Object[]* | data | States ... (defaults to null). |
+| *number* | maximumBoxHeight | States ... (defaults to 200). |
+| *boolean* | reverseOrder | States ... (defaults to false). |
 
 <br/>
 

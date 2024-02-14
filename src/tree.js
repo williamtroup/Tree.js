@@ -127,9 +127,13 @@
     function renderRowsAndBoxes( bindingOptions, data ) {
         var rowData = getRowsAndBoxes( bindingOptions, data ),
             boxRows = createElement( bindingOptions.currentView.element, "div", "box-rows" ),
-            boxWidth = null;
+            boxWidth = null,
+            rowIndex = rowData.totalRows,
+            dividedBoxHeight = bindingOptions.maximumBoxHeight / rowData.totalRows;
 
         for ( var rowKey in rowData.boxesPerRow ) {
+            var boxHeight = dividedBoxHeight * rowIndex;
+
             if ( rowData.boxesPerRow.hasOwnProperty( rowKey ) ) {
                 var boxRow = createElement( boxRows, "div", "box-row" ),
                     boxesLength = rowData.boxesPerRow[ rowKey ].length;
@@ -141,8 +145,15 @@
                 for ( var boxIndex = 0; boxIndex < boxesLength; boxIndex++ ) {
                     var box = createElement( boxRow, "div", "box" );
                     box.style.width = boxWidth + "px";
+                    box.style.height = boxHeight + "px";
                 }
             }
+
+            rowIndex--;
+        }
+
+        if ( bindingOptions.reverseOrder ) {
+            reverseElementsOrder( boxRows );
         }
     }
 
@@ -188,7 +199,8 @@
 
         return {
             boxesPerRow: boxesPerRow,
-            largestAmountOfBoxesOnARow: largestAmountOfBoxesOnARow
+            largestAmountOfBoxesOnARow: largestAmountOfBoxesOnARow,
+            totalRows: rowNumber
         };
     }
 
@@ -273,6 +285,8 @@
         options.maximumRows = getDefaultNumber( options.maximumRows, 10 );
         options.spacing = getDefaultNumber( options.spacing, 10 );
         options.data = getDefaultArray( options.data, null );
+        options.maximumBoxHeight = getDefaultNumber( options.maximumBoxHeight, 200 );
+        options.reverseOrder = getDefaultBoolean( options.reverseOrder, false );
 
         return buildAttributeOptionCustomTriggers( options );
     }
@@ -358,6 +372,15 @@
         
         element.style.left = left + "px";
         element.style.top = top + "px";
+    }
+
+    function reverseElementsOrder( parent ) {
+        var children = parent.children,
+            childrenLength = children.length - 1;
+
+        for ( ; childrenLength--; ) {
+            parent.appendChild( children[ childrenLength ] );
+        }
     }
 
 
