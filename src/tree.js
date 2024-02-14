@@ -100,6 +100,8 @@
         bindingOptions.currentView.categories = categories;
         bindingOptions.currentView.categoryText = null;
         bindingOptions.currentView.categoryIndex = 0;
+        bindingOptions.currentView.fullScreenBoxId = null;
+        bindingOptions.currentView.fullScreenBoxHeight = null;
 
         return bindingOptions;
     }
@@ -285,7 +287,12 @@
 
     function renderBox( bindingOptions, boxRow, boxHeight, boxWidth, boxDetails, isChild ) {
         var box = createElement( boxRow, "div", "box" );
-        box.style.height = boxHeight + "px";
+
+        if ( bindingOptions.currentView.fullScreenBoxId === boxDetails.id ) {
+            box.style.height = bindingOptions.currentView.fullScreenBoxHeight + "px";
+        } else {
+            box.style.height = boxHeight + "px";
+        }
 
         if ( isDefinedFunction( bindingOptions.onBoxClick ) ) {
             box.onclick = function( e ) {
@@ -320,6 +327,24 @@
 
             if ( isDefinedBoolean( boxDetails.showValue ) && boxDetails.showValue ) {
                 createElementWithHTML( titleBar, "div", "value", boxDetails.value );
+            }
+
+            if ( !isChild ) {
+                titleBar.onclick = cancelBubble;
+                
+                titleBar.ondblclick = function( e ) {
+                    cancelBubble( e );
+
+                    if ( isDefined( bindingOptions.currentView.fullScreenBoxId ) ) {
+                        bindingOptions.currentView.fullScreenBoxId = null;
+                        bindingOptions.currentView.fullScreenBoxHeight = null;
+                    } else {
+                        bindingOptions.currentView.fullScreenBoxId = boxDetails.id;
+                        bindingOptions.currentView.fullScreenBoxHeight = boxRow.parentNode.offsetHeight;
+                    }
+
+                    renderControlContainer( bindingOptions );
+                };
             }
         }
 
@@ -447,8 +472,19 @@
         for ( var dataIndex = 0; dataIndex < dataLength; dataIndex++ ) {
             var dataItem = data[ dataIndex ];
 
-            if ( isChildren || !isDefinedString( dataItem.category ) || !isDefinedString( bindingOptions.currentView.category ) || bindingOptions.currentView.category === dataItem.category ) {
-                boxes.push( dataItem );
+            if ( !isDefinedString( dataItem.id ) ) {
+                dataItem.id = newGuid();
+            }
+
+            if ( !isChildren && isDefined( bindingOptions.currentView.fullScreenBoxId ) ) {
+                if ( dataItem.id === bindingOptions.currentView.fullScreenBoxId ) {
+                    boxes.push( dataItem );
+                }
+               
+            } else {
+                if ( isChildren || !isDefinedString( dataItem.category ) || !isDefinedString( bindingOptions.currentView.category ) || bindingOptions.currentView.category === dataItem.category ) {
+                    boxes.push( dataItem );
+                }
             }
         }
 
