@@ -98,6 +98,10 @@ div.tree-js div.box-rows div.box-row div.box h1.name {
   font-size: 1rem !important;
   font-weight: 900 !important;
 }
+div.tree-js div.box-rows div.box-row div.box h1.name span.value {
+  float: right;
+  font-weight: 300 !important;
+}
 div.tree-js div.box-rows div.box-row div.box p.description {
   margin: 0 !important;
   padding: 0 !important;

@@ -214,7 +214,11 @@
         }
 
         if ( isDefinedString( boxDetails.name ) ) {
-            createElementWithHTML( box, "h1", "name", boxDetails.name );
+            var name = createElementWithHTML( box, "h1", "name", boxDetails.name );
+
+            if ( isDefinedBoolean( boxDetails.showValue ) && boxDetails.showValue ) {
+                createElementWithHTML( name, "span", "value", boxDetails.value )
+            }
         }
 
         if ( isDefinedString( boxDetails.description ) ) {

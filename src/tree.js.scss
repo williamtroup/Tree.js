@@ -121,6 +121,11 @@ div.tree-js {
                     margin-bottom: var(--tree-js-spacing) !important;
                     font-size: 1rem !important;
                     font-weight: 900 !important;
+
+                    span.value {
+                        float: right;
+                        font-weight: 300 !important;
+                    }
                 }
 
                 p.description {
