@@ -111,9 +111,9 @@ div.tree-js {
                 flex-basis: 100%;
                 transition: var(--tree-js-transition);
                 white-space: wrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
                 text-align: left;
+                overflow-y: scroll;
+                overflow-x: hidden;
 
                 h1.name {
                     margin: 0 !important;;
