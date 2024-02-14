@@ -16,7 +16,7 @@ Below are all the configuration options that can be passed to the "setConfigurat
 
 ```markdown
 <script> 
-  $notes.setConfiguration( {
+  $tree.setConfiguration( {
       safeMode: false
   } );
 </script>

@@ -31,6 +31,6 @@ Returns the version of v.js.
 
 ```markdown
 <script> 
-    var version = $notes.getVersion();
+    var version = $tree.getVersion();
 </script>
 ```

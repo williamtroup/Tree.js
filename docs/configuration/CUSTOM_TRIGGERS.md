@@ -22,7 +22,7 @@ Fires after the DOM elements are rendered (if any are found).
 
 ```markdown
 <script> 
-  $notes.setConfiguration( {
+  $tree.setConfiguration( {
       onBeforeRender: yourCustomJsFunction
   } );
 </script>

@@ -25,16 +25,16 @@
             <br />
 
             <h2>Additional Data:</h2>
-            <button class="btn btn-primary" onclick="console.log( $notes.getVersion() );">Get Version</button>
+            <button class="btn btn-primary" onclick="console.log( $tree.getVersion() );">Get Version</button>
         </div>
     </body>
 
     <script>
-        document.title += " v" + $notes.getVersion();
-        document.getElementById( "header" ).innerText += " - v" + $notes.getVersion();
+        document.title += " v" + $tree.getVersion();
+        document.getElementById( "header" ).innerText += " - v" + $tree.getVersion();
 
         function setupConfiguration() {
-            $notes.setConfiguration( {
+            $tree.setConfiguration( {
                 safeMode: false
             } );
         }
