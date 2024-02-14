@@ -96,7 +96,8 @@
 
     function buildAttributeOptions( newOptions ) {
         var options = !isDefinedObject( newOptions ) ? {} : newOptions;
-        options.speed = getDefaultNumber( options.speed, 100 );
+        options.maximumColumns = getDefaultNumber( options.maximumColumns, 10 );
+        options.spacing = getDefaultNumber( options.spacing, 10 );
 
         return buildAttributeOptionCustomTriggers( options );
     }

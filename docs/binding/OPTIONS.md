@@ -8,7 +8,9 @@ Below are all the JSON properties that can be passed in the "data-tree-options" 
 
 | Type: | Name: | Description: |
 | --- | --- | --- |
-| *boolean* | showCopyButton | States if the copy button should be added (defaults to true). |
+| *number* | maximumColumns | States ... (defaults to 10). |
+| *number* | spacing | States ... (defaults to 10). |
+
 <br/>
 
 
@@ -18,6 +20,7 @@ Below are all the JSON properties that can be passed in the "data-tree-options" 
 | Type: | Name: | Description: |
 | --- | --- | --- |
 | *string* | copyButtonText | The text that should be displayed for the "Copy" button. |
+
 <br/>
 
 
