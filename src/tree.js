@@ -128,7 +128,7 @@
         var rowData = getRowsAndBoxes( bindingOptions, data ),
             boxRows = createElement( bindingOptions.currentView.element, "div", "box-rows" ),
             boxWidth = null,
-            rowIndex = rowData.totalRows,
+            rowIndex = !bindingOptions.swapSizes ? rowData.totalRows : 1,
             dividedBoxHeight = bindingOptions.maximumBoxHeight / rowData.totalRows;
 
         for ( var rowKey in rowData.boxesPerRow ) {
@@ -171,7 +171,11 @@
                 }
             }
 
-            rowIndex--;
+            if ( !bindingOptions.swapSizes ) {
+                rowIndex--;
+            } else {
+                rowIndex++;
+            }
         }
 
         if ( bindingOptions.reverseOrder ) {
@@ -310,6 +314,7 @@
         options.maximumBoxHeight = getDefaultNumber( options.maximumBoxHeight, 200 );
         options.reverseOrder = getDefaultBoolean( options.reverseOrder, false );
         options.showBoxGaps = getDefaultBoolean( options.showBoxGaps, true );
+        options.swapSizes = getDefaultBoolean( options.swapSizes, false );
 
         return buildAttributeOptionCustomTriggers( options );
     }
