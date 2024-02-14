@@ -234,17 +234,18 @@ div.tree-js div.box-rows div.box-row div.box {
   overflow-y: scroll;
   overflow-x: hidden;
 }
-div.tree-js div.box-rows div.box-row div.box div.title-bar {
+div.tree-js div.box-rows div.box-row div.box div.box-title-bar {
   display: flex;
   font-size: 1rem !important;
   align-items: center !important;
+  margin-bottom: calc(var(--tree-js-spacing) / 2);
 }
-div.tree-js div.box-rows div.box-row div.box div.title-bar div.title {
+div.tree-js div.box-rows div.box-row div.box div.box-title-bar div.box-title {
   text-align: left;
   font-weight: var(--tree-js-title-bold-weight) !important;
   margin-right: var(--tree-js-spacing);
 }
-div.tree-js div.box-rows div.box-row div.box div.title-bar div.value {
+div.tree-js div.box-rows div.box-row div.box div.box-title-bar div.box-value {
   flex-grow: 1;
   text-align: right;
   font-weight: var(--tree-js-text-bold-weight) !important;

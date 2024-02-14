@@ -321,12 +321,12 @@
         }
 
         if ( isDefinedString( boxDetails.name ) || ( isDefinedBoolean( boxDetails.showValue ) && boxDetails.showValue ) ) {
-            var titleBar = createElement( box, "div", "title-bar" );
+            var titleBar = createElement( box, "div", "box-title-bar" );
 
-            createElementWithHTML( titleBar, "div", "title", boxDetails.name );
+            createElementWithHTML( titleBar, "div", "box-title", boxDetails.name );
 
             if ( isDefinedBoolean( boxDetails.showValue ) && boxDetails.showValue ) {
-                createElementWithHTML( titleBar, "div", "value", boxDetails.value );
+                createElementWithHTML( titleBar, "div", "box-value", boxDetails.value );
             }
 
             if ( !isChild ) {

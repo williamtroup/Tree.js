@@ -301,18 +301,19 @@ div.tree-js {
                 overflow-y: scroll;
                 overflow-x: hidden;
 
-                div.title-bar {
+                div.box-title-bar {
                     display: flex;
                     font-size: 1rem !important;
                     align-items: center !important;
+                    margin-bottom: calc( var(--tree-js-spacing) / 2 );
 
-                    div.title {
+                    div.box-title {
                         text-align: left;
                         font-weight: var(--tree-js-title-bold-weight) !important;
                         margin-right: var(--tree-js-spacing);
                     }
 
-                    div.value {
+                    div.box-value {
                         flex-grow: 1;
                         text-align: right;
                         font-weight: var(--tree-js-text-bold-weight) !important;
