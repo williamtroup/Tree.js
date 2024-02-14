@@ -5,12 +5,15 @@
  * Released under the MIT License
  */
 :root {
-  --notes-js-color-black: #3b3a3a;
-  --notes-js-color-white: #F5F5F5;
-  --notes-js-border-radius: 0.5rem;
-  --notes-js-border-style-scrollbar: inset 0 0 6px var(--notes-js-color-dark-gray);
-  --notes-js-border-size: 0.5px;
-  --notes-js-transition: all .3s;
+  --tree-js-default-font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --tree-js-color-black: #3b3a3a;
+  --tree-js-color-white: #F5F5F5;
+  --tree-js-container-background-color: #22272e;
+  --tree-js-container-border-color: #454c56;
+  --tree-js-border-radius: 0.5rem;
+  --tree-js-border-style-scrollbar: inset 0 0 6px var(--tree-js-color-dark-gray);
+  --tree-js-border-size: 0.5px;
+  --tree-js-transition: all .3s;
 }
 
 /*
@@ -22,17 +25,17 @@
   width: 12px;
 }
 .custom-scroll-bars::-webkit-scrollbar-track {
-  -webkit-box-shadow: var(--notes-js-border-style-scrollbar);
-  box-shadow: var(--notes-js-border-style-scrollbar);
+  -webkit-box-shadow: var(--tree-js-border-style-scrollbar);
+  box-shadow: var(--tree-js-border-style-scrollbar);
 }
 .custom-scroll-bars::-webkit-scrollbar-thumb {
-  -webkit-box-shadow: var(--notes-js-border-style-scrollbar);
-  box-shadow: var(--notes-js-border-style-scrollbar);
-  background: var(--notes-js-color-white);
+  -webkit-box-shadow: var(--tree-js-border-style-scrollbar);
+  box-shadow: var(--tree-js-border-style-scrollbar);
+  background: var(--tree-js-color-white);
 }
 .custom-scroll-bars::-webkit-scrollbar-thumb:hover {
-  background-color: var(--notes-js-color-white);
+  background-color: var(--tree-js-color-white);
 }
 .custom-scroll-bars::-webkit-scrollbar-thumb:active {
-  background-color: var(--notes-js-color-lighter-gray);
+  background-color: var(--tree-js-color-lighter-gray);
 }/*# sourceMappingURL=tree.js.css.map */
