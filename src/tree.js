@@ -212,6 +212,14 @@
         if ( isDefinedString( boxDetails.borderColor ) ) {
             box.style.borderColor = boxDetails.borderColor;
         }
+
+        if ( isDefinedString( boxDetails.name ) ) {
+            createElementWithHTML( box, "h1", "name", boxDetails.name );
+        }
+
+        if ( isDefinedString( boxDetails.description ) ) {
+            createElementWithHTML( box, "p", "description", boxDetails.description );
+        }
     }
 
     function getRowsAndBoxes( bindingOptions, data ) {
