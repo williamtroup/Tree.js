@@ -237,7 +237,6 @@
         var rowData = getRowsAndBoxes( bindingOptions, data, isChildren ),
             boxWidth = null,
             rowIndex = !bindingOptions.swapSizes ? rowData.totalRows : 1,
-            rowWidth = null,
             dividedBoxHeight = bindingOptions.maximumBoxHeight / rowData.totalRows;
 
         if ( !isChildren ) {
@@ -251,12 +250,6 @@
                 if ( rowData.boxesPerRow.hasOwnProperty( rowKey ) ) {
                     var boxRow = createElement( container, "div", "box-row" ),
                         boxesLength = rowData.boxesPerRow[ rowKey ].length;
-    
-                    if ( !isDefinedNumber( rowWidth ) ) {
-                        rowWidth = boxRow.offsetWidth;
-                    }
-    
-                    boxRow.style.width = rowWidth + "px";
     
                     if ( !bindingOptions.showBoxGaps ) {
                         addClass( boxRow, "box-row-no-spacing" );
