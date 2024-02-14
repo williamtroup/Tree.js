@@ -30,6 +30,27 @@ Fires when a box is clicked.
 <br>
 
 
+## For Category Selections:
+
+### options.onBackCategory( *category* ):
+Fires when the category is moved back.
+<br>
+***Parameter:*** category: '*string*' - The category that is now being viewed.
+
+### options.onNextCategory( *category* ):
+Fires when the category is moved forward.
+<br>
+***Parameter:*** category: '*string*' - The category that is now being viewed.
+<br>
+
+### options.onSetCategory( *category* ):
+Fires when the category is manually set.
+<br>
+***Parameter:*** category: '*string*' - The category that is now being viewed.
+<br>
+<br>
+
+
 ## Binding Example:
 
 ```markdown

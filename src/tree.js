@@ -153,6 +153,7 @@
                     bindingOptions.currentView.category = bindingOptions.currentView.categories[ bindingOptions.currentView.categoryIndex ];
 
                     renderControlContainer( bindingOptions );
+                    fireCustomTrigger( bindingOptions.onBackCategory, bindingOptions.currentView.category );
                 }
             };
 
@@ -191,6 +192,7 @@
                     bindingOptions.currentView.category = bindingOptions.currentView.categories[ bindingOptions.currentView.categoryIndex ];
 
                     renderControlContainer( bindingOptions );
+                    fireCustomTrigger( bindingOptions.onNextCategory, bindingOptions.currentView.category );
                 }
             };
         }
@@ -205,6 +207,7 @@
                 bindingOptions.currentView.category = currentCategory;
     
                 renderControlContainer( bindingOptions );
+                fireCustomTrigger( bindingOptions.onSetCategory, bindingOptions.currentView.category );
             };
 
         } else {
@@ -502,6 +505,9 @@
         options.onBeforeRender = getDefaultFunction( options.onBeforeRender, null );
         options.onRenderComplete = getDefaultFunction( options.onRenderComplete, null );
         options.onBoxClick = getDefaultFunction( options.onBoxClick, null );
+        options.onBackCategory = getDefaultFunction( options.onBackCategory, null );
+        options.onNextCategory = getDefaultFunction( options.onNextCategory, null );
+        options.onSetCategory = getDefaultFunction( options.onSetCategory, null );
 
         return options;
     }
