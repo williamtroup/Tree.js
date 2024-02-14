@@ -54,15 +54,16 @@
             var data = [];
 
             for ( var dataIndex = 0; dataIndex < size; dataIndex++ ) {
-                var id = ( dataIndex + 1 ).toString();
+                var id = ( dataIndex + 1 ).toString(),
+                    opacity = parseFloat( "0." + Math.floor( random( 40, 99 ) ) );
 
                 data.push( {
                     name: "Data Set " + id,
                     description: "This is a description for Data Set " + id + ".",
-                    backgroundColor: "rgba( 80, 200, 120, 1 )",
+                    backgroundColor: "rgba( 80, 200, 120, " + opacity + " )",
                     textColor: "black",
                     borderColor: "rgba( 80, 200, 120, 0.75 )",
-                    value: Math.floor( Math.random() * 150 ),
+                    value: Math.floor( random( 1, 150 ) ),
                     visible: true,
                     category: "Category 1",
                     showValue: true,
@@ -74,8 +75,12 @@
         }
 
         function onBoxClick( boxDetails ) {
-            console.log( "Box details: " + boxDetails );
+            console.log( "Box details: " + JSON.stringify( boxDetails ) );
             console.log();
+        }
+
+        function random( min, max ) {
+            return min + Math.random() * ( max - min );
         }
     </script>
 </html>
