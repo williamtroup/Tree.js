@@ -8,16 +8,32 @@
   --tree-js-default-font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --tree-js-text-bold-weight: 400;
   --tree-js-title-bold-weight: 900;
+  --tree-js-text-bold-weight-active: 900;
   --tree-js-color-black: #3b3a3a;
   --tree-js-color-white: #F5F5F5;
+  --tree-js-color-snow-white: #F5F5F5;
   --tree-js-container-background-color: #22272e;
   --tree-js-container-border-color: #454c56;
+  --heat-js-categories-opener-text-color-hover: var(--heat-js-color-gray);
+  --tree-js-categories-background-color: var(--tree-js-container-background-color);
+  --tree-js-categories-border-color: var(--tree-js-container-border-color);
+  --tree-js-categories-text-color: var(--tree-js-color-white);
+  --tree-js-categories-background-color-hover: var(--tree-js-button-background-color-hover);
+  --tree-js-categories-text-color-hover: var(--tree-js-color-snow-white);
+  --tree-js-button-background-color: #2d333b;
+  --tree-js-button-border-color: var(--tree-js-container-border-color);
+  --tree-js-button-text-color: var(--tree-js-color-white);
+  --tree-js-button-background-color-hover: var(--tree-js-container-border-color);
+  --tree-js-button-text-color-hover: var(--tree-js-color-snow-white);
+  --tree-js-button-background-color-active: #616b79;
+  --tree-js-button-text-color-active: var(--tree-js-color-snow-white);
   --tree-js-border-radius: 0.5rem;
   --tree-js-border-style-scrollbar: inset 0 0 6px var(--tree-js-color-dark-gray);
   --tree-js-border-size: 0.5px;
   --tree-js-spacing: 10px;
   --tree-js-spacing-font-size: 0.85rem;
   --tree-js-transition: all .3s;
+  --tree-js-animation-length: 0.5s;
 }
 
 /*
@@ -84,6 +100,111 @@ div.tree-js div.title-bar div.controls {
   margin-left: var(--tree-js-spacing);
   flex-grow: 1;
   text-align: right;
+}
+div.tree-js div.title-bar div.controls button {
+  background-color: var(--tree-js-button-background-color);
+  border: var(--tree-js-border-size) solid var(--tree-js-button-border-color);
+  color: var(--tree-js-button-text-color);
+  border-radius: var(--tree-js-border-radius);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 9px;
+  padding-right: 9px;
+  outline: none;
+  transition: var(--tree-js-transition);
+}
+div.tree-js div.title-bar div.controls button:not(.active):active {
+  background: var(--tree-js-button-background-color-active) !important;
+  color: var(--tree-js-button-text-color-active) !important;
+}
+div.tree-js div.title-bar div.controls button:not(.active):hover {
+  cursor: pointer;
+  background: var(--tree-js-button-background-color-hover);
+  color: var(--tree-js-button-text-color-hover);
+}
+div.tree-js div.title-bar div.controls button.active {
+  cursor: default;
+  background: var(--tree-js-button-background-color-hover);
+  color: var(--tree-js-button-text-color-hover);
+  transition: var(--tree-js-transition);
+  font-weight: var(--tree-js-text-bold-weight-active);
+}
+div.tree-js div.title-bar div.controls div.category-text {
+  margin-left: var(--tree-js-spacing);
+  margin-right: var(--tree-js-spacing);
+  display: inline-block;
+  font-weight: var(--tree-js-title-bold-weight);
+  position: relative;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  transition: var(--tree-js-transition);
+  cursor: pointer;
+}
+div.tree-js div.title-bar div.controls div.category-text:hover {
+  color: var(--heat-js-categories-opener-text-color-hover);
+}
+div.tree-js div.title-bar div.controls div.category-text:hover div.down-arrow {
+  border-top-color: var(--heat-js-categories-opener-text-color-hover);
+}
+div.tree-js div.title-bar div.controls div.category-text:hover div.categories-list {
+  display: block !important;
+}
+div.tree-js div.title-bar div.controls div.category-text div.down-arrow {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 9px solid var(--tree-js-color-white);
+  transition: var(--tree-js-transition);
+  margin-left: calc(var(--tree-js-spacing) / 2);
+}
+div.tree-js div.title-bar div.controls div.category-text div.categories-list {
+  animation: fade-in-animation var(--tree-js-animation-length);
+  padding-top: 5px;
+  display: none;
+  position: absolute;
+  width: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 5px;
+  z-index: 1000;
+}
+div.tree-js div.title-bar div.controls div.category-text div.categories-list div.categories {
+  border-radius: var(--tree-js-border-radius);
+  background-color: var(--tree-js-categories-background-color);
+  border: var(--tree-js-border-size) solid var(--tree-js-categories-border-color);
+  color: var(--tree-js-categories-text-color);
+  max-height: 183px;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
+div.tree-js div.title-bar div.controls div.category-text div.categories-list div.categories div.category {
+  color: var(--tree-js-color-white);
+  font-weight: var(--tree-js-text-bold-weight);
+  border-bottom: var(--tree-js-border-size) dashed var(--tree-js-container-border-color);
+  padding: var(--tree-js-spacing);
+  text-align: center;
+  width: 100%;
+  transition: var(--tree-js-transition);
+  scroll-snap-align: start;
+}
+div.tree-js div.title-bar div.controls div.category-text div.categories-list div.categories div.category:not(.category-active):active {
+  opacity: 0.5 !important;
+}
+div.tree-js div.title-bar div.controls div.category-text div.categories-list div.categories div.category:not(.category-active):hover {
+  cursor: pointer;
+  background-color: var(--tree-js-categories-background-color-hover);
+  color: var(--tree-js-categories-text-color-hover);
+}
+div.tree-js div.title-bar div.controls div.category-text div.categories-list div.categories div.category:last-child {
+  border-bottom: none;
+}
+div.tree-js div.title-bar div.controls div.category-text div.categories-list div.categories div.category-active {
+  background-color: var(--tree-js-categories-background-color-hover);
+  color: var(--tree-js-categories-text-color-hover);
+  font-weight: var(--tree-js-text-bold-weight-active);
+  cursor: default !important;
 }
 
 /*

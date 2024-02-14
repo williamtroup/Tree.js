@@ -13,14 +13,33 @@
     --tree-js-default-font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --tree-js-text-bold-weight: 400;
     --tree-js-title-bold-weight: 900;
+    --tree-js-text-bold-weight-active: 900;
 
     // Colors
     --tree-js-color-black: #3b3a3a;
     --tree-js-color-white: #F5F5F5;
+    --tree-js-color-snow-white: #F5F5F5;
 
     // Containers
     --tree-js-container-background-color: #22272e;
     --tree-js-container-border-color: #454c56;
+
+    // Categories
+    --heat-js-categories-opener-text-color-hover: var(--heat-js-color-gray);
+    --tree-js-categories-background-color: var(--tree-js-container-background-color);
+    --tree-js-categories-border-color: var(--tree-js-container-border-color);
+    --tree-js-categories-text-color: var(--tree-js-color-white);
+    --tree-js-categories-background-color-hover: var(--tree-js-button-background-color-hover);
+    --tree-js-categories-text-color-hover: var(--tree-js-color-snow-white);
+
+    // Button
+    --tree-js-button-background-color: #2d333b;
+    --tree-js-button-border-color: var(--tree-js-container-border-color);
+    --tree-js-button-text-color: var(--tree-js-color-white);
+    --tree-js-button-background-color-hover: var(--tree-js-container-border-color);
+    --tree-js-button-text-color-hover: var(--tree-js-color-snow-white);
+    --tree-js-button-background-color-active: #616b79;
+    --tree-js-button-text-color-active: var(--tree-js-color-snow-white);
 
     // Borders
     --tree-js-border-radius: 0.5rem;
@@ -33,6 +52,7 @@
 
     // Transitions
     --tree-js-transition: all .3s;
+    --tree-js-animation-length: 0.5s;
 }
 
 
@@ -41,6 +61,59 @@
     Tree.js - Mixins
     -------------------------------------------------------------------------
 */
+
+@mixin buttons {
+    button {
+        background-color: var(--tree-js-button-background-color);
+        border: var(--tree-js-border-size) solid var(--tree-js-button-border-color);
+        color: var(--tree-js-button-text-color);
+        border-radius: var(--tree-js-border-radius);
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 9px;
+        padding-right: 9px;
+        outline: none;
+        transition: var(--tree-js-transition);
+
+        &:not(.active):active {
+            background: var(--tree-js-button-background-color-active) !important;
+            color: var(--tree-js-button-text-color-active) !important;
+        }
+
+        &:not(.active):hover {
+            cursor: pointer;
+            background: var(--tree-js-button-background-color-hover);
+            color: var(--tree-js-button-text-color-hover);
+        }
+    }
+
+    button.active {
+        cursor: default;
+        background: var(--tree-js-button-background-color-hover);
+        color: var(--tree-js-button-text-color-hover);
+        transition: var(--tree-js-transition);
+        font-weight: var(--tree-js-text-bold-weight-active);
+    }
+}
+
+@mixin down-arrow($left-right-border-size: 8px, $border-top-size: 14px, $left: true, $margin-size: var(--tree-js-spacing)) {
+    div.down-arrow {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-left: $left-right-border-size solid transparent;
+        border-right: $left-right-border-size solid transparent;
+        border-top: $border-top-size solid var(--tree-js-color-white);
+        transition: var(--tree-js-transition);
+
+        @if ($left) {
+            margin-right: $margin-size;
+        }
+        @else {
+            margin-left: $margin-size;
+        }
+    }
+}
 
 @mixin box-sizing {
     box-sizing: border-box;
@@ -108,6 +181,90 @@ div.tree-js {
             margin-left: var(--tree-js-spacing);
             flex-grow: 1;
             text-align: right;
+
+            @include buttons;
+
+            div.category-text {
+                $category-margin: 5px;
+    
+                margin-left: var(--tree-js-spacing);
+                margin-right: var(--tree-js-spacing);
+                display: inline-block;
+                font-weight: var(--tree-js-title-bold-weight);
+                position: relative;
+                padding-top: $category-margin;
+                padding-bottom: $category-margin;
+                transition: var(--tree-js-transition);
+                cursor: pointer;
+    
+                &:hover {
+                    color: var(--heat-js-categories-opener-text-color-hover);
+                }
+    
+                &:hover div.down-arrow {
+                    border-top-color:  var(--heat-js-categories-opener-text-color-hover);
+                }
+    
+                &:hover div.categories-list {
+                    display: block !important;
+                }
+    
+                @include down-arrow( 6px, 9px, false, calc( var(--tree-js-spacing) / 2 ) );
+    
+                div.categories-list {
+                    animation: fade-in-animation var(--tree-js-animation-length);
+                    padding-top: $category-margin;
+                    display: none;
+                    position: absolute;
+                    width: 150px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    margin-top: $category-margin;
+                    z-index: 1000;
+    
+                    div.categories {
+                        border-radius: var(--tree-js-border-radius);
+                        background-color: var(--tree-js-categories-background-color);
+                        border: var(--tree-js-border-size) solid var(--tree-js-categories-border-color);
+                        color: var(--tree-js-categories-text-color);
+                        max-height: 183px;
+                        overflow-y: scroll;
+                        scroll-snap-type: y mandatory;
+    
+                        div.category {
+                            color: var(--tree-js-color-white);
+                            font-weight: var(--tree-js-text-bold-weight);
+                            border-bottom: var(--tree-js-border-size) dashed var(--tree-js-container-border-color);
+                            padding: var(--tree-js-spacing);
+                            text-align: center;
+                            width: 100%;
+                            transition: var(--tree-js-transition);
+                            scroll-snap-align: start;
+        
+                            &:not(.category-active):active {
+                                opacity: 0.5 !important;
+                            }
+        
+                            &:not(.category-active):hover {
+                                cursor: pointer;
+                                background-color: var(--tree-js-categories-background-color-hover);
+                                color: var(--tree-js-categories-text-color-hover);
+                            }
+        
+                            &:last-child {
+                                border-bottom: none;
+                            }
+                        }
+    
+                        div.category-active {
+                            background-color: var(--tree-js-categories-background-color-hover);
+                            color: var(--tree-js-categories-text-color-hover);
+                            font-weight: var(--tree-js-text-bold-weight-active);
+                            cursor: default !important;
+                        }
+                    }
+                }
+            }
         }
     }
 }

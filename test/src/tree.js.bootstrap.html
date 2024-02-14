@@ -46,29 +46,36 @@
                 showBoxGaps: true,
                 swapSizes: false,
                 onBoxClick: onBoxClick,
-                data: buildData( 10 )
+                data: buildData( 10, 2 )
             }
         }
 
-        function buildData( size ) {
-            var data = [];
+        function buildData( size, categories ) {
+            var data = [],
+                dataSetId = 0;
 
-            for ( var dataIndex = 0; dataIndex < size; dataIndex++ ) {
-                var id = ( dataIndex + 1 ).toString(),
-                    opacity = parseFloat( "0." + Math.floor( random( 40, 99 ) ) );
+            for ( var categoryIndex = 0; categoryIndex < categories; categoryIndex++ ) {
+                var category = "Category " + ( categoryIndex + 1 ).toString();
 
-                data.push( {
-                    name: "Data Set " + id,
-                    description: "This is a description for Data Set " + id + ".",
-                    backgroundColor: "rgba( 80, 200, 120, " + opacity + " )",
-                    textColor: "black",
-                    borderColor: "rgba( 80, 200, 120, 0.75 )",
-                    value: Math.floor( random( 1, 150 ) ),
-                    visible: true,
-                    category: "Category 1",
-                    showValue: true,
-                    children: null
-                } )
+                for ( var dataIndex = 0; dataIndex < size; dataIndex++ ) {
+                    var id = ( dataSetId + 1 ).toString(),
+                        opacity = parseFloat( "0." + Math.floor( random( 40, 99 ) ) );
+
+                    data.push( {
+                        name: "Data Set " + id,
+                        description: "This is a description for Data Set " + id + ".",
+                        backgroundColor: "rgba( 80, 200, 120, " + opacity + " )",
+                        textColor: "black",
+                        borderColor: "rgba( 80, 200, 120, 0.75 )",
+                        value: Math.floor( random( 1, 150 ) ),
+                        visible: true,
+                        category: category,
+                        showValue: true,
+                        children: null
+                    } );
+
+                    dataSetId++;
+                }
             }
 
             return data;

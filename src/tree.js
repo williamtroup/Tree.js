@@ -94,6 +94,12 @@
         bindingOptions.currentView.tooltip = null;
         bindingOptions.currentView.tooltipTimer = null;
 
+        var categories = getCategories( bindingOptions );
+
+        bindingOptions.currentView.category = categories.length > 0 ? categories[ 0 ] : null;
+        bindingOptions.currentView.categories = categories;
+        bindingOptions.currentView.categoryText = null;
+
         return bindingOptions;
     }
 
@@ -120,7 +126,7 @@
         renderControlRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, bindingOptions.data );
 
         _parameter_Window.addEventListener( "resize", function() {
-            renderRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, bindingOptions.data );
+            renderControlRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, bindingOptions.data );
         } );
     }
 
@@ -136,7 +142,64 @@
         
         createElementWithHTML( titleBar, "div", "title", bindingOptions.titleText );
 
-        var controls = createElement( titleBar, "div", "controls" );
+        if ( bindingOptions.currentView.categories.length > 1 ) {
+            var controls = createElement( titleBar, "div", "controls" ),
+                back = createElementWithHTML( controls, "button", "back", _configuration.backButtonText );
+            
+            back.onclick = function() {
+            };
+
+            bindingOptions.currentView.categoryText = createElementWithHTML( controls, "div", "category-text", bindingOptions.currentView.category );
+
+            createElement( bindingOptions.currentView.categoryText, "div", "down-arrow" );
+
+            var categoriesList = createElement( bindingOptions.currentView.categoryText, "div", "categories-list" ),
+                categories = createElement( categoriesList, "div", "categories" ),
+                activeCategory = null,
+                categoriesLength = bindingOptions.currentView.categories.length;
+
+            categoriesList.style.display = "block";
+            categoriesList.style.visibility = "hidden";
+
+            for ( var categoryIndex = 0; categoryIndex < categoriesLength; categoryIndex++ ) {
+                var category = renderControlTitleBarCategory( bindingOptions, categories, bindingOptions.currentView.categories[ categoryIndex ] );
+
+                if ( !isDefined( activeCategory ) ) {
+                    activeCategory = category;
+                }
+            }
+
+            if ( isDefined( activeCategory ) ) {
+                categories.scrollTop = activeCategory.offsetTop - ( categories.offsetHeight / 2 );
+            }
+
+            categoriesList.style.display = "none";
+            categoriesList.style.visibility = "visible";
+
+            var next = createElementWithHTML( controls, "button", "next", _configuration.nextButtonText );
+
+            next.onclick = function() {
+            };
+        }
+    }
+
+    function renderControlTitleBarCategory( bindingOptions, categories, currentCategory ) {
+        var result = null,
+            category = createElementWithHTML( categories, "div", "category", currentCategory );
+
+        if ( bindingOptions.currentView.category !== currentCategory ) {
+            category.onclick = function() {
+                bindingOptions.currentView.category = currentCategory;
+    
+                renderControlContainer( bindingOptions );
+            };
+
+        } else {
+            addClass( category, "category-active" );
+            result = category;
+        }
+
+        return result;
     }
 
 
@@ -233,74 +296,13 @@
             var name = createElementWithHTML( box, "h1", "name", boxDetails.name );
 
             if ( isDefinedBoolean( boxDetails.showValue ) && boxDetails.showValue ) {
-                createElementWithHTML( name, "span", "value", boxDetails.value )
+                createElementWithHTML( name, "span", "value", boxDetails.value );
             }
         }
 
         if ( isDefinedString( boxDetails.description ) ) {
             createElementWithHTML( box, "p", "description", boxDetails.description );
         }
-    }
-
-    function getRowsAndBoxes( bindingOptions, data ) {
-        var totalBoxesForFirstRow = getTotalBoxesForFirstRow( bindingOptions, data ),
-            boxesPerRow = {},
-            largestAmountOfBoxesOnARow = 0;
-
-        data = data.sort( function( a, b ) {
-            return b.value - a.value;
-        } );
-
-        var rowNumber = 1,
-            startIndex = 0,
-            endIndex = totalBoxesForFirstRow,
-            dataLength = data.length;
-
-        while ( true ) {
-            var breakOnceProcessed = false;
-
-            boxesPerRow[ rowNumber ] = [];
-
-            if ( endIndex > dataLength ) {
-                endIndex = dataLength;
-                breakOnceProcessed = true;
-            }
-
-            for ( var arrayIndex = startIndex; arrayIndex < endIndex; arrayIndex++ ) {
-                boxesPerRow[ rowNumber ].push( data[ arrayIndex ] );
-            }
-
-            largestAmountOfBoxesOnARow = _parameter_Math.max( boxesPerRow[ rowNumber ].length, largestAmountOfBoxesOnARow );
-
-            if ( breakOnceProcessed ) {
-                break;
-
-            } else {
-                startIndex = endIndex;
-                endIndex += totalBoxesForFirstRow + ( rowNumber * 2 );
-                rowNumber++;
-            }
-        }
-
-        return {
-            boxesPerRow: boxesPerRow,
-            largestAmountOfBoxesOnARow: largestAmountOfBoxesOnARow,
-            totalRows: rowNumber
-        };
-    }
-
-    function getTotalBoxesForFirstRow( bindingOptions, data ) {
-        var totalItems = data.length,
-            totalRows = bindingOptions.maximumRows,
-            totalBoxes = totalItems / totalRows;
-
-        while ( totalBoxes < 1.0 ) {
-            totalRows--;
-
-            totalBoxes = totalItems / totalRows;
-        }
-
-        return _parameter_Math.round( totalBoxes );
     }
 
 
@@ -356,6 +358,102 @@
                 bindingOptions.currentView.tooltip.style.display = "none";
             }
         }
+    }
+
+    /*
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     * Data
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     */
+
+    function getRowsAndBoxes( bindingOptions, data ) {
+        var boxesDetails = getBoxesAndMaximumPerRow( bindingOptions, data ),
+            boxesPerRow = {},
+            largestAmountOfBoxesOnARow = 0;
+
+        boxesDetails.boxes = boxesDetails.boxes.sort( function( a, b ) {
+            return b.value - a.value;
+        } );
+
+        var rowNumber = 1,
+            startIndex = 0,
+            endIndex = boxesDetails.maximum,
+            dataLength = boxesDetails.boxes.length;
+
+        while ( true ) {
+            var breakOnceProcessed = false;
+
+            boxesPerRow[ rowNumber ] = [];
+
+            if ( endIndex > dataLength ) {
+                endIndex = dataLength;
+                breakOnceProcessed = true;
+            }
+
+            for ( var arrayIndex = startIndex; arrayIndex < endIndex; arrayIndex++ ) {
+                boxesPerRow[ rowNumber ].push( boxesDetails.boxes[ arrayIndex ] );
+            }
+
+            largestAmountOfBoxesOnARow = _parameter_Math.max( boxesPerRow[ rowNumber ].length, largestAmountOfBoxesOnARow );
+
+            if ( breakOnceProcessed ) {
+                break;
+
+            } else {
+                startIndex = endIndex;
+                endIndex += boxesDetails.maximum + ( rowNumber * 2 );
+                rowNumber++;
+            }
+        }
+
+        return {
+            boxesPerRow: boxesPerRow,
+            largestAmountOfBoxesOnARow: largestAmountOfBoxesOnARow,
+            totalRows: rowNumber
+        };
+    }
+
+    function getBoxesAndMaximumPerRow( bindingOptions, data ) {
+        var boxes = [],
+            dataLength = data.length;
+
+        for ( var dataIndex = 0; dataIndex < dataLength; dataIndex++ ) {
+            var dataItem = data[ dataIndex ];
+
+            if ( !isDefinedString( dataItem.category ) || !isDefinedString( bindingOptions.currentView.category ) || bindingOptions.currentView.category === dataItem.category ) {
+                boxes.push( dataItem );
+            }
+        }
+
+        var totalItems = boxes.length,
+            totalRows = bindingOptions.maximumRows,
+            maximumBoxes = totalItems / totalRows;
+
+        while ( maximumBoxes < 1.0 ) {
+            totalRows--;
+
+            maximumBoxes = totalItems / totalRows;
+        }
+
+        return {
+            maximum: _parameter_Math.round( maximumBoxes ),
+            boxes: boxes
+        };
+    }
+
+    function getCategories( bindingOptions ) {
+        var categories = [],
+            dataLength = bindingOptions.data.length;
+
+        for ( var dataIndex = 0; dataIndex < dataLength; dataIndex++ ) {
+            var data = bindingOptions.data[ dataIndex ];
+
+            if ( isDefinedString( data.category ) && categories.indexOf( data.category ) === -1 ) {
+                categories.push( data.category );
+            }
+        }
+
+        return categories;
     }
 
 
@@ -653,17 +751,29 @@
      * 
      * @returns     {Object}                                                The Tree.js class instance.
      */
-    this.setConfiguration = function( newOptions ) {
-        _configuration = !isDefinedObject( newOptions ) ? {} : newOptions;
-        
-        buildDefaultConfiguration();
+    this.setConfiguration = function( newConfiguration ) {
+        for ( var propertyName in newConfiguration ) {
+            if ( newConfiguration.hasOwnProperty( propertyName ) ) {
+                _configuration[ propertyName ] = newConfiguration[ propertyName ];
+            }
+        }
+
+        buildDefaultConfiguration( _configuration );
 
         return this;
     };
 
-    function buildDefaultConfiguration() {
+    function buildDefaultConfiguration( newConfiguration ) {
+        _configuration = !isDefinedObject( newConfiguration ) ? {} : newConfiguration;
         _configuration.safeMode = getDefaultBoolean( _configuration.safeMode, true );
         _configuration.domElementTypes = getDefaultStringOrArray( _configuration.domElementTypes, [ "*" ] );
+
+        buildDefaultConfigurationStrings();
+    }
+
+    function buildDefaultConfigurationStrings() {
+        _configuration.backButtonText = getDefaultString( _configuration.backButtonText, "Back" );
+        _configuration.nextButtonText = getDefaultString( _configuration.nextButtonText, "Next" );
     }
 
 
