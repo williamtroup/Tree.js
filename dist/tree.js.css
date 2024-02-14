@@ -14,7 +14,7 @@
   --tree-js-color-snow-white: #F5F5F5;
   --tree-js-container-background-color: #22272e;
   --tree-js-container-border-color: #454c56;
-  --heat-js-categories-opener-text-color-hover: var(--heat-js-color-gray);
+  --tree-js-categories-opener-text-color-hover: var(--tree-js-color-gray);
   --tree-js-categories-background-color: var(--tree-js-container-background-color);
   --tree-js-categories-border-color: var(--tree-js-container-border-color);
   --tree-js-categories-text-color: var(--tree-js-color-white);
@@ -141,10 +141,10 @@ div.tree-js div.title-bar div.controls div.category-text {
   cursor: pointer;
 }
 div.tree-js div.title-bar div.controls div.category-text:hover {
-  color: var(--heat-js-categories-opener-text-color-hover);
+  color: var(--tree-js-categories-opener-text-color-hover);
 }
 div.tree-js div.title-bar div.controls div.category-text:hover div.down-arrow {
-  border-top-color: var(--heat-js-categories-opener-text-color-hover);
+  border-top-color: var(--tree-js-categories-opener-text-color-hover);
 }
 div.tree-js div.title-bar div.controls div.category-text:hover div.categories-list {
   display: block !important;

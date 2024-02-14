@@ -25,7 +25,7 @@
     --tree-js-container-border-color: #454c56;
 
     // Categories
-    --heat-js-categories-opener-text-color-hover: var(--heat-js-color-gray);
+    --tree-js-categories-opener-text-color-hover: var(--tree-js-color-gray);
     --tree-js-categories-background-color: var(--tree-js-container-background-color);
     --tree-js-categories-border-color: var(--tree-js-container-border-color);
     --tree-js-categories-text-color: var(--tree-js-color-white);
@@ -198,11 +198,11 @@ div.tree-js {
                 cursor: pointer;
     
                 &:hover {
-                    color: var(--heat-js-categories-opener-text-color-hover);
+                    color: var(--tree-js-categories-opener-text-color-hover);
                 }
     
                 &:hover div.down-arrow {
-                    border-top-color:  var(--heat-js-categories-opener-text-color-hover);
+                    border-top-color:  var(--tree-js-categories-opener-text-color-hover);
                 }
     
                 &:hover div.categories-list {
