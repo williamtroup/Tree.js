@@ -235,15 +235,19 @@ div.tree-js div.box-rows div.box-row div.box {
   overflow-y: scroll;
   overflow-x: hidden;
 }
-div.tree-js div.box-rows div.box-row div.box h1.name {
-  margin: 0 !important;
-  padding: 0 !important;
-  margin-bottom: var(--tree-js-spacing) !important;
+div.tree-js div.box-rows div.box-row div.box div.title-bar {
+  display: flex;
   font-size: 1rem !important;
-  font-weight: var(--tree-js-title-bold-weight) !important;
+  align-items: center !important;
 }
-div.tree-js div.box-rows div.box-row div.box h1.name span.value {
-  float: right;
+div.tree-js div.box-rows div.box-row div.box div.title-bar div.title {
+  text-align: left;
+  font-weight: var(--tree-js-title-bold-weight) !important;
+  margin-right: var(--tree-js-spacing);
+}
+div.tree-js div.box-rows div.box-row div.box div.title-bar div.value {
+  flex-grow: 1;
+  text-align: right;
   font-weight: var(--tree-js-text-bold-weight) !important;
 }
 div.tree-js div.box-rows div.box-row div.box p.description {

@@ -313,11 +313,13 @@
             box.style.borderColor = boxDetails.borderColor;
         }
 
-        if ( isDefinedString( boxDetails.name ) ) {
-            var name = createElementWithHTML( box, "h1", "name", boxDetails.name );
+        if ( isDefinedString( boxDetails.name ) || ( isDefinedBoolean( boxDetails.showValue ) && boxDetails.showValue ) ) {
+            var titleBar = createElement( box, "div", "title-bar" );
+
+            createElementWithHTML( titleBar, "div", "title", boxDetails.name );
 
             if ( isDefinedBoolean( boxDetails.showValue ) && boxDetails.showValue ) {
-                createElementWithHTML( name, "span", "value", boxDetails.value );
+                createElementWithHTML( titleBar, "div", "value", boxDetails.value );
             }
         }
 

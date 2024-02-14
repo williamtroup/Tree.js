@@ -302,15 +302,20 @@ div.tree-js {
                 overflow-y: scroll;
                 overflow-x: hidden;
 
-                h1.name {
-                    margin: 0 !important;
-                    padding: 0 !important;
-                    margin-bottom: var(--tree-js-spacing) !important;
+                div.title-bar {
+                    display: flex;
                     font-size: 1rem !important;
-                    font-weight: var(--tree-js-title-bold-weight) !important;
+                    align-items: center !important;
 
-                    span.value {
-                        float: right;
+                    div.title {
+                        text-align: left;
+                        font-weight: var(--tree-js-title-bold-weight) !important;
+                        margin-right: var(--tree-js-spacing);
+                    }
+
+                    div.value {
+                        flex-grow: 1;
+                        text-align: right;
                         font-weight: var(--tree-js-text-bold-weight) !important;
                     }
                 }
