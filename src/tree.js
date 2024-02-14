@@ -62,12 +62,7 @@
                 var bindingOptions = getObjectFromString( bindingOptionsData );
 
                 if ( bindingOptions.parsed && isDefinedObject( bindingOptions.result ) ) {
-                    bindingOptions = buildAttributeOptions( bindingOptions.result );
-                    bindingOptions.element = element;
-
-                    element.removeAttribute( _attribute_Name_Options );
-
-                    fireCustomTrigger( bindingOptions.onBeforeRender, bindingOptions.element );
+                    renderControl( renderBindingOptions( bindingOptions.result, element ) );
 
                 } else {
                     if ( !_configuration.safeMode ) {
@@ -85,6 +80,33 @@
         }
 
         return result;
+    }
+
+    function renderBindingOptions( data, element ) {
+        var bindingOptions = buildAttributeOptions( data );
+        bindingOptions.currentView = {};
+        bindingOptions.currentView.element = element;
+        bindingOptions.currentView.tooltip = null;
+        bindingOptions.currentView.tooltipTimer = null;
+
+        return bindingOptions;
+    }
+
+    function renderControl( bindingOptions ) {
+        fireCustomTrigger( bindingOptions.onBeforeRender, bindingOptions.element );
+
+        if ( !isDefinedString( bindingOptions.currentView.element.id ) ) {
+            bindingOptions.currentView.element.id = newGuid();
+        }
+
+        renderControlContainer( bindingOptions );
+        fireCustomTrigger( bindingOptions.onRenderComplete, bindingOptions.currentView.element );
+    }
+
+    function renderControlContainer( bindingOptions ) {
+        bindingOptions.currentView.element.removeAttribute( _attribute_Name_Options );
+        bindingOptions.currentView.element.innerHTML = _string.empty;
+        bindingOptions.currentView.element.className = "tree-js";
     }
 
 

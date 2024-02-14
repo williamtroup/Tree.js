@@ -13,7 +13,53 @@
   --tree-js-border-radius: 0.5rem;
   --tree-js-border-style-scrollbar: inset 0 0 6px var(--tree-js-color-dark-gray);
   --tree-js-border-size: 0.5px;
+  --tree-js-spacing: 10px;
+  --tree-js-spacing-font-size: 0.85rem;
   --tree-js-transition: all .3s;
+}
+
+/*
+    -------------------------------------------------------------------------
+    Tree.js - Mixins
+    -------------------------------------------------------------------------
+*/
+/*
+    -------------------------------------------------------------------------
+    Tree.js - Container
+    -------------------------------------------------------------------------
+*/
+div.tree-js {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  cursor: default;
+  box-sizing: border-box;
+  line-height: normal;
+  font-family: var(--tree-js-default-font);
+  display: inline-block;
+  position: relative;
+  border-radius: var(--tree-js-border-radius);
+  background-color: var(--tree-js-container-background-color);
+  color: var(--tree-js-color-white);
+  border: var(--tree-js-border-size) solid var(--tree-js-container-border-color);
+  padding: var(--tree-js-spacing);
+  font-size: var(--tree-js-spacing-font-size);
+  width: 100%;
+  max-width: 700px;
+  margin: 0 !important;
+}
+div.tree-js div.no-click {
+  pointer-events: none !important;
+}
+div.tree-js * {
+  box-sizing: border-box;
+  line-height: normal;
+}
+div.tree-js *::before, div.tree-js *::after {
+  box-sizing: border-box;
+  line-height: normal;
 }
 
 /*

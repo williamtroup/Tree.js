@@ -4,7 +4,9 @@
  * Copyright 2024 Bunoon
  * Released under the MIT License
  */
- 
+
+
+ @import "foundation/styles";
 
 :root {
     // Fonts
@@ -23,8 +25,61 @@
     --tree-js-border-style-scrollbar: inset 0 0 6px var(--tree-js-color-dark-gray);
     --tree-js-border-size: 0.5px;
 
+    // Sizes
+    --tree-js-spacing: 10px;
+    --tree-js-spacing-font-size: 0.85rem;
+
     // Transitions
     --tree-js-transition: all .3s;
+}
+
+
+/*
+    -------------------------------------------------------------------------
+    Tree.js - Mixins
+    -------------------------------------------------------------------------
+*/
+
+@mixin box-sizing {
+    box-sizing: border-box;
+    line-height: normal;
+}
+
+
+/*
+    -------------------------------------------------------------------------
+    Tree.js - Container
+    -------------------------------------------------------------------------
+*/
+
+div.tree-js {
+    @include no-selection-allowed;
+    @include box-sizing;
+    font-family: var(--tree-js-default-font);
+    display: inline-block;
+    position: relative;
+    border-radius: var(--tree-js-border-radius);
+    background-color: var(--tree-js-container-background-color);
+    color: var(--tree-js-color-white);
+    border: var(--tree-js-border-size) solid var(--tree-js-container-border-color);
+    padding: var(--tree-js-spacing);
+    font-size: var(--tree-js-spacing-font-size);
+    width: 100%;
+    max-width: 700px;
+    margin: 0 !important;
+    
+    div.no-click {
+        pointer-events: none !important;
+    }
+
+    * {
+        @include box-sizing;
+
+        &::before,
+        &::after {
+            @include box-sizing;
+        }
+    }
 }
 
 

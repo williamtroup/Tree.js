@@ -10,6 +10,7 @@ Below are all the JSON properties that can be passed in the "data-tree-options" 
 | --- | --- | --- |
 | *number* | maximumColumns | States ... (defaults to 10). |
 | *number* | spacing | States ... (defaults to 10). |
+| *Object[]* | data | States ... (defaults to null). |
 
 <br/>
 
