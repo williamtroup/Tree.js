@@ -71,11 +71,32 @@
                         visible: true,
                         category: category,
                         showValue: true,
-                        children: null
+                        children: buildDataChildren( random( 0, 5 ) )
                     } );
 
                     dataSetId++;
                 }
+            }
+
+            return data;
+        }
+
+        function buildDataChildren( size ) {
+            var data = [];
+
+            for ( var dataIndex = 0; dataIndex < size; dataIndex++ ) {
+                var id = ( dataIndex + 1 ).toString(),
+                    opacity = parseFloat( "0." + Math.floor( random( 40, 99 ) ) );
+
+                data.push( {
+                    name: "Data Set " + id,
+                    description: "This is a description for Data Set " + id + ".",
+                    backgroundColor: "rgba( 255, 0, 0, " + opacity + " )",
+                    textColor: "black",
+                    borderColor: "rgba( 255, 0, 0, 0.75 )",
+                    value: Math.floor( random( 1, 150 ) ),
+                    visible: true
+                } );
             }
 
             return data;

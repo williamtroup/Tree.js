@@ -303,8 +303,8 @@ div.tree-js {
                 overflow-x: hidden;
 
                 h1.name {
-                    margin: 0 !important;;
-                    padding: 0 !important;;
+                    margin: 0 !important;
+                    padding: 0 !important;
                     margin-bottom: var(--tree-js-spacing) !important;
                     font-size: 1rem !important;
                     font-weight: var(--tree-js-title-bold-weight) !important;
@@ -316,8 +316,9 @@ div.tree-js {
                 }
 
                 p.description {
-                    margin: 0 !important;;
-                    padding: 0 !important;;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    margin-bottom: var(--tree-js-spacing) !important;
                 }
 
                 &:first-child {

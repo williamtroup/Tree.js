@@ -249,6 +249,7 @@ div.tree-js div.box-rows div.box-row div.box h1.name span.value {
 div.tree-js div.box-rows div.box-row div.box p.description {
   margin: 0 !important;
   padding: 0 !important;
+  margin-bottom: var(--tree-js-spacing) !important;
 }
 div.tree-js div.box-rows div.box-row div.box:first-child {
   margin-left: 0;

@@ -229,14 +229,18 @@
         bindingOptions.currentView.rows = createElement( bindingOptions.currentView.element, "div", "box-rows" );
     }
 
-    function renderControlRowsAndBoxes( bindingOptions, container, data ) {
+    function renderControlRowsAndBoxes( bindingOptions, container, data, clearContent ) {
+        clearContent = isDefined( clearContent ) ? clearContent : true;
+
         var rowData = getRowsAndBoxes( bindingOptions, data ),
             boxWidth = null,
             rowIndex = !bindingOptions.swapSizes ? rowData.totalRows : 1,
             rowWidth = null,
             dividedBoxHeight = bindingOptions.maximumBoxHeight / rowData.totalRows;
 
-        container.innerHTML = _string.empty;
+        if ( clearContent ) {
+            container.innerHTML = _string.empty;
+        }
 
         for ( var rowKey in rowData.boxesPerRow ) {
             if ( rowData.boxesPerRow.hasOwnProperty( rowKey ) ) {
@@ -285,6 +289,7 @@
 
         if ( isDefinedFunction( bindingOptions.onBoxClick ) ) {
             box.onclick = function( e ) {
+                cancelBubble( e );
                 fireCustomTrigger( bindingOptions.onBoxClick, boxDetails );
             };
 
@@ -318,6 +323,10 @@
 
         if ( isDefinedString( boxDetails.description ) ) {
             createElementWithHTML( box, "p", "description", boxDetails.description );
+        }
+
+        if ( isDefinedArray( boxDetails.children ) && boxDetails.children.length > 0 ) {
+            renderControlRowsAndBoxes( bindingOptions, box, boxDetails.children, false );
         }
     }
 
