@@ -346,7 +346,9 @@
         }
 
         if ( !isChild && isDefinedArray( boxDetails.children ) && boxDetails.children.length > 0 && ( !isDefinedBoolean( boxDetails.showChildren ) || boxDetails.showChildren ) ) {
-            renderControlRowsAndBoxes( bindingOptions, box, boxDetails.children, true );
+            var boxRows = createElement( box, "div", "box-rows" );
+            
+            renderControlRowsAndBoxes( bindingOptions, boxRows, boxDetails.children, true );
         }
     }
 
