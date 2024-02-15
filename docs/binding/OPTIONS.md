@@ -8,7 +8,7 @@ Below are all the JSON properties that can be passed in the "data-tree-options" 
 
 | Type: | Name: | Description: |
 | --- | --- | --- |
-| *Object[]* | data | States ... (defaults to null). |
+| *Object[]* | data | States ... (defaults to []). |
 | *number* | maximumRows | States ... (defaults to 10). |
 | *number* | spacing | States ... (defaults to 10). |
 | *number* | maximumBoxHeight | States ... (defaults to 200). |
