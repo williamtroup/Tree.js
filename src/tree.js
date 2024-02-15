@@ -118,6 +118,12 @@
         bindingOptions.currentView.rows = null;
         bindingOptions.currentView.element.className = "tree-js";
 
+        if ( !_elements_Data.hasOwnProperty( bindingOptions.currentView.element.id ) ) {
+            _elements_Data[ bindingOptions.currentView.element.id ] = bindingOptions.data;
+
+            delete bindingOptions.data;
+        }
+
         renderControlContainer( bindingOptions );
         fireCustomTrigger( bindingOptions.onRenderComplete, bindingOptions.currentView.element );
     }
@@ -128,10 +134,10 @@
         renderControlToolTip( bindingOptions );
         renderControlTitleBar( bindingOptions );
         renderControlRows( bindingOptions );
-        renderControlRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, bindingOptions.data );
+        renderControlRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, _elements_Data[ bindingOptions.currentView.element.id ] );
 
         _parameter_Window.addEventListener( "resize", function() {
-            renderControlRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, bindingOptions.data );
+            renderControlRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, _elements_Data[ bindingOptions.currentView.element.id ] );
         } );
     }
 
