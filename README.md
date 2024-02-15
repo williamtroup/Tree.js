@@ -88,7 +88,7 @@ Make sure you include the "DOCTYPE html" tag at the top of your HTML, as follows
 ### 3. DOM Element Binding:
 
 ```markdown
-<div id="tree-1" data-tree-options="{ 'showBoxGapsForChildren': true, 'data': [] }">
+<div id="tree-1" data-tree-options="{ 'showBoxGaps': true, 'data': [] }">
     Your HTML.
 </div>
 ```
