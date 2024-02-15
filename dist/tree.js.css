@@ -223,8 +223,8 @@ div.tree-js div.box-rows div.box-row div.box {
   position: relative;
   border-radius: var(--tree-js-border-radius);
   background-color: rgb(80, 200, 120);
-  color: var(--tree-js-color-white);
-  border: var(--tree-js-border-size) solid rgba(80, 200, 120, 0.7);
+  color: var(--tree-js-color-black);
+  border: var(--tree-js-border-size) solid rgba(80, 200, 120, 0.75);
   padding: var(--tree-js-spacing);
   margin: calc(var(--tree-js-spacing) / 2);
   flex-basis: 100%;
@@ -233,6 +233,11 @@ div.tree-js div.box-rows div.box-row div.box {
   text-align: left;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+div.tree-js div.box-rows div.box-row div.box div.box {
+  background-color: rgb(210, 43, 43);
+  color: var(--tree-js-color-white);
+  border: var(--tree-js-border-size) solid rgba(210, 43, 43, 0.75);
 }
 div.tree-js div.box-rows div.box-row div.box div.box-title-bar {
   display: flex;
