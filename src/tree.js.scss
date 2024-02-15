@@ -367,8 +367,20 @@ div.tree-js {
 
 div.tree-js {
     div.footer {
-        padding: calc( var(--tree-js-spacing) / 2 );
-        text-align: right;
+        text-align: center;
+
+        @media (min-width: $minimum-width) { 
+            text-align: right;
+        }
+
+        label.checkbox {
+            margin: calc( var(--tree-js-spacing) / 2 );
+            margin-right: var(--tree-js-spacing);
+
+            &:last-child {
+                margin-right: calc( var(--tree-js-spacing) / 2 );
+            }
+        }
     }
 }
 

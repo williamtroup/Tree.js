@@ -103,6 +103,8 @@
         bindingOptions.currentView.fullScreenBoxId = null;
         bindingOptions.currentView.fullScreenBoxHeight = null;
         bindingOptions.currentView.showChildren = true;
+        bindingOptions.currentView.showDescriptions = true;
+        bindingOptions.currentView.showContents = true;
 
         return bindingOptions;
     }
@@ -352,7 +354,7 @@
             }
         }
 
-        if ( isDefinedString( boxDetails.description ) ) {
+        if ( isDefinedString( boxDetails.description ) && bindingOptions.currentView.showDescriptions ) {
             createElementWithHTML( box, "p", "description", boxDetails.description );
         }
 
@@ -374,12 +376,16 @@
         var footer = createElement( bindingOptions.currentView.element, "div", "footer" );
 
         var onClick = function() {
-            bindingOptions.currentView.showChildren = checkbox.checked;
-            
+            bindingOptions.currentView.showChildren = showChildren.checked;
+            bindingOptions.currentView.showDescriptions = showDescriptions.checked;
+            bindingOptions.currentView.showContents = showContents.checked;
+
             renderControlContainer( bindingOptions );
         };
 
-        var checkbox = buildCheckBox( footer, _configuration.showChildrenLabelText, bindingOptions.currentView.showChildren, onClick )[ 0 ];
+        var showChildren = buildCheckBox( footer, _configuration.showChildrenLabelText, bindingOptions.currentView.showChildren, onClick )[ 0 ],
+            showDescriptions = buildCheckBox( footer, _configuration.showDescriptionsLabelText, bindingOptions.currentView.showDescriptions, onClick )[ 0 ],
+            showContents = buildCheckBox( footer, _configuration.showContentsLabelText, bindingOptions.currentView.showContents, onClick )[ 0 ];
     }
 
 
@@ -887,6 +893,8 @@
         _configuration.backButtonText = getDefaultString( _configuration.backButtonText, "Back" );
         _configuration.nextButtonText = getDefaultString( _configuration.nextButtonText, "Next" );
         _configuration.showChildrenLabelText = getDefaultString( _configuration.showChildrenLabelText, "Show Children" );
+        _configuration.showDescriptionsLabelText = getDefaultString( _configuration.showDescriptionsLabelText, "Show Descriptions" );
+        _configuration.showContentsLabelText = getDefaultString( _configuration.showContentsLabelText, "Show Contents" );
     }
 
 

@@ -282,8 +282,19 @@ div.tree-js div.box-rows div.box-row div.box:hover {
     -------------------------------------------------------------------------
 */
 div.tree-js div.footer {
-  padding: calc(var(--tree-js-spacing) / 2);
-  text-align: right;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  div.tree-js div.footer {
+    text-align: right;
+  }
+}
+div.tree-js div.footer label.checkbox {
+  margin: calc(var(--tree-js-spacing) / 2);
+  margin-right: var(--tree-js-spacing);
+}
+div.tree-js div.footer label.checkbox:last-child {
+  margin-right: calc(var(--tree-js-spacing) / 2);
 }
 
 /*

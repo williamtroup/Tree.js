@@ -22,6 +22,8 @@ Below are all the configuration options that can be passed to the "setConfigurat
 | *string* | backButtonText | The text that should be shown for the "Back" button. |
 | *string* | nextButtonText | The text that should be shown for the "Next" button. |
 | *string* | showChildrenLabelText | The text that should be shown for the "Show Children" label. |
+| *string* | showDescriptionsLabelText | The text that should be shown for the "Show Descriptions" label. |
+| *string* | showContentsLabelText | The text that should be shown for the "Show Contents" label. |
 
 <br/>
 
