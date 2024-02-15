@@ -318,7 +318,7 @@
 
             createElementWithHTML( titleBar, "div", "box-title", boxDetails.name );
 
-            if ( isDefinedBoolean( boxDetails.showValue ) && boxDetails.showValue ) {
+            if ( isDefinedBoolean( boxDetails.showValue ) && boxDetails.showValue && isDefinedNumber( boxDetails.value ) ) {
                 createElementWithHTML( titleBar, "div", "box-value", boxDetails.value );
             }
 
