@@ -280,6 +280,7 @@
 
     function renderBox( bindingOptions, boxRow, boxHeight, boxWidth, boxDetails, isChild ) {
         var box = createElement( boxRow, "div", "box" );
+        box.id = boxDetails.id;
 
         if ( bindingOptions.currentView.fullScreenBoxId === boxDetails.id ) {
             box.style.height = bindingOptions.currentView.fullScreenBoxHeight + "px";
