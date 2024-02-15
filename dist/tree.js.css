@@ -92,7 +92,7 @@ div.tree-js *::before, div.tree-js *::after {
 */
 div.tree-js div.title-bar {
   display: flex;
-  margin-bottom: calc(var(--tree-js-spacing) + var(--tree-js-spacing) / 2);
+  margin-bottom: calc(var(--tree-js-spacing) / 2);
 }
 div.tree-js div.title-bar div.title {
   text-align: left;
