@@ -284,6 +284,11 @@ div.tree-js {
 
 div.tree-js {
     div.box-rows {
+        div.no-data {
+            text-align: center;
+            padding: 30px;
+        }
+
         div.box-row-no-spacing {
             display: flex;
             justify-content: space-between;

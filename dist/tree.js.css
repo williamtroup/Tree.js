@@ -216,6 +216,10 @@ div.tree-js div.title-bar div.controls div.category-text div.categories-list div
     Tree.js - Rows & Boxes
     -------------------------------------------------------------------------
 */
+div.tree-js div.box-rows div.no-data {
+  text-align: center;
+  padding: 30px;
+}
 div.tree-js div.box-rows div.box-row-no-spacing {
   display: flex;
   justify-content: space-between;

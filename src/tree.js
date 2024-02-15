@@ -245,47 +245,55 @@
     function renderControlRowsAndBoxes( bindingOptions, container, data, isChildren ) {
         isChildren = isDefined( isChildren ) ? isChildren : false;
 
-        var rowData = getRowsAndBoxes( bindingOptions, data, isChildren ),
-            boxWidth = null,
-            rowIndex = !bindingOptions.swapSizes ? rowData.totalRows : 1,
-            dividedBoxHeight = bindingOptions.maximumBoxHeight / rowData.totalRows;
+        var rowData = getRowsAndBoxes( bindingOptions, data, isChildren );
 
         if ( !isChildren ) {
             container.innerHTML = _string.empty;
         }
 
-        for ( var rowKey in rowData.boxesPerRow ) {
-            if ( rowData.boxesPerRow.hasOwnProperty( rowKey ) ) {
-                var boxHeight = dividedBoxHeight * rowIndex;
+        if ( rowData.totalRows === 0 ) {
+            if ( !isChildren ) {
+                createElementWithHTML( container, "div", "no-data", _configuration.noDataMessage );
+            }
 
+        } else {
+            var boxWidth = null,
+                rowIndex = !bindingOptions.swapSizes ? rowData.totalRows : 1,
+                dividedBoxHeight = bindingOptions.maximumBoxHeight / rowData.totalRows;
+
+            for ( var rowKey in rowData.boxesPerRow ) {
                 if ( rowData.boxesPerRow.hasOwnProperty( rowKey ) ) {
-                    var boxRow = createElement( container, "div", "box-row" ),
-                        boxesLength = rowData.boxesPerRow[ rowKey ].length;
-    
-                    if ( ( !isChildren && !bindingOptions.showBoxGaps ) || ( isChildren && !bindingOptions.showBoxGapsForChildren ) ) {
-                        addClass( boxRow, "box-row-no-spacing" );
-    
-                    } else {
-                        if ( !isDefinedNumber( boxWidth ) ) {
-                            boxWidth = ( boxRow.offsetWidth / rowData.largestAmountOfBoxesOnARow ) - bindingOptions.spacing;
+                    var boxHeight = dividedBoxHeight * rowIndex;
+
+                    if ( rowData.boxesPerRow.hasOwnProperty( rowKey ) ) {
+                        var boxRow = createElement( container, "div", "box-row" ),
+                            boxesLength = rowData.boxesPerRow[ rowKey ].length;
+        
+                        if ( ( !isChildren && !bindingOptions.showBoxGaps ) || ( isChildren && !bindingOptions.showBoxGapsForChildren ) ) {
+                            addClass( boxRow, "box-row-no-spacing" );
+        
+                        } else {
+                            if ( !isDefinedNumber( boxWidth ) ) {
+                                boxWidth = ( boxRow.offsetWidth / rowData.largestAmountOfBoxesOnARow ) - bindingOptions.spacing;
+                            }
+                        }
+        
+                        for ( var boxIndex = 0; boxIndex < boxesLength; boxIndex++ ) {
+                            renderBox( bindingOptions, boxRow, boxHeight, boxWidth, rowData.boxesPerRow[ rowKey ][ boxIndex ], isChildren );
                         }
                     }
-    
-                    for ( var boxIndex = 0; boxIndex < boxesLength; boxIndex++ ) {
-                        renderBox( bindingOptions, boxRow, boxHeight, boxWidth, rowData.boxesPerRow[ rowKey ][ boxIndex ], isChildren );
+        
+                    if ( !bindingOptions.swapSizes ) {
+                        rowIndex--;
+                    } else {
+                        rowIndex++;
                     }
                 }
-    
-                if ( !bindingOptions.swapSizes ) {
-                    rowIndex--;
-                } else {
-                    rowIndex++;
-                }
             }
-        }
 
-        if ( bindingOptions.reverseOrder ) {
-            reverseElementsOrder( container );
+            if ( bindingOptions.reverseOrder ) {
+                reverseElementsOrder( container );
+            }
         }
 
         return container.children.length > 0;
@@ -459,40 +467,44 @@
     function getRowsAndBoxes( bindingOptions, data, isChildren ) {
         var boxesDetails = getBoxesAndMaximumPerRow( bindingOptions, data, isChildren ),
             boxesPerRow = {},
-            largestAmountOfBoxesOnARow = 0;
+            largestAmountOfBoxesOnARow = 0,
+            rowNumber = 0;
 
-        boxesDetails.boxes = boxesDetails.boxes.sort( function( a, b ) {
-            return b.value - a.value;
-        } );
+        if ( boxesDetails.maximum > 0 ) {
+            rowNumber = 1;
 
-        var rowNumber = 1,
-            startIndex = 0,
-            endIndex = boxesDetails.maximum,
-            dataLength = boxesDetails.boxes.length;
-
-        while ( true ) {
-            var breakOnceProcessed = false;
-
-            boxesPerRow[ rowNumber ] = [];
-
-            if ( endIndex > dataLength ) {
-                endIndex = dataLength;
-                breakOnceProcessed = true;
-            }
-
-            for ( var arrayIndex = startIndex; arrayIndex < endIndex; arrayIndex++ ) {
-                boxesPerRow[ rowNumber ].push( boxesDetails.boxes[ arrayIndex ] );
-            }
-
-            largestAmountOfBoxesOnARow = _parameter_Math.max( boxesPerRow[ rowNumber ].length, largestAmountOfBoxesOnARow );
-
-            if ( breakOnceProcessed ) {
-                break;
-
-            } else {
-                startIndex = endIndex;
-                endIndex += boxesDetails.maximum + ( rowNumber * 2 );
-                rowNumber++;
+            boxesDetails.boxes = boxesDetails.boxes.sort( function( a, b ) {
+                return b.value - a.value;
+            } );
+    
+            var startIndex = 0,
+                endIndex = boxesDetails.maximum,
+                dataLength = boxesDetails.boxes.length;
+    
+            while ( true ) {
+                var breakOnceProcessed = false;
+    
+                boxesPerRow[ rowNumber ] = [];
+    
+                if ( endIndex > dataLength ) {
+                    endIndex = dataLength;
+                    breakOnceProcessed = true;
+                }
+    
+                for ( var arrayIndex = startIndex; arrayIndex < endIndex; arrayIndex++ ) {
+                    boxesPerRow[ rowNumber ].push( boxesDetails.boxes[ arrayIndex ] );
+                }
+    
+                largestAmountOfBoxesOnARow = _parameter_Math.max( boxesPerRow[ rowNumber ].length, largestAmountOfBoxesOnARow );
+    
+                if ( breakOnceProcessed ) {
+                    break;
+    
+                } else {
+                    startIndex = endIndex;
+                    endIndex += boxesDetails.maximum + ( rowNumber * 2 );
+                    rowNumber++;
+                }
             }
         }
 
@@ -505,35 +517,39 @@
 
     function getBoxesAndMaximumPerRow( bindingOptions, data, isChildren ) {
         var boxes = [],
+            maximumBoxes = 0,
             dataLength = data.length;
 
-        for ( var dataIndex = 0; dataIndex < dataLength; dataIndex++ ) {
-            var dataItem = data[ dataIndex ];
-
-            if ( !isDefinedString( dataItem.id ) ) {
-                dataItem.id = newGuid();
-            }
-
-            if ( !isChildren && isDefined( bindingOptions.currentView.fullScreenBoxId ) ) {
-                if ( dataItem.id === bindingOptions.currentView.fullScreenBoxId ) {
-                    boxes.push( dataItem );
+        if ( dataLength > 1 ) {
+            for ( var dataIndex = 0; dataIndex < dataLength; dataIndex++ ) {
+                var dataItem = data[ dataIndex ];
+    
+                if ( !isDefinedString( dataItem.id ) ) {
+                    dataItem.id = newGuid();
                 }
-               
-            } else {
-                if ( isChildren || !isDefinedString( dataItem.category ) || !isDefinedString( bindingOptions.currentView.category ) || bindingOptions.currentView.category === dataItem.category ) {
-                    boxes.push( dataItem );
+    
+                if ( !isChildren && isDefined( bindingOptions.currentView.fullScreenBoxId ) ) {
+                    if ( dataItem.id === bindingOptions.currentView.fullScreenBoxId ) {
+                        boxes.push( dataItem );
+                    }
+                   
+                } else {
+                    if ( isChildren || !isDefinedString( dataItem.category ) || !isDefinedString( bindingOptions.currentView.category ) || bindingOptions.currentView.category === dataItem.category ) {
+                        boxes.push( dataItem );
+                    }
                 }
             }
-        }
-
-        var totalItems = boxes.length,
-            totalRows = bindingOptions.maximumRows,
+    
+            var totalItems = boxes.length,
+                totalRows = bindingOptions.maximumRows;
+    
             maximumBoxes = totalItems / totalRows;
-
-        while ( maximumBoxes < 1.0 ) {
-            totalRows--;
-
-            maximumBoxes = totalItems / totalRows;
+    
+            while ( maximumBoxes < 1.0 ) {
+                totalRows--;
+    
+                maximumBoxes = totalItems / totalRows;
+            }
         }
 
         return {
@@ -566,7 +582,7 @@
 
     function buildAttributeOptions( newOptions ) {
         var options = !isDefinedObject( newOptions ) ? {} : newOptions;
-        options.data = getDefaultArray( options.data, null );
+        options.data = getDefaultArray( options.data, [] );
         options.maximumRows = getDefaultNumber( options.maximumRows, 10 );
         options.spacing = getDefaultNumber( options.spacing, 10 );
         options.maximumBoxHeight = getDefaultNumber( options.maximumBoxHeight, 200 );
@@ -907,6 +923,7 @@
         _configuration.showChildrenLabelText = getDefaultString( _configuration.showChildrenLabelText, "Show Children" );
         _configuration.showDescriptionsLabelText = getDefaultString( _configuration.showDescriptionsLabelText, "Show Descriptions" );
         _configuration.showContentsLabelText = getDefaultString( _configuration.showContentsLabelText, "Show Contents" );
+        _configuration.noDataMessage = getDefaultString( _configuration.noDataMessage, "There is currently no data to view." );
     }
 
 

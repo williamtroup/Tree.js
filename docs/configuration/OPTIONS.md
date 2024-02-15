@@ -24,6 +24,7 @@ Below are all the configuration options that can be passed to the "setConfigurat
 | *string* | showChildrenLabelText | The text that should be shown for the "Show Children" label. |
 | *string* | showDescriptionsLabelText | The text that should be shown for the "Show Descriptions" label. |
 | *string* | showContentsLabelText | The text that should be shown for the "Show Contents" label. |
+| *string* | noDataMessage | States the message that should be shown when there is no data (defaults to "There is currently no data to view."). |
 
 <br/>
 

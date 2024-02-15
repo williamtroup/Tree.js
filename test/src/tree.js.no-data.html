@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Tree.js - No Data</title>
+        <link rel="stylesheet" href="../css/styles.css">
+        <link rel="stylesheet" href="../../dist/tree.js.css">
+        <script src="../../src/tree.js"></script>
+    </head>
+
+    <body>
+        <div class="header">
+            <h1 id="header">Tree.js - No Data</h1>
+            <p>This is a basic example of how to use Tree.js when no data is available.</p>
+        </div>
+
+        <div class="contents">
+            <div id="tree-map-1" data-tree-options="bindingOptions"></div>
+        </div>
+    </body>
+
+    <script>
+        document.title += " - v" + $tree.getVersion();
+        document.getElementById( "header" ).innerText += " - v" + $tree.getVersion();
+
+        function bindingOptions() {
+            return {
+                reverseOrder: false,
+                showBoxGaps: true,
+                swapSizes: false
+            }
+        }
+    </script>
+</html>
