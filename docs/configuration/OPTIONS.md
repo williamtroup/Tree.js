@@ -1,7 +1,11 @@
 # Tree.js - Configuration - Options:
 
 Below are all the configuration options that can be passed to the "setConfiguration()" public function.
+<br>
+<br>
 
+
+### Options:
 
 | Type: | Name: | Description: |
 | --- | --- | --- |
@@ -11,8 +15,19 @@ Below are all the configuration options that can be passed to the "setConfigurat
 <br/>
 
 
-## Example:
+### Options - Strings:
+
+| Type: | Name: | Description: |
+| --- | --- | --- |
+| *string* | backButtonText | The text that should be shown for the "Back" button. |
+| *string* | nextButtonText | The text that should be shown for the "Next" button. |
+| *string* | showChildrenLabelText | The text that should be shown for the "Show Children" label. |
+
 <br/>
+
+
+## Example:
+
 
 ```markdown
 <script> 
