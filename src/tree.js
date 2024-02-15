@@ -207,6 +207,7 @@
         if ( bindingOptions.currentView.category !== currentCategory ) {
             category.onclick = function() {
                 bindingOptions.currentView.category = currentCategory;
+                bindingOptions.currentView.categoryIndex = bindingOptions.currentView.categories.indexOf( currentCategory );
     
                 renderControlContainer( bindingOptions );
                 fireCustomTrigger( bindingOptions.onSetCategory, bindingOptions.currentView.category );
