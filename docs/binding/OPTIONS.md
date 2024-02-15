@@ -38,7 +38,7 @@ Below are all the JSON properties that can be passed in the "data-tree-options" 
 ## Binding Example:
 
 ```markdown
-<code data-tree-options="{ 'showCopyButton': false }">
+<code data-tree-options="{ 'showBoxGapsForChildren': true }">
     <pre>
         var something = true;
     </pre>
