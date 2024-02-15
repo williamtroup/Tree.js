@@ -29,6 +29,7 @@
 
         // Variables: Elements
         _elements_Type = {},
+        _elements_Data = {},
 
         // Variables: Attribute Names
         _attribute_Name_Options = "data-tree-options";
@@ -113,15 +114,16 @@
             bindingOptions.currentView.element.id = newGuid();
         }
 
+        bindingOptions.currentView.element.removeAttribute( _attribute_Name_Options );
+        bindingOptions.currentView.rows = null;
+        bindingOptions.currentView.element.className = "tree-js";
+
         renderControlContainer( bindingOptions );
         fireCustomTrigger( bindingOptions.onRenderComplete, bindingOptions.currentView.element );
     }
 
     function renderControlContainer( bindingOptions ) {
-        bindingOptions.currentView.element.removeAttribute( _attribute_Name_Options );
-        bindingOptions.currentView.rows = null;
         bindingOptions.currentView.element.innerHTML = _string.empty;
-        bindingOptions.currentView.element.className = "tree-js";
 
         renderControlToolTip( bindingOptions );
         renderControlTitleBar( bindingOptions );
