@@ -28,8 +28,13 @@
   --tree-js-button-background-color-active: #616b79;
   --tree-js-button-text-color-active: var(--tree-js-color-snow-white);
   --tree-js-border-radius: 0.5rem;
+  --tree-js-border-control-radius: 0.25rem;
   --tree-js-border-style-scrollbar: inset 0 0 6px var(--tree-js-color-dark-gray);
   --tree-js-border-size: 0.5px;
+  --tree-js-checkbox-background-color-checked: rgba( 80, 200, 120, 1 );
+  --tree-js-checkbox-background-color: var(--tree-js-color-black);
+  --tree-js-checkbox-border-color-checked: --tree-js-checkbox-background-color-checked;
+  --tree-js-checkbox-border-color: rgba( 80, 200, 120, 0.55 );
   --tree-js-spacing: 10px;
   --tree-js-spacing-font-size: 0.85rem;
   --tree-js-transition: all .3s;
@@ -273,6 +278,16 @@ div.tree-js div.box-rows div.box-row div.box:hover {
 
 /*
     -------------------------------------------------------------------------
+    Tree.js - Footer
+    -------------------------------------------------------------------------
+*/
+div.tree-js div.footer {
+  padding: calc(var(--tree-js-spacing) / 2);
+  text-align: right;
+}
+
+/*
+    -------------------------------------------------------------------------
     Tree.js - CheckBox
     -------------------------------------------------------------------------
 */
@@ -287,15 +302,14 @@ div.tree-js label.checkbox {
   position: relative;
   padding-left: 25px;
   padding-top: 1px;
-  margin-bottom: var(--tree-js-spacing);
   color: var(--tree-js-color-white);
 }
 div.tree-js label.checkbox input {
   display: none !important;
 }
 div.tree-js label.checkbox input:checked ~ span.check-mark {
-  background-color: var(--tree-js-color-black);
-  border: var(--tree-js-border-size) solid var(--tree-js-color-black);
+  background-color: var(--tree-js-checkbox-background-color-checked);
+  border: var(--tree-js-border-size) solid var(--tree-js-checkbox-border-color-checked);
 }
 div.tree-js label.checkbox input:checked ~ span.check-mark::before {
   display: block;
@@ -308,13 +322,13 @@ div.tree-js label.checkbox input:disabled ~ span.check-mark {
 }
 div.tree-js label.checkbox span.check-mark {
   position: absolute;
-  top: 0;
+  top: 1px;
   left: 0;
   height: 15px;
   width: 15px;
-  background-color: var(--tree-js-container-background-color);
-  border-radius: var(--tree-js-border-radius);
-  border: var(--tree-js-border-size) solid var(--tree-js-container-border-color);
+  background-color: var(--tree-js-checkbox-background-color);
+  border-radius: var(--tree-js-border-control-radius);
+  border: var(--tree-js-border-size) solid var(--tree-js-checkbox-border-color);
   transition: var(--tree-js-transition);
 }
 div.tree-js label.checkbox span.check-mark::before {
@@ -324,12 +338,12 @@ div.tree-js label.checkbox span.check-mark::before {
   content: "";
   position: absolute;
   display: none;
-  left: 4px;
+  left: 4.5px;
   top: 1px;
-  width: 4px;
-  height: 7px;
-  border: solid var(--tree-js-color-white);
-  border-width: 0 3px 3px 0;
+  width: 6px;
+  height: 10px;
+  border: solid var(--tree-js-color-black);
+  border-width: 0 2px 2px 0;
 }
 
 /*

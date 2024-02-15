@@ -102,6 +102,7 @@
         bindingOptions.currentView.categoryIndex = 0;
         bindingOptions.currentView.fullScreenBoxId = null;
         bindingOptions.currentView.fullScreenBoxHeight = null;
+        bindingOptions.currentView.showChildren = true;
 
         return bindingOptions;
     }
@@ -134,6 +135,7 @@
         renderControlTitleBar( bindingOptions );
         renderControlRows( bindingOptions );
         renderControlRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, _elements_Data[ bindingOptions.currentView.element.id ] );
+        renderControlFooter( bindingOptions );
 
         _parameter_Window.addEventListener( "resize", function() {
             renderControlRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, _elements_Data[ bindingOptions.currentView.element.id ] );
@@ -354,11 +356,30 @@
             createElementWithHTML( box, "p", "description", boxDetails.description );
         }
 
-        if ( !isChild && isDefinedArray( boxDetails.children ) && boxDetails.children.length > 0 && ( !isDefinedBoolean( boxDetails.showChildren ) || boxDetails.showChildren ) ) {
+        if ( !isChild && isDefinedArray( boxDetails.children ) && boxDetails.children.length > 0 && bindingOptions.currentView.showChildren ) {
             var boxRows = createElement( box, "div", "box-rows children" );
             
             renderControlRowsAndBoxes( bindingOptions, boxRows, boxDetails.children, true );
         }
+    }
+
+
+    /*
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     * Render:  Footer
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     */
+
+    function renderControlFooter( bindingOptions ) {
+        var footer = createElement( bindingOptions.currentView.element, "div", "footer" );
+
+        var onClick = function() {
+            bindingOptions.currentView.showChildren = checkbox.checked;
+            
+            renderControlContainer( bindingOptions );
+        };
+
+        var checkbox = buildCheckBox( footer, _configuration.showChildrenLabelText, bindingOptions.currentView.showChildren, onClick )[ 0 ];
     }
 
 
@@ -658,6 +679,26 @@
         e.cancelBubble = true;
     }
 
+    function buildCheckBox( container, labelText, checked, onClick ) {
+        var label = createElement( container, "label", "checkbox" ),
+            input = createElement( label, "input" );
+
+        input.type = "checkbox";
+
+        if ( isDefined( onClick ) ) {
+            input.onclick = onClick;
+        }
+
+        if ( isDefined( checked ) ) {
+            input.checked = checked;
+        }
+
+        createElement( label, "span", "check-mark" );
+        createElementWithHTML( label, "span", "text", labelText );
+
+        return [ input, label ];
+    }
+
 
     /*
      * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -845,6 +886,7 @@
     function buildDefaultConfigurationStrings() {
         _configuration.backButtonText = getDefaultString( _configuration.backButtonText, "Back" );
         _configuration.nextButtonText = getDefaultString( _configuration.nextButtonText, "Next" );
+        _configuration.showChildrenLabelText = getDefaultString( _configuration.showChildrenLabelText, "Show Children" );
     }
 
 
