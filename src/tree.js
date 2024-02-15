@@ -1,7 +1,7 @@
 /**
  * Tree.js
  * 
- * A lightweight JavaScript library that generates customizable trees views to visualize numerical data.
+ * A lightweight JavaScript library that generates customizable tree views to visualize numerical data.
  * 
  * @file        tree.js
  * @version     v0.2.0

@@ -7,7 +7,7 @@
 [![discussions Welcome](https://img.shields.io/badge/discussions-Welcome-red)](https://github.com/williamtroup/Tree.js/discussions)
 [![coded by William Troup](https://img.shields.io/badge/coded_by-William_Troup-yellow)](https://william-troup.com/)
 
-> 🌲 A lightweight JavaScript library that generates customizable trees views to visualize numerical data.
+> 🌲 A lightweight JavaScript library that generates customizable tree views to visualize numerical data.
 
 
 ## What features does Tree.js have?
