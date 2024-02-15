@@ -102,9 +102,6 @@
         bindingOptions.currentView.categoryIndex = 0;
         bindingOptions.currentView.fullScreenBoxId = null;
         bindingOptions.currentView.fullScreenBoxHeight = null;
-        bindingOptions.currentView.showChildren = true;
-        bindingOptions.currentView.showDescriptions = true;
-        bindingOptions.currentView.showContents = true;
 
         return bindingOptions;
     }
@@ -356,11 +353,11 @@
             }
         }
 
-        if ( isDefinedString( boxDetails.description ) && bindingOptions.currentView.showDescriptions ) {
+        if ( isDefinedString( boxDetails.description ) && bindingOptions.showDescriptions ) {
             createElementWithHTML( box, "p", "description", boxDetails.description );
         }
 
-        if ( !isChild && isDefinedArray( boxDetails.children ) && boxDetails.children.length > 0 && bindingOptions.currentView.showChildren ) {
+        if ( !isChild && isDefinedArray( boxDetails.children ) && boxDetails.children.length > 0 && bindingOptions.showChildren ) {
             var boxRows = createElement( box, "div", "box-rows children" );
             
             renderControlRowsAndBoxes( bindingOptions, boxRows, boxDetails.children, true );
@@ -378,16 +375,16 @@
         var footer = createElement( bindingOptions.currentView.element, "div", "footer" );
 
         var onClick = function() {
-            bindingOptions.currentView.showChildren = showChildren.checked;
-            bindingOptions.currentView.showDescriptions = showDescriptions.checked;
-            bindingOptions.currentView.showContents = showContents.checked;
+            bindingOptions.showChildren = showChildren.checked;
+            bindingOptions.showDescriptions = showDescriptions.checked;
+            bindingOptions.showContents = showContents.checked;
 
             renderControlContainer( bindingOptions );
         };
 
-        var showChildren = buildCheckBox( footer, _configuration.showChildrenLabelText, bindingOptions.currentView.showChildren, onClick )[ 0 ],
-            showDescriptions = buildCheckBox( footer, _configuration.showDescriptionsLabelText, bindingOptions.currentView.showDescriptions, onClick )[ 0 ],
-            showContents = buildCheckBox( footer, _configuration.showContentsLabelText, bindingOptions.currentView.showContents, onClick )[ 0 ];
+        var showChildren = buildCheckBox( footer, _configuration.showChildrenLabelText, bindingOptions.showChildren, onClick )[ 0 ],
+            showDescriptions = buildCheckBox( footer, _configuration.showDescriptionsLabelText, bindingOptions.showDescriptions, onClick )[ 0 ],
+            showContents = buildCheckBox( footer, _configuration.showContentsLabelText, bindingOptions.showContents, onClick )[ 0 ];
     }
 
 
@@ -571,6 +568,9 @@
         options.showBoxGapsForChildren = getDefaultBoolean( options.showBoxGapsForChildren, false );
         options.allowBoxExpanding = getDefaultBoolean( options.allowBoxExpanding, true );
         options.showTitle = getDefaultBoolean( options.showTitle, true );
+        options.showChildren = getDefaultBoolean( options.showChildren, true );
+        options.showDescriptions = getDefaultBoolean( options.showDescriptions, true );
+        options.showContents = getDefaultBoolean( options.showContents, true );
 
         options = buildAttributeOptionCustomTriggers( options );
         options = buildAttributeOptionStrings( options );
