@@ -287,10 +287,14 @@
         if ( bindingOptions.reverseOrder ) {
             reverseElementsOrder( container );
         }
+
+        return container.children.length > 0;
     }
 
     function renderBox( bindingOptions, boxRow, boxHeight, boxWidth, boxDetails, isChild ) {
-        var box = createElement( boxRow, "div", "box" );
+        var box = createElement( boxRow, "div", "box" ),
+            boxChildrenAdded = false;
+
         box.id = boxDetails.id;
 
         if ( bindingOptions.currentView.fullScreenBoxId === boxDetails.id ) {
@@ -360,7 +364,11 @@
         if ( !isChild && isDefinedArray( boxDetails.children ) && boxDetails.children.length > 0 && bindingOptions.showChildren ) {
             var boxRows = createElement( box, "div", "box-rows children" );
             
-            renderControlRowsAndBoxes( bindingOptions, boxRows, boxDetails.children, true );
+            boxChildrenAdded = renderControlRowsAndBoxes( bindingOptions, boxRows, boxDetails.children, true );
+        }
+
+        if ( !boxChildrenAdded && isDefinedString( boxDetails.content ) && bindingOptions.showContents ) {
+            createElementWithHTML( box, "div", null, boxDetails.content );
         }
     }
 
