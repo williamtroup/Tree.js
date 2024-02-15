@@ -8,3 +8,9 @@ $minimum-width: 768px;
     user-select: none;
     cursor: default;
 }
+
+@mixin transform( $property ) {
+    -webkit-transform: $property;
+    -ms-transform: $property;
+    transform: $property;
+}

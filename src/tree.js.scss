@@ -354,6 +354,72 @@ div.tree-js {
 
 /*
     -------------------------------------------------------------------------
+    Tree.js - CheckBox
+    -------------------------------------------------------------------------
+*/
+
+div.tree-js {
+    label.checkbox {
+        @include no-selection-allowed;
+        display: inline-block;
+        position: relative;
+        padding-left: 25px;
+        padding-top: 1px;
+        margin-bottom: var(--tree-js-spacing);
+        color: var(--tree-js-color-white);
+
+        input {
+            display: none !important;
+
+            &:checked ~ span.check-mark {
+                background-color: var(--tree-js-color-black);
+                border: var(--tree-js-border-size) solid var(--tree-js-color-black);
+            }
+
+            &:checked ~ span.check-mark::before {
+                display: block;
+            }
+
+            &:disabled ~ span.check-mark,
+            &:disabled ~ span.text {
+                opacity: 0.5;
+            }
+            
+            &:disabled ~ span.check-mark {
+                border: var(--tree-js-border-size) solid var(--tree-js-color-black) !important;
+            }
+        }
+
+        span.check-mark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 15px;
+            width: 15px;
+            background-color: var(--tree-js-container-background-color);
+            border-radius: var(--tree-js-border-radius);
+            border: var(--tree-js-border-size) solid var(--tree-js-container-border-color);
+            transition: var(--tree-js-transition);
+
+            &::before {
+                @include transform( rotate( 45deg ) );
+                content: "";
+                position: absolute;
+                display: none;
+                left: 4px;
+                top: 1px;
+                width: 4px;
+                height: 7px;
+                border: solid var(--tree-js-color-white);
+                border-width: 0 3px 3px 0;
+            }
+        }
+    }
+}
+
+
+/*
+    -------------------------------------------------------------------------
     Tree.js - Custom Scroll Bar
     -------------------------------------------------------------------------
 */
