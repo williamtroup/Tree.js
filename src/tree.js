@@ -252,7 +252,7 @@
                     var boxRow = createElement( container, "div", "box-row" ),
                         boxesLength = rowData.boxesPerRow[ rowKey ].length;
     
-                    if ( !bindingOptions.showBoxGaps ) {
+                    if ( ( !isChildren && !bindingOptions.showBoxGaps ) || ( isChildren && !bindingOptions.showBoxGapsForChildren ) ) {
                         addClass( boxRow, "box-row-no-spacing" );
     
                     } else {
@@ -532,6 +532,7 @@
         options.reverseOrder = getDefaultBoolean( options.reverseOrder, false );
         options.showBoxGaps = getDefaultBoolean( options.showBoxGaps, true );
         options.swapSizes = getDefaultBoolean( options.swapSizes, false );
+        options.showBoxGapsForChildren = getDefaultBoolean( options.showBoxGapsForChildren, false );
 
         options = buildAttributeOptionCustomTriggers( options );
         options = buildAttributeOptionStrings( options );

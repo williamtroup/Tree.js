@@ -15,6 +15,7 @@ Below are all the JSON properties that can be passed in the "data-tree-options" 
 | *boolean* | reverseOrder | States ... (defaults to false). |
 | *boolean* | showBoxGaps | States ... (defaults to false). |
 | *boolean* | swapSizes | States ... (defaults to false). |
+| *boolean* | showBoxGapsForChildren | States ... (defaults to true). |
 
 <br/>
 
