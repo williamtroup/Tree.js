@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>jTree.js</id>
-        <version>0.1.0</version>
+        <version>0.2.0</version>
         <title>Tree.js</title>
         <description>A lightweight JavaScript library that generates customizable trees views to visualize numerical data.</description>
         <authors>William Troup</authors>

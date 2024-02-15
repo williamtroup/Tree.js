@@ -2,7 +2,7 @@
     "name": "jtree.js",
     "title": "Tree.js",
     "description": "A lightweight JavaScript library that generates customizable trees views to visualize numerical data.",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "main": "dist/tree.js",
     "homepage": "https://www.william-troup.com/tree-js/",
     "author": {
