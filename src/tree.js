@@ -346,7 +346,7 @@
         }
 
         if ( !isChild && isDefinedArray( boxDetails.children ) && boxDetails.children.length > 0 && ( !isDefinedBoolean( boxDetails.showChildren ) || boxDetails.showChildren ) ) {
-            var boxRows = createElement( box, "div", "box-rows" );
+            var boxRows = createElement( box, "div", "box-rows children" );
             
             renderControlRowsAndBoxes( bindingOptions, boxRows, boxDetails.children, true );
         }

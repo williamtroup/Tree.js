@@ -234,7 +234,7 @@ div.tree-js div.box-rows div.box-row div.box {
   overflow-y: scroll;
   overflow-x: hidden;
 }
-div.tree-js div.box-rows div.box-row div.box div.box {
+div.tree-js div.box-rows div.box-row div.box div.children div.box {
   background-color: rgb(210, 43, 43);
   color: var(--tree-js-color-white);
   border: var(--tree-js-border-size) solid rgba(210, 43, 43, 0.75);

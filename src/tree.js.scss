@@ -301,10 +301,12 @@ div.tree-js {
                 overflow-y: scroll;
                 overflow-x: hidden;
 
-                div.box {
-                    background-color: rgba( 210, 43, 43, 1 );
-                    color: var(--tree-js-color-white);
-                    border: var(--tree-js-border-size) solid rgba( 210, 43, 43, 0.75 );
+                div.children {
+                    div.box {
+                        background-color: rgba( 210, 43, 43, 1 );
+                        color: var(--tree-js-color-white);
+                        border: var(--tree-js-border-size) solid rgba( 210, 43, 43, 0.75 );
+                    }
                 }
 
                 div.box-title-bar {
