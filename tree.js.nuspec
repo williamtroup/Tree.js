@@ -4,7 +4,7 @@
         <id>jTree.js</id>
         <version>0.1.0</version>
         <title>Tree.js</title>
-        <description>A lightweight, and easy-to-use, JavaScript library.</description>
+        <description>A lightweight JavaScript library that generates customizable trees views to visualize numerical data.</description>
         <authors>William Troup</authors>
         <projectUrl>https://www.william-troup.com/tree-js/</projectUrl>
         <repository type="git" url="https://github.com/williamtroup/Tree.js" branch="main" />
