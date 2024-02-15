@@ -17,6 +17,7 @@ Below are all the JSON properties that can be passed in the "data-tree-options" 
 | *boolean* | swapSizes | States ... (defaults to false). |
 | *boolean* | showBoxGapsForChildren | States ... (defaults to true). |
 | *boolean* | allowBoxExpanding | States ... (defaults to true). |
+| *boolean* | showTitle | States ... (defaults to true). |
 
 <br/>
 

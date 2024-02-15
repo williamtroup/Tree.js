@@ -154,7 +154,9 @@
     function renderControlTitleBar( bindingOptions ) {
         var titleBar = createElement( bindingOptions.currentView.element, "div", "title-bar" );
         
-        createElementWithHTML( titleBar, "div", "title", bindingOptions.titleText );
+        if ( bindingOptions.showTitle ) {
+            createElementWithHTML( titleBar, "div", "title", bindingOptions.titleText );
+        }
 
         if ( bindingOptions.currentView.categories.length > 1 ) {
             var controls = createElement( titleBar, "div", "controls" ),
@@ -568,6 +570,7 @@
         options.swapSizes = getDefaultBoolean( options.swapSizes, false );
         options.showBoxGapsForChildren = getDefaultBoolean( options.showBoxGapsForChildren, false );
         options.allowBoxExpanding = getDefaultBoolean( options.allowBoxExpanding, true );
+        options.showTitle = getDefaultBoolean( options.showTitle, true );
 
         options = buildAttributeOptionCustomTriggers( options );
         options = buildAttributeOptionStrings( options );
