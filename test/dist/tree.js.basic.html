@@ -16,11 +16,86 @@
         </div>
 
         <div class="contents">
+            <div id="tree-map-1" data-tree-options="bindingOptions"></div>
         </div>
     </body>
 
     <script>
         document.title += " - v" + $tree.getVersion();
         document.getElementById( "header" ).innerText += " - v" + $tree.getVersion();
+
+        function bindingOptions() {
+            return {
+                reverseOrder: false,
+                showBoxGaps: true,
+                swapSizes: false,
+                onBoxClick: onBoxClick,
+                data: buildData( 8, 4 )
+            }
+        }
+
+        function buildData( size, categories ) {
+            var data = [],
+                dataSetId = 0;
+
+            for ( var categoryIndex = 0; categoryIndex < categories; categoryIndex++ ) {
+                var category = "Category " + ( categoryIndex + 1 ).toString();
+
+                for ( var dataIndex = 0; dataIndex < size; dataIndex++ ) {
+                    var id = ( dataSetId + 1 ).toString(),
+                        opacity = parseFloat( "0." + Math.floor( random( 40, 99 ) ) );
+
+                    data.push( {
+                        id: id,
+                        name: "Data Set " + id,
+                        description: "This is a description for Data Set " + id + ".",
+                        backgroundColor: "rgba( 80, 200, 120, " + opacity + " )",
+                        textColor: "black",
+                        borderColor: "rgba( 80, 200, 120, 0.75 )",
+                        value: Math.floor( random( 1, 150 ) ),
+                        visible: true,
+                        category: category,
+                        showValue: true,
+                        children: buildDataChildren( random( 0, 5 ) ),
+                        showChildren: true
+                    } );
+
+                    dataSetId++;
+                }
+            }
+
+            return data;
+        }
+
+        function buildDataChildren( size ) {
+            var data = [];
+
+            for ( var dataIndex = 0; dataIndex < size; dataIndex++ ) {
+                var id = ( dataIndex + 1 ).toString(),
+                    opacity = parseFloat( "0." + Math.floor( random( 40, 99 ) ) );
+
+                data.push( {
+                    name: "Data Set " + id,
+                    description: "This is a description for Data Set " + id + ".",
+                    backgroundColor: "rgba( 255, 0, 0, " + opacity + " )",
+                    textColor: "black",
+                    borderColor: "rgba( 255, 0, 0, 0.75 )",
+                    value: Math.floor( random( 1, 150 ) ),
+                    visible: true,
+                    showValue: true
+                } );
+            }
+
+            return data;
+        }
+
+        function onBoxClick( boxDetails ) {
+            console.log( "Box details: " + JSON.stringify( boxDetails ) );
+            console.log();
+        }
+
+        function random( min, max ) {
+            return min + Math.random() * ( max - min );
+        }
     </script>
 </html>
