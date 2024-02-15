@@ -265,12 +265,6 @@ div.tree-js div.box-rows div.box-row div.box:hover {
   cursor: pointer;
   opacity: 0.8;
 }
-div.tree-js div.box-rows div.box-row:first-child div.box {
-  margin-top: 0;
-}
-div.tree-js div.box-rows div.box-row:last-child div.box {
-  margin-bottom: 0;
-}
 
 /*
     -------------------------------------------------------------------------

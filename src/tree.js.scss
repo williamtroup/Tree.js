@@ -339,18 +339,6 @@ div.tree-js {
                     opacity: 0.8;
                 }
             }
-    
-            &:first-child {
-                div.box {
-                    margin-top: 0;
-                }
-            }
-    
-            &:last-child {
-                div.box {
-                    margin-bottom: 0;
-                }
-            }
         }
     }
 }
