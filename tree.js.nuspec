@@ -10,7 +10,7 @@
         <repository type="git" url="https://github.com/williamtroup/Tree.js" branch="main" />
         <readme>README_NUGET.md</readme>
         <license type="expression">MIT</license>
-        <tags>javascript css html5 Tree.js</tags>
+        <tags>javascript css html5 Tree.js numeric tree stack grid map visualization data treemap</tags>
         <icon>docs\images\icon.png</icon>
         <copyright>William Troup</copyright>
     </metadata>

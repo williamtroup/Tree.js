@@ -16,7 +16,15 @@
       "javascript",
       "css",
       "html5",
-      "Tree.js"
+      "Tree.js",
+      "numeric",
+      "tree",
+      "stack",
+      "grid",
+      "map",
+      "visualization",
+      "data",
+      "treemap"
     ],
     "bugs": {
       "url": "https://github.com/williamtroup/Tree.js/issues"
