@@ -25,6 +25,8 @@ Below are all the configuration options that can be passed to the "setConfigurat
 | *string* | showDescriptionsLabelText | The text that should be shown for the "Show Descriptions" label. |
 | *string* | showContentsLabelText | The text that should be shown for the "Show Contents" label. |
 | *string* | noDataMessage | States the message that should be shown when there is no data (defaults to "There is currently no data to view."). |
+| *string* | expandToolTipText | States the tooltip that should be shown for the expand button (defaults to "Expand"). |
+| *string* | contractToolTipText | States the tooltip that should be shown for the contract button (defaults to "Contract"). |
 
 <br/>
 

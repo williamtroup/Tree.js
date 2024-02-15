@@ -21,6 +21,7 @@ Below are all the JSON properties that can be passed in the "data-tree-options" 
 | *boolean* | showChildren | States ... (defaults to true). |
 | *boolean* | showDescriptions | States ... (defaults to true). |
 | *boolean* | showContents | States ... (defaults to true). |
+| *number* | tooltipDelay | States ... (defaults to 750). |
 
 <br/>
 

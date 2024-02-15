@@ -24,6 +24,11 @@
     --tree-js-container-background-color: #22272e;
     --tree-js-container-border-color: #454c56;
 
+    // ToolTip
+    --tree-js-tooltip-background-color: var(--tree-js-container-background-color);
+    --tree-js-tooltip-border-color: var(--tree-js-container-border-color);
+    --tree-js-tooltip-text-color: var(--tree-js-color-white);
+
     // Categories
     --tree-js-categories-opener-text-color-hover: var(--tree-js-color-gray);
     --tree-js-categories-background-color: var(--tree-js-container-background-color);
@@ -52,6 +57,10 @@
     --tree-js-checkbox-background-color: var(--tree-js-color-black);
     --tree-js-checkbox-border-color-checked: --tree-js-checkbox-background-color-checked;
     --tree-js-checkbox-border-color: rgba( 80, 200, 120, 0.55 );
+
+    // Box
+    --tree-js-box-size: 12.5px;
+    --tree-js-box-border-size: 3.5px;
 
     // Sizes
     --tree-js-spacing: 10px;
@@ -337,6 +346,43 @@ div.tree-js {
                         flex-grow: 1;
                         text-align: right;
                         font-weight: var(--tree-js-text-bold-weight) !important;
+                    }
+
+                    div.expand,
+                    div.contract {
+                        display: inline-block;
+                        height: var(--tree-js-box-size);
+                        width: var(--tree-js-box-size);
+                        transition: var(--tree-js-transition);
+                        margin-left: calc( var(--tree-js-spacing) / 2 );
+
+                        &:hover {
+                            opacity: 0.7;
+                        }
+                    }
+
+                    div.expand {
+                        border-radius: var(--tree-js-border-control-radius);
+                        border: var(--tree-js-box-border-size) solid var(--tree-js-color-black);
+                    }
+
+                    div.contract {
+                        position: relative;
+
+                        &::before {
+                            content: "";
+                            position: absolute;
+                            left: 0;
+                            height: var(--tree-js-box-border-size);
+                            width: var(--tree-js-box-size);
+                            background-color: var(--tree-js-color-black);
+                            top: 50%;
+                            transform: translate(0, -50%);
+                        }
+
+                        &:hover {
+                            opacity: 0.7;
+                        }
                     }
                 }
 

@@ -14,6 +14,9 @@
   --tree-js-color-snow-white: #F5F5F5;
   --tree-js-container-background-color: #22272e;
   --tree-js-container-border-color: #454c56;
+  --tree-js-tooltip-background-color: var(--tree-js-container-background-color);
+  --tree-js-tooltip-border-color: var(--tree-js-container-border-color);
+  --tree-js-tooltip-text-color: var(--tree-js-color-white);
   --tree-js-categories-opener-text-color-hover: var(--tree-js-color-gray);
   --tree-js-categories-background-color: var(--tree-js-container-background-color);
   --tree-js-categories-border-color: var(--tree-js-container-border-color);
@@ -35,6 +38,8 @@
   --tree-js-checkbox-background-color: var(--tree-js-color-black);
   --tree-js-checkbox-border-color-checked: --tree-js-checkbox-background-color-checked;
   --tree-js-checkbox-border-color: rgba( 80, 200, 120, 0.55 );
+  --tree-js-box-size: 12.5px;
+  --tree-js-box-border-size: 3.5px;
   --tree-js-spacing: 10px;
   --tree-js-spacing-font-size: 0.85rem;
   --tree-js-transition: all .3s;
@@ -263,6 +268,38 @@ div.tree-js div.box-rows div.box-row div.box div.box-title-bar div.box-value {
   flex-grow: 1;
   text-align: right;
   font-weight: var(--tree-js-text-bold-weight) !important;
+}
+div.tree-js div.box-rows div.box-row div.box div.box-title-bar div.expand,
+div.tree-js div.box-rows div.box-row div.box div.box-title-bar div.contract {
+  display: inline-block;
+  height: var(--tree-js-box-size);
+  width: var(--tree-js-box-size);
+  transition: var(--tree-js-transition);
+  margin-left: calc(var(--tree-js-spacing) / 2);
+}
+div.tree-js div.box-rows div.box-row div.box div.box-title-bar div.expand:hover,
+div.tree-js div.box-rows div.box-row div.box div.box-title-bar div.contract:hover {
+  opacity: 0.7;
+}
+div.tree-js div.box-rows div.box-row div.box div.box-title-bar div.expand {
+  border-radius: var(--tree-js-border-control-radius);
+  border: var(--tree-js-box-border-size) solid var(--tree-js-color-black);
+}
+div.tree-js div.box-rows div.box-row div.box div.box-title-bar div.contract {
+  position: relative;
+}
+div.tree-js div.box-rows div.box-row div.box div.box-title-bar div.contract::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  height: var(--tree-js-box-border-size);
+  width: var(--tree-js-box-size);
+  background-color: var(--tree-js-color-black);
+  top: 50%;
+  transform: translate(0, -50%);
+}
+div.tree-js div.box-rows div.box-row div.box div.box-title-bar div.contract:hover {
+  opacity: 0.7;
 }
 div.tree-js div.box-rows div.box-row div.box p.description {
   margin: 0 !important;

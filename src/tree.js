@@ -130,6 +130,8 @@
     function renderControlContainer( bindingOptions ) {
         bindingOptions.currentView.element.innerHTML = _string.empty;
 
+        hideToolTip( bindingOptions );
+        
         renderControlToolTip( bindingOptions );
         renderControlTitleBar( bindingOptions );
         renderControlRows( bindingOptions );
@@ -341,15 +343,14 @@
             var titleBar = createElement( box, "div", "box-title-bar" );
 
             createElementWithHTML( titleBar, "div", "box-title", boxDetails.name );
+            var value = createElement( titleBar, "div", "box-value" );
 
             if ( isDefinedBoolean( boxDetails.showValue ) && boxDetails.showValue && isDefinedNumber( boxDetails.value ) ) {
-                createElementWithHTML( titleBar, "div", "box-value", boxDetails.value );
+                createElementWithHTML( value, "span", null, boxDetails.value );
             }
 
             if ( !isChild && bindingOptions.allowBoxExpanding ) {
-                titleBar.onclick = cancelBubble;
-
-                titleBar.ondblclick = function( e ) {
+                var expandFunc = function( e ) {
                     cancelBubble( e );
 
                     if ( isDefined( bindingOptions.currentView.fullScreenBoxId ) ) {
@@ -362,6 +363,27 @@
 
                     renderControlContainer( bindingOptions );
                 };
+
+                if ( bindingOptions.currentView.fullScreenBoxId !== boxDetails.id ) {
+                    var expand = createElement( value, "div", "expand" );
+                    expand.onclick = expandFunc;
+
+                    addToolTip( expand, bindingOptions, _configuration.expandToolTipText );
+
+                    if ( isDefinedString( boxDetails.textColor ) ) {
+                        expand.style.borderColor = boxDetails.textColor;
+                    }
+
+                } else {
+                    var contract = createElement( value, "div", "contract" );
+                    contract.onclick = expandFunc;
+
+                    addToolTip( contract, bindingOptions, _configuration.contractToolTipText );
+
+                    if ( isDefinedString( boxDetails.textColor ) ) {
+                        contract.style.setProperty( '--tree-js-color-black', boxDetails.textColor );
+                    }
+                }
             }
         }
 
@@ -595,6 +617,7 @@
         options.showChildren = getDefaultBoolean( options.showChildren, true );
         options.showDescriptions = getDefaultBoolean( options.showDescriptions, true );
         options.showContents = getDefaultBoolean( options.showContents, true );
+        options.tooltipDelay = getDefaultNumber( options.tooltipDelay, 750 );
 
         options = buildAttributeOptionCustomTriggers( options );
         options = buildAttributeOptionStrings( options );
@@ -924,6 +947,8 @@
         _configuration.showDescriptionsLabelText = getDefaultString( _configuration.showDescriptionsLabelText, "Show Descriptions" );
         _configuration.showContentsLabelText = getDefaultString( _configuration.showContentsLabelText, "Show Contents" );
         _configuration.noDataMessage = getDefaultString( _configuration.noDataMessage, "There is currently no data to view." );
+        _configuration.expandToolTipText = getDefaultString( _configuration.expandToolTipText, "Expand" );
+        _configuration.contractToolTipText = getDefaultString( _configuration.contractToolTipText, "Contract" );
     }
 
 
