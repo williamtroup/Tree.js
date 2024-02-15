@@ -335,7 +335,7 @@
                 createElementWithHTML( titleBar, "div", "box-value", boxDetails.value );
             }
 
-            if ( !isChild ) {
+            if ( !isChild && bindingOptions.allowBoxExpanding ) {
                 titleBar.onclick = cancelBubble;
 
                 titleBar.ondblclick = function( e ) {
@@ -567,6 +567,7 @@
         options.showBoxGaps = getDefaultBoolean( options.showBoxGaps, true );
         options.swapSizes = getDefaultBoolean( options.swapSizes, false );
         options.showBoxGapsForChildren = getDefaultBoolean( options.showBoxGapsForChildren, false );
+        options.allowBoxExpanding = getDefaultBoolean( options.allowBoxExpanding, true );
 
         options = buildAttributeOptionCustomTriggers( options );
         options = buildAttributeOptionStrings( options );
