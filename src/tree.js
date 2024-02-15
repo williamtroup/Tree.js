@@ -89,14 +89,13 @@
     }
 
     function renderBindingOptions( data, element ) {
-        var bindingOptions = buildAttributeOptions( data );
+        var bindingOptions = buildAttributeOptions( data ),
+            categories = getCategories( bindingOptions );
+
         bindingOptions.currentView = {};
         bindingOptions.currentView.element = element;
         bindingOptions.currentView.tooltip = null;
         bindingOptions.currentView.tooltipTimer = null;
-
-        var categories = getCategories( bindingOptions );
-
         bindingOptions.currentView.category = categories.length > 0 ? categories[ 0 ] : null;
         bindingOptions.currentView.categories = categories;
         bindingOptions.currentView.categoryText = null;
