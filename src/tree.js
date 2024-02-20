@@ -1,10 +1,10 @@
 /**
  * Tree.js
  * 
- * A lightweight JavaScript library that generates customizable trees views to visualize numerical data.
+ * A lightweight JavaScript library that allows you to create responsive and customizable interactive tree diagrams from an array of JS objects.
  * 
  * @file        tree.js
- * @version     v0.1.0
+ * @version     v0.2.0
  * @author      Bunoon
  * @license     MIT License
  * @copyright   Bunoon 2024
@@ -158,57 +158,65 @@
         }
 
         if ( bindingOptions.currentView.categories.length > 1 ) {
-            var controls = createElement( titleBar, "div", "controls" ),
-                back = createElementWithHTML( controls, "button", "back", _configuration.backButtonText );
+            var controls = createElement( titleBar, "div", "controls" );
+
+            if ( bindingOptions.showCategorySelector ) {
+                var back = createElementWithHTML( controls, "button", "back", _configuration.backButtonText );
             
-            back.onclick = function() {
-                if ( bindingOptions.currentView.categoryIndex > 0 ) {
-                    bindingOptions.currentView.categoryIndex--;
-                    bindingOptions.currentView.category = bindingOptions.currentView.categories[ bindingOptions.currentView.categoryIndex ];
-
-                    renderControlContainer( bindingOptions );
-                    fireCustomTrigger( bindingOptions.onBackCategory, bindingOptions.currentView.category );
+                back.onclick = function() {
+                    if ( bindingOptions.currentView.categoryIndex > 0 ) {
+                        bindingOptions.currentView.categoryIndex--;
+                        bindingOptions.currentView.category = bindingOptions.currentView.categories[ bindingOptions.currentView.categoryIndex ];
+    
+                        renderControlContainer( bindingOptions );
+                        fireCustomTrigger( bindingOptions.onBackCategory, bindingOptions.currentView.category );
+                    }
+                };
+    
+                bindingOptions.currentView.categoryText = createElementWithHTML( controls, "div", "category-text", bindingOptions.currentView.category );
+    
+                if ( bindingOptions.showCategorySelectionDropDown ) {
+                    createElement( bindingOptions.currentView.categoryText, "div", "down-arrow" );
+    
+                    var categoriesList = createElement( bindingOptions.currentView.categoryText, "div", "categories-list" ),
+                        categories = createElement( categoriesList, "div", "categories" ),
+                        activeCategory = null,
+                        categoriesLength = bindingOptions.currentView.categories.length;
+        
+                    categoriesList.style.display = "block";
+                    categoriesList.style.visibility = "hidden";
+        
+                    for ( var categoryIndex = 0; categoryIndex < categoriesLength; categoryIndex++ ) {
+                        var category = renderControlTitleBarCategory( bindingOptions, categories, bindingOptions.currentView.categories[ categoryIndex ] );
+        
+                        if ( !isDefined( activeCategory ) ) {
+                            activeCategory = category;
+                        }
+                    }
+        
+                    if ( isDefined( activeCategory ) ) {
+                        categories.scrollTop = activeCategory.offsetTop - ( categories.offsetHeight / 2 );
+                    }
+        
+                    categoriesList.style.display = "none";
+                    categoriesList.style.visibility = "visible";
+    
+                } else {
+                    addClass( bindingOptions.currentView.categoryText, "no-click" );
                 }
-            };
-
-            bindingOptions.currentView.categoryText = createElementWithHTML( controls, "div", "category-text", bindingOptions.currentView.category );
-
-            createElement( bindingOptions.currentView.categoryText, "div", "down-arrow" );
-
-            var categoriesList = createElement( bindingOptions.currentView.categoryText, "div", "categories-list" ),
-                categories = createElement( categoriesList, "div", "categories" ),
-                activeCategory = null,
-                categoriesLength = bindingOptions.currentView.categories.length;
-
-            categoriesList.style.display = "block";
-            categoriesList.style.visibility = "hidden";
-
-            for ( var categoryIndex = 0; categoryIndex < categoriesLength; categoryIndex++ ) {
-                var category = renderControlTitleBarCategory( bindingOptions, categories, bindingOptions.currentView.categories[ categoryIndex ] );
-
-                if ( !isDefined( activeCategory ) ) {
-                    activeCategory = category;
-                }
+    
+                var next = createElementWithHTML( controls, "button", "next", _configuration.nextButtonText );
+    
+                next.onclick = function() {
+                    if ( bindingOptions.currentView.categoryIndex < categoriesLength - 1 ) {
+                        bindingOptions.currentView.categoryIndex++;
+                        bindingOptions.currentView.category = bindingOptions.currentView.categories[ bindingOptions.currentView.categoryIndex ];
+    
+                        renderControlContainer( bindingOptions );
+                        fireCustomTrigger( bindingOptions.onNextCategory, bindingOptions.currentView.category );
+                    }
+                };
             }
-
-            if ( isDefined( activeCategory ) ) {
-                categories.scrollTop = activeCategory.offsetTop - ( categories.offsetHeight / 2 );
-            }
-
-            categoriesList.style.display = "none";
-            categoriesList.style.visibility = "visible";
-
-            var next = createElementWithHTML( controls, "button", "next", _configuration.nextButtonText );
-
-            next.onclick = function() {
-                if ( bindingOptions.currentView.categoryIndex < categoriesLength - 1 ) {
-                    bindingOptions.currentView.categoryIndex++;
-                    bindingOptions.currentView.category = bindingOptions.currentView.categories[ bindingOptions.currentView.categoryIndex ];
-
-                    renderControlContainer( bindingOptions );
-                    fireCustomTrigger( bindingOptions.onNextCategory, bindingOptions.currentView.category );
-                }
-            };
         }
     }
 
@@ -410,19 +418,38 @@
      */
 
     function renderControlFooter( bindingOptions ) {
-        var footer = createElement( bindingOptions.currentView.element, "div", "footer" );
+        var footer = createElement( bindingOptions.currentView.element, "div", "footer" ),
+            showChildren = null,
+            showDescriptions = null,
+            showContents = null;
 
         var onClick = function() {
-            bindingOptions.showChildren = showChildren.checked;
-            bindingOptions.showDescriptions = showDescriptions.checked;
-            bindingOptions.showContents = showContents.checked;
+            if ( isDefined( showChildren ) ) {
+                bindingOptions.showChildren = showChildren.checked;
+            }
+            
+            if ( isDefined( showDescriptions ) ) {
+                bindingOptions.showDescriptions = showDescriptions.checked;
+            }
+            
+            if ( isDefined( showContents ) ) {
+                bindingOptions.showContents = showContents.checked;
+            }
 
             renderControlContainer( bindingOptions );
         };
 
-        var showChildren = buildCheckBox( footer, _configuration.showChildrenLabelText, bindingOptions.showChildren, onClick )[ 0 ],
-            showDescriptions = buildCheckBox( footer, _configuration.showDescriptionsLabelText, bindingOptions.showDescriptions, onClick )[ 0 ],
+        if ( bindingOptions.showChildrenToggle ) {
+            showChildren = buildCheckBox( footer, _configuration.showChildrenLabelText, bindingOptions.showChildren, onClick )[ 0 ];
+        }
+
+        if ( bindingOptions.showDescriptionsToggle ) {
+            showDescriptions = buildCheckBox( footer, _configuration.showDescriptionsLabelText, bindingOptions.showDescriptions, onClick )[ 0 ];
+        }
+
+        if ( bindingOptions.showContentsToggle ) {
             showContents = buildCheckBox( footer, _configuration.showContentsLabelText, bindingOptions.showContents, onClick )[ 0 ];
+        }
     }
 
 
@@ -618,6 +645,11 @@
         options.showDescriptions = getDefaultBoolean( options.showDescriptions, true );
         options.showContents = getDefaultBoolean( options.showContents, true );
         options.tooltipDelay = getDefaultNumber( options.tooltipDelay, 750 );
+        options.showChildrenToggle = getDefaultBoolean( options.showChildrenToggle, true );
+        options.showDescriptionsToggle = getDefaultBoolean( options.showDescriptionsToggle, true );
+        options.showContentsToggle = getDefaultBoolean( options.showContentsToggle, true );
+        options.showCategorySelector = getDefaultBoolean( options.showCategorySelector, true );
+        options.showCategorySelectionDropDown = getDefaultBoolean( options.showCategorySelectionDropDown, true );
 
         options = buildAttributeOptionCustomTriggers( options );
         options = buildAttributeOptionStrings( options );
@@ -968,7 +1000,7 @@
      * @returns     {string}                                                The version number.
      */
     this.getVersion = function() {
-        return "0.1.0";
+        return "0.2.0";
     };
 
 

@@ -8,7 +8,7 @@ Below are all the JSON properties that can be passed in the "data-tree-options" 
 
 | Type: | Name: | Description: |
 | --- | --- | --- |
-| *Object[]* | data | The data that should be shown in the display (see ["Data Format"](../DATA_FORMAT.md) for details, defaults to []). |
+| *Object[]* | data | The data that should be shown in the display (see ["Data Format"](DATA.md) for details, defaults to []). |
 | *number* | maximumRows | States the maximum rows that can be shown (defaults to 10). |
 | *number* | spacing | States the spacing that should be used around the row boxes (defaults to 10 pixels). |
 | *number* | maximumBoxHeight | States the maximum height a row box can be (defaults to 200 pixels). |
@@ -22,6 +22,11 @@ Below are all the JSON properties that can be passed in the "data-tree-options" 
 | *boolean* | showDescriptions | States if the descriptions for the boxes should be shown (defaults to true). |
 | *boolean* | showContents | States if additional box contents should be shown (when no children are available, defaults to true). |
 | *number* | tooltipDelay | States how long the tooltip should wait (in milliseconds) until it's shown (defaults to 750). |
+| *boolean* | showChildrenToggle | States if the "Show Children" toggle check box should be shown (defaults to true). |
+| *boolean* | showDescriptionsToggle | States if the "Show Descriptions" toggle check box should be shown (defaults to true). |
+| *boolean* | showContentsToggle | States if the "Show Contents" toggle check box should be shown (defaults to true). |
+| *boolean* | showCategorySelector | States if the category selector (and buttons) is shown (defaults to true). |
+| *boolean* | showCategorySelectionDropDown | States if the category selection drop-down menu is shown (defaults to true). |
 
 <br/>
 
