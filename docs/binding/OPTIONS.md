@@ -22,6 +22,9 @@ Below are all the JSON properties that can be passed in the "data-tree-options" 
 | *boolean* | showDescriptions | States if the descriptions for the boxes should be shown (defaults to true). |
 | *boolean* | showContents | States if additional box contents should be shown (when no children are available, defaults to true). |
 | *number* | tooltipDelay | States how long the tooltip should wait (in milliseconds) until it's shown (defaults to 750). |
+| *boolean* | showChildrenToggle | States if the "Show Children" toggle check box should be shown (defaults to true). |
+| *boolean* | showDescriptionsToggle | States if the "Show Descriptions" toggle check box should be shown (defaults to true). |
+| *boolean* | showContentsToggle | States if the "Show Contents" toggle check box should be shown (defaults to true). |
 
 <br/>
 

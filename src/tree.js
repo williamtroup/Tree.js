@@ -410,19 +410,38 @@
      */
 
     function renderControlFooter( bindingOptions ) {
-        var footer = createElement( bindingOptions.currentView.element, "div", "footer" );
+        var footer = createElement( bindingOptions.currentView.element, "div", "footer" ),
+            showChildren = null,
+            showDescriptions = null,
+            showContents = null;
 
         var onClick = function() {
-            bindingOptions.showChildren = showChildren.checked;
-            bindingOptions.showDescriptions = showDescriptions.checked;
-            bindingOptions.showContents = showContents.checked;
+            if ( isDefined( showChildren ) ) {
+                bindingOptions.showChildren = showChildren.checked;
+            }
+            
+            if ( isDefined( showDescriptions ) ) {
+                bindingOptions.showDescriptions = showDescriptions.checked;
+            }
+            
+            if ( isDefined( showContents ) ) {
+                bindingOptions.showContents = showContents.checked;
+            }
 
             renderControlContainer( bindingOptions );
         };
 
-        var showChildren = buildCheckBox( footer, _configuration.showChildrenLabelText, bindingOptions.showChildren, onClick )[ 0 ],
-            showDescriptions = buildCheckBox( footer, _configuration.showDescriptionsLabelText, bindingOptions.showDescriptions, onClick )[ 0 ],
+        if ( bindingOptions.showChildrenToggle ) {
+            showChildren = buildCheckBox( footer, _configuration.showChildrenLabelText, bindingOptions.showChildren, onClick )[ 0 ];
+        }
+
+        if ( bindingOptions.showDescriptionsToggle ) {
+            showDescriptions = buildCheckBox( footer, _configuration.showDescriptionsLabelText, bindingOptions.showDescriptions, onClick )[ 0 ];
+        }
+
+        if ( bindingOptions.showContentsToggle ) {
             showContents = buildCheckBox( footer, _configuration.showContentsLabelText, bindingOptions.showContents, onClick )[ 0 ];
+        }
     }
 
 
@@ -618,6 +637,9 @@
         options.showDescriptions = getDefaultBoolean( options.showDescriptions, true );
         options.showContents = getDefaultBoolean( options.showContents, true );
         options.tooltipDelay = getDefaultNumber( options.tooltipDelay, 750 );
+        options.showChildrenToggle = getDefaultBoolean( options.showChildrenToggle, true );
+        options.showDescriptionsToggle = getDefaultBoolean( options.showDescriptionsToggle, true );
+        options.showContentsToggle = getDefaultBoolean( options.showContentsToggle, true );
 
         options = buildAttributeOptionCustomTriggers( options );
         options = buildAttributeOptionStrings( options );
