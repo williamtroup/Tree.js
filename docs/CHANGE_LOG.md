@@ -10,9 +10,9 @@
 - Added a new binding option called "showCategorySelectionDropDown", which states if the category selection drop-down menu is shown (defaults to true).
 
 #### **Documentation:**
-- Fixed a grammar mistake in the projects description.
+- Fixed a grammar mistake in the project description.
 - Fixed grammar mistakes in other areas of the documentation.
-- Moved the "DATA_FORMAT.md" file into "binding" and renamed to "DATA.md".
+- Moved the "DATA_FORMAT.md" file into "binding" and renamed it to "DATA.md".
 
 <br>
 
