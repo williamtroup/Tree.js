@@ -88,44 +88,50 @@
     }
     if (bindingOptions.currentView.categories.length > 1) {
       var controls = createElement(titleBar, "div", "controls");
-      var back = createElementWithHTML(controls, "button", "back", _configuration.backButtonText);
-      back.onclick = function() {
-        if (bindingOptions.currentView.categoryIndex > 0) {
-          bindingOptions.currentView.categoryIndex--;
-          bindingOptions.currentView.category = bindingOptions.currentView.categories[bindingOptions.currentView.categoryIndex];
-          renderControlContainer(bindingOptions);
-          fireCustomTrigger(bindingOptions.onBackCategory, bindingOptions.currentView.category);
+      if (bindingOptions.showCategorySelector) {
+        var back = createElementWithHTML(controls, "button", "back", _configuration.backButtonText);
+        back.onclick = function() {
+          if (bindingOptions.currentView.categoryIndex > 0) {
+            bindingOptions.currentView.categoryIndex--;
+            bindingOptions.currentView.category = bindingOptions.currentView.categories[bindingOptions.currentView.categoryIndex];
+            renderControlContainer(bindingOptions);
+            fireCustomTrigger(bindingOptions.onBackCategory, bindingOptions.currentView.category);
+          }
+        };
+        bindingOptions.currentView.categoryText = createElementWithHTML(controls, "div", "category-text", bindingOptions.currentView.category);
+        if (bindingOptions.showCategorySelectionDropDown) {
+          createElement(bindingOptions.currentView.categoryText, "div", "down-arrow");
+          var categoriesList = createElement(bindingOptions.currentView.categoryText, "div", "categories-list");
+          var categories = createElement(categoriesList, "div", "categories");
+          var activeCategory = null;
+          var categoriesLength = bindingOptions.currentView.categories.length;
+          categoriesList.style.display = "block";
+          categoriesList.style.visibility = "hidden";
+          var categoryIndex = 0;
+          for (; categoryIndex < categoriesLength; categoryIndex++) {
+            var category = renderControlTitleBarCategory(bindingOptions, categories, bindingOptions.currentView.categories[categoryIndex]);
+            if (!isDefined(activeCategory)) {
+              activeCategory = category;
+            }
+          }
+          if (isDefined(activeCategory)) {
+            categories.scrollTop = activeCategory.offsetTop - categories.offsetHeight / 2;
+          }
+          categoriesList.style.display = "none";
+          categoriesList.style.visibility = "visible";
+        } else {
+          addClass(bindingOptions.currentView.categoryText, "no-click");
         }
-      };
-      bindingOptions.currentView.categoryText = createElementWithHTML(controls, "div", "category-text", bindingOptions.currentView.category);
-      createElement(bindingOptions.currentView.categoryText, "div", "down-arrow");
-      var categoriesList = createElement(bindingOptions.currentView.categoryText, "div", "categories-list");
-      var categories = createElement(categoriesList, "div", "categories");
-      var activeCategory = null;
-      var categoriesLength = bindingOptions.currentView.categories.length;
-      categoriesList.style.display = "block";
-      categoriesList.style.visibility = "hidden";
-      var categoryIndex = 0;
-      for (; categoryIndex < categoriesLength; categoryIndex++) {
-        var category = renderControlTitleBarCategory(bindingOptions, categories, bindingOptions.currentView.categories[categoryIndex]);
-        if (!isDefined(activeCategory)) {
-          activeCategory = category;
-        }
+        var next = createElementWithHTML(controls, "button", "next", _configuration.nextButtonText);
+        next.onclick = function() {
+          if (bindingOptions.currentView.categoryIndex < categoriesLength - 1) {
+            bindingOptions.currentView.categoryIndex++;
+            bindingOptions.currentView.category = bindingOptions.currentView.categories[bindingOptions.currentView.categoryIndex];
+            renderControlContainer(bindingOptions);
+            fireCustomTrigger(bindingOptions.onNextCategory, bindingOptions.currentView.category);
+          }
+        };
       }
-      if (isDefined(activeCategory)) {
-        categories.scrollTop = activeCategory.offsetTop - categories.offsetHeight / 2;
-      }
-      categoriesList.style.display = "none";
-      categoriesList.style.visibility = "visible";
-      var next = createElementWithHTML(controls, "button", "next", _configuration.nextButtonText);
-      next.onclick = function() {
-        if (bindingOptions.currentView.categoryIndex < categoriesLength - 1) {
-          bindingOptions.currentView.categoryIndex++;
-          bindingOptions.currentView.category = bindingOptions.currentView.categories[bindingOptions.currentView.categoryIndex];
-          renderControlContainer(bindingOptions);
-          fireCustomTrigger(bindingOptions.onNextCategory, bindingOptions.currentView.category);
-        }
-      };
     }
   }
   function renderControlTitleBarCategory(bindingOptions, categories, currentCategory) {
@@ -433,6 +439,8 @@
     options.showChildrenToggle = getDefaultBoolean(options.showChildrenToggle, true);
     options.showDescriptionsToggle = getDefaultBoolean(options.showDescriptionsToggle, true);
     options.showContentsToggle = getDefaultBoolean(options.showContentsToggle, true);
+    options.showCategorySelector = getDefaultBoolean(options.showCategorySelector, true);
+    options.showCategorySelectionDropDown = getDefaultBoolean(options.showCategorySelectionDropDown, true);
     options = buildAttributeOptionCustomTriggers(options);
     options = buildAttributeOptionStrings(options);
     return options;

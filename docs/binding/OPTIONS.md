@@ -25,6 +25,8 @@ Below are all the JSON properties that can be passed in the "data-tree-options" 
 | *boolean* | showChildrenToggle | States if the "Show Children" toggle check box should be shown (defaults to true). |
 | *boolean* | showDescriptionsToggle | States if the "Show Descriptions" toggle check box should be shown (defaults to true). |
 | *boolean* | showContentsToggle | States if the "Show Contents" toggle check box should be shown (defaults to true). |
+| *boolean* | showCategorySelector | States if the category selector (and buttons) is shown (defaults to true). |
+| *boolean* | showCategorySelectionDropDown | States if the category selection drop-down menu is shown (defaults to true). |
 
 <br/>
 
