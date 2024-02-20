@@ -29,7 +29,7 @@ Tree.js
 - Fully configurable per DOM element.
 - Toggling data on/off support.
 - Customizable tooltips.
-- Expanding/Contract data items.
+- Expand/Contract data items.
 - Configurable colors for boxes!
 <br />
 <br />

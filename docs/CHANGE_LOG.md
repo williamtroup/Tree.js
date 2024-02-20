@@ -11,6 +11,8 @@
 
 #### **Documentation:**
 - Fixed a grammar mistake in the projects description.
+- Fixed grammar mistakes in other areas of the documentation.
+- Moved the "DATA_FORMAT.md" file into "binding" and renamed to "DATA.md".
 
 <br>
 

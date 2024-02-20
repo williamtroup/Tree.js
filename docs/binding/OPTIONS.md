@@ -8,7 +8,7 @@ Below are all the JSON properties that can be passed in the "data-tree-options" 
 
 | Type: | Name: | Description: |
 | --- | --- | --- |
-| *Object[]* | data | The data that should be shown in the display (see ["Data Format"](../DATA_FORMAT.md) for details, defaults to []). |
+| *Object[]* | data | The data that should be shown in the display (see ["Data Format"](DATA.md) for details, defaults to []). |
 | *number* | maximumRows | States the maximum rows that can be shown (defaults to 10). |
 | *number* | spacing | States the spacing that should be used around the row boxes (defaults to 10 pixels). |
 | *number* | maximumBoxHeight | States the maximum height a row box can be (defaults to 200 pixels). |

@@ -1,6 +1,6 @@
-# Tree.js - Data Format:
+# Tree.js - Binding Options - Data:
 
-Below is the format that is expected for a data item that is used when applying data via the "data-tree-options" binding attribute on a DOM element.
+Below is a list of all the options supported for the property "data" used in the "data-tree-options" binding attribute for DOM elements.
 <br>
 <br>
 
