@@ -206,7 +206,11 @@
     if (bindingOptions.currentView.fullScreenBoxId === boxDetails.id) {
       box.style.height = bindingOptions.currentView.fullScreenBoxHeight + "px";
     } else {
-      box.style.height = boxHeight + "px";
+      if (bindingOptions.useDecreasingHeightsForBoxes) {
+        box.style.height = boxHeight + "px";
+      } else {
+        box.style.height = bindingOptions.maximumBoxHeight + "px";
+      }
     }
     if (isDefinedFunction(bindingOptions.onBoxClick)) {
       box.onclick = function(e) {
@@ -441,6 +445,7 @@
     options.showContentsToggle = getDefaultBoolean(options.showContentsToggle, true);
     options.showCategorySelector = getDefaultBoolean(options.showCategorySelector, true);
     options.showCategorySelectionDropDown = getDefaultBoolean(options.showCategorySelectionDropDown, true);
+    options.useDecreasingHeightsForBoxes = getDefaultBoolean(options.useDecreasingHeightsForBoxes, true);
     options = buildAttributeOptionCustomTriggers(options);
     options = buildAttributeOptionStrings(options);
     return options;

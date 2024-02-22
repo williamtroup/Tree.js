@@ -1,7 +1,9 @@
 # Tree.js - Change Log:
 
 ## Version 0.3.0:
-- 
+
+#### **Binding Options:**
+- Added a new binding option called "useDecreasingHeightsForBoxes", which states if decreasing heights should be used for the boxes (defaults to true).
 
 <br>
 
