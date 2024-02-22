@@ -21,6 +21,15 @@
         </div>
 
         <div class="contents">
+            <h2>Manage Instances:</h2>
+            <button class="btn btn-primary" onclick="$tree.moveToPreviousCategory( 'tree-1' );">Move To Previous Category</button>
+            <button class="btn btn-primary" onclick="$tree.moveToNextCategory( 'tree-1' );">Move To Next Category</button>
+            <br>
+            <button class="btn btn-primary" onclick="$tree.refresh( 'tree-1' );">Refresh</button>
+            <br>
+            <button class="btn btn-primary" onclick="$tree.refreshAll();">Refresh All</button>
+            <br>
+
             <h2>Configuration:</h2>
             <button class="btn btn-primary" onclick="setupConfiguration();">Set Configuration</button>
             <br />

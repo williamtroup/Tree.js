@@ -1,5 +1,5 @@
 /*
- * Tree.js Library v0.2.0
+ * Tree.js Library v0.3.0
  *
  * Copyright 2024 Bunoon
  * Released under the MIT License
@@ -198,6 +198,10 @@ div.tree-js {
             text-align: right;
 
             @include buttons;
+
+            button.back {
+                margin-left: calc( var(--tree-js-spacing) * 2 ) !important;
+            }
 
             div.category-text {
                 $category-margin: 5px;

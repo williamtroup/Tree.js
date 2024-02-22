@@ -7,6 +7,12 @@ Below is a list of all the custom triggers supported in the "data-tree-options" 
 
 ## For Rendering:
 
+### options.onRefresh( *element* ):
+Fires when a rendered element is refreshed.
+<br>
+***Parameter:*** element: '*Object*' - The element that was refreshed.
+<br>
+
 ### options.onBeforeRenderComplete( *element* ):
 Fires before the rendering an element.
 <br>

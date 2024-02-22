@@ -1,4 +1,4 @@
-/*! Tree.js v0.2.0 | (c) Bunoon 2024 | MIT License */
+/*! Tree.js v0.3.0 | (c) Bunoon 2024 | MIT License */
 (function() {
   function render() {
     var tagTypes = _configuration.domElementTypes;
@@ -59,11 +59,13 @@
     if (!isDefinedString(bindingOptions.currentView.element.id)) {
       bindingOptions.currentView.element.id = newGuid();
     }
+    bindingOptions.currentView.element.className = "tree-js";
     bindingOptions.currentView.element.removeAttribute(_attribute_Name_Options);
     bindingOptions.currentView.rows = null;
-    bindingOptions.currentView.element.className = "tree-js";
     if (!_elements_Data.hasOwnProperty(bindingOptions.currentView.element.id)) {
-      _elements_Data[bindingOptions.currentView.element.id] = bindingOptions.data;
+      _elements_Data[bindingOptions.currentView.element.id] = {};
+      _elements_Data[bindingOptions.currentView.element.id].options = bindingOptions;
+      _elements_Data[bindingOptions.currentView.element.id].data = bindingOptions.data;
       delete bindingOptions.data;
     }
     renderControlContainer(bindingOptions);
@@ -75,10 +77,10 @@
     renderControlToolTip(bindingOptions);
     renderControlTitleBar(bindingOptions);
     renderControlRows(bindingOptions);
-    renderControlRowsAndBoxes(bindingOptions, bindingOptions.currentView.rows, _elements_Data[bindingOptions.currentView.element.id]);
+    renderControlRowsAndBoxes(bindingOptions, bindingOptions.currentView.rows, _elements_Data[bindingOptions.currentView.element.id].data);
     renderControlFooter(bindingOptions);
     _parameter_Window.addEventListener("resize", function() {
-      renderControlRowsAndBoxes(bindingOptions, bindingOptions.currentView.rows, _elements_Data[bindingOptions.currentView.element.id]);
+      renderControlRowsAndBoxes(bindingOptions, bindingOptions.currentView.rows, _elements_Data[bindingOptions.currentView.element.id].data);
     });
   }
   function renderControlTitleBar(bindingOptions) {
@@ -88,15 +90,17 @@
     }
     if (bindingOptions.currentView.categories.length > 1) {
       var controls = createElement(titleBar, "div", "controls");
+      if (bindingOptions.showRefreshButton) {
+        var refresh = createElementWithHTML(controls, "button", "refresh", _configuration.refreshButtonText);
+        refresh.onclick = function() {
+          renderControlContainer(bindingOptions);
+          fireCustomTrigger(bindingOptions.onRefresh, bindingOptions.currentView.element);
+        };
+      }
       if (bindingOptions.showCategorySelector) {
         var back = createElementWithHTML(controls, "button", "back", _configuration.backButtonText);
         back.onclick = function() {
-          if (bindingOptions.currentView.categoryIndex > 0) {
-            bindingOptions.currentView.categoryIndex--;
-            bindingOptions.currentView.category = bindingOptions.currentView.categories[bindingOptions.currentView.categoryIndex];
-            renderControlContainer(bindingOptions);
-            fireCustomTrigger(bindingOptions.onBackCategory, bindingOptions.currentView.category);
-          }
+          moveToPreviousCategory(bindingOptions);
         };
         bindingOptions.currentView.categoryText = createElementWithHTML(controls, "div", "category-text", bindingOptions.currentView.category);
         if (bindingOptions.showCategorySelectionDropDown) {
@@ -124,12 +128,7 @@
         }
         var next = createElementWithHTML(controls, "button", "next", _configuration.nextButtonText);
         next.onclick = function() {
-          if (bindingOptions.currentView.categoryIndex < categoriesLength - 1) {
-            bindingOptions.currentView.categoryIndex++;
-            bindingOptions.currentView.category = bindingOptions.currentView.categories[bindingOptions.currentView.categoryIndex];
-            renderControlContainer(bindingOptions);
-            fireCustomTrigger(bindingOptions.onNextCategory, bindingOptions.currentView.category);
-          }
+          moveToNextCategory(bindingOptions);
         };
       }
     }
@@ -149,6 +148,22 @@
       result = category;
     }
     return result;
+  }
+  function moveToPreviousCategory(bindingOptions) {
+    if (bindingOptions.currentView.categoryIndex > 0) {
+      bindingOptions.currentView.categoryIndex--;
+      bindingOptions.currentView.category = bindingOptions.currentView.categories[bindingOptions.currentView.categoryIndex];
+      renderControlContainer(bindingOptions);
+      fireCustomTrigger(bindingOptions.onBackCategory, bindingOptions.currentView.category);
+    }
+  }
+  function moveToNextCategory(bindingOptions) {
+    if (bindingOptions.currentView.categoryIndex < bindingOptions.currentView.categories.length - 1) {
+      bindingOptions.currentView.categoryIndex++;
+      bindingOptions.currentView.category = bindingOptions.currentView.categories[bindingOptions.currentView.categoryIndex];
+      renderControlContainer(bindingOptions);
+      fireCustomTrigger(bindingOptions.onNextCategory, bindingOptions.currentView.category);
+    }
   }
   function renderControlRows(bindingOptions) {
     bindingOptions.currentView.rows = createElement(bindingOptions.currentView.element, "div", "box-rows");
@@ -206,7 +221,11 @@
     if (bindingOptions.currentView.fullScreenBoxId === boxDetails.id) {
       box.style.height = bindingOptions.currentView.fullScreenBoxHeight + "px";
     } else {
-      box.style.height = boxHeight + "px";
+      if (bindingOptions.useDecreasingHeightsForBoxes) {
+        box.style.height = boxHeight + "px";
+      } else {
+        box.style.height = bindingOptions.maximumBoxHeight + "px";
+      }
     }
     if (isDefinedFunction(bindingOptions.onBoxClick)) {
       box.onclick = function(e) {
@@ -441,6 +460,8 @@
     options.showContentsToggle = getDefaultBoolean(options.showContentsToggle, true);
     options.showCategorySelector = getDefaultBoolean(options.showCategorySelector, true);
     options.showCategorySelectionDropDown = getDefaultBoolean(options.showCategorySelectionDropDown, true);
+    options.useDecreasingHeightsForBoxes = getDefaultBoolean(options.useDecreasingHeightsForBoxes, true);
+    options.showRefreshButton = getDefaultBoolean(options.showRefreshButton, false);
     options = buildAttributeOptionCustomTriggers(options);
     options = buildAttributeOptionStrings(options);
     return options;
@@ -456,6 +477,7 @@
     options.onBackCategory = getDefaultFunction(options.onBackCategory, null);
     options.onNextCategory = getDefaultFunction(options.onNextCategory, null);
     options.onSetCategory = getDefaultFunction(options.onSetCategory, null);
+    options.onRefresh = getDefaultFunction(options.onRefresh, null);
     return options;
   }
   function createElement(container, type, className) {
@@ -637,6 +659,7 @@
     _configuration.noDataMessage = getDefaultString(_configuration.noDataMessage, "There is currently no data to view.");
     _configuration.expandToolTipText = getDefaultString(_configuration.expandToolTipText, "Expand");
     _configuration.contractToolTipText = getDefaultString(_configuration.contractToolTipText, "Contract");
+    _configuration.refreshButtonText = getDefaultString(_configuration.refreshButtonText, "Refresh");
   }
   var _parameter_Document = null;
   var _parameter_Window = null;
@@ -647,6 +670,37 @@
   var _elements_Type = {};
   var _elements_Data = {};
   var _attribute_Name_Options = "data-tree-options";
+  this.refresh = function(elementId) {
+    if (isDefinedString(elementId) && _elements_Data.hasOwnProperty(elementId)) {
+      var bindingOptions = _elements_Data[elementId].options;
+      renderControlContainer(bindingOptions);
+      fireCustomTrigger(bindingOptions.onRefresh, bindingOptions.currentView.element);
+    }
+    return this;
+  };
+  this.refreshAll = function() {
+    var elementId;
+    for (elementId in _elements_Data) {
+      if (_elements_Data.hasOwnProperty(elementId)) {
+        var bindingOptions = _elements_Data[elementId].options;
+        renderControlContainer(bindingOptions);
+        fireCustomTrigger(bindingOptions.onRefresh, bindingOptions.currentView.element);
+      }
+    }
+    return this;
+  };
+  this.moveToPreviousCategory = function(elementId) {
+    if (isDefinedString(elementId) && _elements_Data.hasOwnProperty(elementId)) {
+      moveToPreviousCategory(_elements_Data[elementId].options);
+    }
+    return this;
+  };
+  this.moveToNextCategory = function(elementId) {
+    if (isDefinedString(elementId) && _elements_Data.hasOwnProperty(elementId)) {
+      moveToNextCategory(_elements_Data[elementId].options);
+    }
+    return this;
+  };
   this.setConfiguration = function(newConfiguration) {
     var propertyName;
     for (propertyName in newConfiguration) {
@@ -658,7 +712,7 @@
     return this;
   };
   this.getVersion = function() {
-    return "0.2.0";
+    return "0.3.0";
   };
   (function(documentObject, windowObject, mathObject, jsonObject) {
     _parameter_Document = documentObject;

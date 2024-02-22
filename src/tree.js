@@ -4,7 +4,7 @@
  * A lightweight JavaScript library that allows you to create responsive and customizable interactive tree diagrams from an array of JS objects.
  * 
  * @file        tree.js
- * @version     v0.2.0
+ * @version     v0.3.0
  * @author      Bunoon
  * @license     MIT License
  * @copyright   Bunoon 2024
@@ -113,12 +113,14 @@
             bindingOptions.currentView.element.id = newGuid();
         }
 
+        bindingOptions.currentView.element.className = "tree-js";
         bindingOptions.currentView.element.removeAttribute( _attribute_Name_Options );
         bindingOptions.currentView.rows = null;
-        bindingOptions.currentView.element.className = "tree-js";
 
         if ( !_elements_Data.hasOwnProperty( bindingOptions.currentView.element.id ) ) {
-            _elements_Data[ bindingOptions.currentView.element.id ] = bindingOptions.data;
+            _elements_Data[ bindingOptions.currentView.element.id ] = {};
+            _elements_Data[ bindingOptions.currentView.element.id ].options = bindingOptions;
+            _elements_Data[ bindingOptions.currentView.element.id ].data = bindingOptions.data;
 
             delete bindingOptions.data;
         }
@@ -135,11 +137,11 @@
         renderControlToolTip( bindingOptions );
         renderControlTitleBar( bindingOptions );
         renderControlRows( bindingOptions );
-        renderControlRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, _elements_Data[ bindingOptions.currentView.element.id ] );
+        renderControlRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, _elements_Data[ bindingOptions.currentView.element.id ].data );
         renderControlFooter( bindingOptions );
 
         _parameter_Window.addEventListener( "resize", function() {
-            renderControlRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, _elements_Data[ bindingOptions.currentView.element.id ] );
+            renderControlRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, _elements_Data[ bindingOptions.currentView.element.id ].data );
         } );
     }
 
@@ -160,17 +162,20 @@
         if ( bindingOptions.currentView.categories.length > 1 ) {
             var controls = createElement( titleBar, "div", "controls" );
 
+            if ( bindingOptions.showRefreshButton ) {
+                var refresh = createElementWithHTML( controls, "button", "refresh", _configuration.refreshButtonText );
+        
+                refresh.onclick = function() {
+                    renderControlContainer( bindingOptions );
+                    fireCustomTrigger( bindingOptions.onRefresh, bindingOptions.currentView.element );
+                };
+            }
+
             if ( bindingOptions.showCategorySelector ) {
                 var back = createElementWithHTML( controls, "button", "back", _configuration.backButtonText );
             
                 back.onclick = function() {
-                    if ( bindingOptions.currentView.categoryIndex > 0 ) {
-                        bindingOptions.currentView.categoryIndex--;
-                        bindingOptions.currentView.category = bindingOptions.currentView.categories[ bindingOptions.currentView.categoryIndex ];
-    
-                        renderControlContainer( bindingOptions );
-                        fireCustomTrigger( bindingOptions.onBackCategory, bindingOptions.currentView.category );
-                    }
+                    moveToPreviousCategory( bindingOptions );
                 };
     
                 bindingOptions.currentView.categoryText = createElementWithHTML( controls, "div", "category-text", bindingOptions.currentView.category );
@@ -208,13 +213,7 @@
                 var next = createElementWithHTML( controls, "button", "next", _configuration.nextButtonText );
     
                 next.onclick = function() {
-                    if ( bindingOptions.currentView.categoryIndex < categoriesLength - 1 ) {
-                        bindingOptions.currentView.categoryIndex++;
-                        bindingOptions.currentView.category = bindingOptions.currentView.categories[ bindingOptions.currentView.categoryIndex ];
-    
-                        renderControlContainer( bindingOptions );
-                        fireCustomTrigger( bindingOptions.onNextCategory, bindingOptions.currentView.category );
-                    }
+                    moveToNextCategory( bindingOptions );
                 };
             }
         }
@@ -239,6 +238,26 @@
         }
 
         return result;
+    }
+
+    function moveToPreviousCategory( bindingOptions ) {
+        if ( bindingOptions.currentView.categoryIndex > 0 ) {
+            bindingOptions.currentView.categoryIndex--;
+            bindingOptions.currentView.category = bindingOptions.currentView.categories[ bindingOptions.currentView.categoryIndex ];
+
+            renderControlContainer( bindingOptions );
+            fireCustomTrigger( bindingOptions.onBackCategory, bindingOptions.currentView.category );
+        }
+    }
+
+    function moveToNextCategory( bindingOptions ) {
+        if ( bindingOptions.currentView.categoryIndex < bindingOptions.currentView.categories.length - 1 ) {
+            bindingOptions.currentView.categoryIndex++;
+            bindingOptions.currentView.category = bindingOptions.currentView.categories[ bindingOptions.currentView.categoryIndex ];
+
+            renderControlContainer( bindingOptions );
+            fireCustomTrigger( bindingOptions.onNextCategory, bindingOptions.currentView.category );
+        }
     }
 
 
@@ -318,7 +337,12 @@
         if ( bindingOptions.currentView.fullScreenBoxId === boxDetails.id ) {
             box.style.height = bindingOptions.currentView.fullScreenBoxHeight + "px";
         } else {
-            box.style.height = boxHeight + "px";
+
+            if ( bindingOptions.useDecreasingHeightsForBoxes ) {
+                box.style.height = boxHeight + "px";
+            } else {
+                box.style.height = bindingOptions.maximumBoxHeight + "px";
+            }
         }
 
         if ( isDefinedFunction( bindingOptions.onBoxClick ) ) {
@@ -650,6 +674,8 @@
         options.showContentsToggle = getDefaultBoolean( options.showContentsToggle, true );
         options.showCategorySelector = getDefaultBoolean( options.showCategorySelector, true );
         options.showCategorySelectionDropDown = getDefaultBoolean( options.showCategorySelectionDropDown, true );
+        options.useDecreasingHeightsForBoxes = getDefaultBoolean( options.useDecreasingHeightsForBoxes, true );
+        options.showRefreshButton = getDefaultBoolean( options.showRefreshButton, false );
 
         options = buildAttributeOptionCustomTriggers( options );
         options = buildAttributeOptionStrings( options );
@@ -670,6 +696,7 @@
         options.onBackCategory = getDefaultFunction( options.onBackCategory, null );
         options.onNextCategory = getDefaultFunction( options.onNextCategory, null );
         options.onSetCategory = getDefaultFunction( options.onSetCategory, null );
+        options.onRefresh = getDefaultFunction( options.onRefresh, null );
 
         return options;
     }
@@ -937,6 +964,99 @@
 
     /*
      * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     * Public Functions:  Manage Instances
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * refresh().
+     * 
+     * Refreshes a Tree.js instance.
+     * 
+     * @public
+     * @fires       onRefresh
+     * 
+     * @param       {string}    elementId                                   The Tree.js element ID that should be refreshed.
+     * 
+     * @returns     {Object}                                                The Tree.js class instance.
+     */
+    this.refresh = function( elementId ) {
+        if ( isDefinedString( elementId ) && _elements_Data.hasOwnProperty( elementId ) ) {
+            var bindingOptions = _elements_Data[ elementId ].options;
+
+            renderControlContainer( bindingOptions );
+            fireCustomTrigger( bindingOptions.onRefresh, bindingOptions.currentView.element );
+        }
+
+        return this;
+    };
+
+    /**
+     * refreshAll().
+     * 
+     * Refreshes all of the rendered Tree.js instances.
+     * 
+     * @public
+     * @fires       onRefresh
+     * 
+     * @returns     {Object}                                                The Tree.js class instance.
+     */
+    this.refreshAll = function() {
+        for ( var elementId in _elements_Data ) {
+            if ( _elements_Data.hasOwnProperty( elementId ) ) {
+                var bindingOptions = _elements_Data[ elementId ].options;
+
+                renderControlContainer( bindingOptions );
+                fireCustomTrigger( bindingOptions.onRefresh, bindingOptions.currentView.element );
+            }
+        }
+
+        return this;
+    };
+
+    /**
+     * moveToPreviousCategory().
+     * 
+     * Moves to the previous category.
+     * 
+     * @public
+     * @fires       onBackCategory
+     * 
+     * @param       {string}    elementId                                   The Tree.js element ID that should be updated.
+     * 
+     * @returns     {Object}                                                The Tree.js class instance.
+     */
+    this.moveToPreviousCategory = function( elementId ) {
+        if ( isDefinedString( elementId ) && _elements_Data.hasOwnProperty( elementId ) ) {
+            moveToPreviousCategory( _elements_Data[ elementId ].options );
+        }
+
+        return this;
+    };
+
+    /**
+     * moveToNextCategory().
+     * 
+     * Moves to the next category.
+     * 
+     * @public
+     * @fires       onNextCategory
+     * 
+     * @param       {string}    elementId                                   The Tree.js element ID that should be updated.
+     * 
+     * @returns     {Object}                                                The Tree.js class instance.
+     */
+    this.moveToNextCategory = function( elementId ) {
+        if ( isDefinedString( elementId ) && _elements_Data.hasOwnProperty( elementId ) ) {
+            moveToNextCategory( _elements_Data[ elementId ].options );
+        }
+
+        return this;
+    };
+
+
+    /*
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
      * Public Functions:  Configuration
      * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
      */
@@ -981,6 +1101,7 @@
         _configuration.noDataMessage = getDefaultString( _configuration.noDataMessage, "There is currently no data to view." );
         _configuration.expandToolTipText = getDefaultString( _configuration.expandToolTipText, "Expand" );
         _configuration.contractToolTipText = getDefaultString( _configuration.contractToolTipText, "Contract" );
+        _configuration.refreshButtonText = getDefaultString( _configuration.refreshButtonText, "Refresh" );
     }
 
 
@@ -1000,7 +1121,7 @@
      * @returns     {string}                                                The version number.
      */
     this.getVersion = function() {
-        return "0.2.0";
+        return "0.3.0";
     };
 
 

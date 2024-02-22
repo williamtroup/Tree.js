@@ -1,5 +1,5 @@
 /*
- * Tree.js Library v0.2.0
+ * Tree.js Library v0.3.0
  *
  * Copyright 2024 Bunoon
  * Released under the MIT License
@@ -137,6 +137,9 @@ div.tree-js div.title-bar div.controls button.active {
   color: var(--tree-js-button-text-color-hover);
   transition: var(--tree-js-transition);
   font-weight: var(--tree-js-text-bold-weight-active);
+}
+div.tree-js div.title-bar div.controls button.back {
+  margin-left: calc(var(--tree-js-spacing) * 2) !important;
 }
 div.tree-js div.title-bar div.controls div.category-text {
   margin-left: var(--tree-js-spacing);
