@@ -118,7 +118,9 @@
         bindingOptions.currentView.element.className = "tree-js";
 
         if ( !_elements_Data.hasOwnProperty( bindingOptions.currentView.element.id ) ) {
-            _elements_Data[ bindingOptions.currentView.element.id ] = bindingOptions.data;
+            _elements_Data[ bindingOptions.currentView.element.id ] = {};
+            _elements_Data[ bindingOptions.currentView.element.id ].options = bindingOptions;
+            _elements_Data[ bindingOptions.currentView.element.id ].data = bindingOptions.data;
 
             delete bindingOptions.data;
         }
@@ -135,11 +137,11 @@
         renderControlToolTip( bindingOptions );
         renderControlTitleBar( bindingOptions );
         renderControlRows( bindingOptions );
-        renderControlRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, _elements_Data[ bindingOptions.currentView.element.id ] );
+        renderControlRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, _elements_Data[ bindingOptions.currentView.element.id ].data );
         renderControlFooter( bindingOptions );
 
         _parameter_Window.addEventListener( "resize", function() {
-            renderControlRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, _elements_Data[ bindingOptions.currentView.element.id ] );
+            renderControlRowsAndBoxes( bindingOptions, bindingOptions.currentView.rows, _elements_Data[ bindingOptions.currentView.element.id ].data );
         } );
     }
 
@@ -164,13 +166,7 @@
                 var back = createElementWithHTML( controls, "button", "back", _configuration.backButtonText );
             
                 back.onclick = function() {
-                    if ( bindingOptions.currentView.categoryIndex > 0 ) {
-                        bindingOptions.currentView.categoryIndex--;
-                        bindingOptions.currentView.category = bindingOptions.currentView.categories[ bindingOptions.currentView.categoryIndex ];
-    
-                        renderControlContainer( bindingOptions );
-                        fireCustomTrigger( bindingOptions.onBackCategory, bindingOptions.currentView.category );
-                    }
+                    moveToPreviousCategory( bindingOptions );
                 };
     
                 bindingOptions.currentView.categoryText = createElementWithHTML( controls, "div", "category-text", bindingOptions.currentView.category );
@@ -208,13 +204,7 @@
                 var next = createElementWithHTML( controls, "button", "next", _configuration.nextButtonText );
     
                 next.onclick = function() {
-                    if ( bindingOptions.currentView.categoryIndex < categoriesLength - 1 ) {
-                        bindingOptions.currentView.categoryIndex++;
-                        bindingOptions.currentView.category = bindingOptions.currentView.categories[ bindingOptions.currentView.categoryIndex ];
-    
-                        renderControlContainer( bindingOptions );
-                        fireCustomTrigger( bindingOptions.onNextCategory, bindingOptions.currentView.category );
-                    }
+                    moveToNextCategory( bindingOptions );
                 };
             }
         }
@@ -239,6 +229,26 @@
         }
 
         return result;
+    }
+
+    function moveToPreviousCategory( bindingOptions ) {
+        if ( bindingOptions.currentView.categoryIndex > 0 ) {
+            bindingOptions.currentView.categoryIndex--;
+            bindingOptions.currentView.category = bindingOptions.currentView.categories[ bindingOptions.currentView.categoryIndex ];
+
+            renderControlContainer( bindingOptions );
+            fireCustomTrigger( bindingOptions.onBackCategory, bindingOptions.currentView.category );
+        }
+    }
+
+    function moveToNextCategory( bindingOptions ) {
+        if ( bindingOptions.currentView.categoryIndex < bindingOptions.currentView.categories.length - 1 ) {
+            bindingOptions.currentView.categoryIndex++;
+            bindingOptions.currentView.category = bindingOptions.currentView.categories[ bindingOptions.currentView.categoryIndex ];
+
+            renderControlContainer( bindingOptions );
+            fireCustomTrigger( bindingOptions.onNextCategory, bindingOptions.currentView.category );
+        }
     }
 
 
@@ -939,6 +949,53 @@
 
         return result.join( _string.empty );
     }
+
+
+    /*
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     * Public Functions:  Manage Instances
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * moveToPreviousCategory().
+     * 
+     * Moves to the previous category.
+     * 
+     * @public
+     * @fires       onBackCategory
+     * 
+     * @param       {string}    elementId                                   The Tree.js element ID that should be updated.
+     * 
+     * @returns     {Object}                                                The Tree.js class instance.
+     */
+    this.moveToPreviousCategory = function( elementId ) {
+        if ( isDefinedString( elementId ) && _elements_Data.hasOwnProperty( elementId ) ) {
+            moveToPreviousCategory( _elements_Data[ elementId ].options );
+        }
+
+        return this;
+    };
+
+    /**
+     * moveToNextCategory().
+     * 
+     * Moves to the next category.
+     * 
+     * @public
+     * @fires       onNextCategory
+     * 
+     * @param       {string}    elementId                                   The Tree.js element ID that should be updated.
+     * 
+     * @returns     {Object}                                                The Tree.js class instance.
+     */
+    this.moveToNextCategory = function( elementId ) {
+        if ( isDefinedString( elementId ) && _elements_Data.hasOwnProperty( elementId ) ) {
+            moveToNextCategory( _elements_Data[ elementId ].options );
+        }
+
+        return this;
+    };
 
 
     /*

@@ -63,7 +63,9 @@
     bindingOptions.currentView.rows = null;
     bindingOptions.currentView.element.className = "tree-js";
     if (!_elements_Data.hasOwnProperty(bindingOptions.currentView.element.id)) {
-      _elements_Data[bindingOptions.currentView.element.id] = bindingOptions.data;
+      _elements_Data[bindingOptions.currentView.element.id] = {};
+      _elements_Data[bindingOptions.currentView.element.id].options = bindingOptions;
+      _elements_Data[bindingOptions.currentView.element.id].data = bindingOptions.data;
       delete bindingOptions.data;
     }
     renderControlContainer(bindingOptions);
@@ -75,10 +77,10 @@
     renderControlToolTip(bindingOptions);
     renderControlTitleBar(bindingOptions);
     renderControlRows(bindingOptions);
-    renderControlRowsAndBoxes(bindingOptions, bindingOptions.currentView.rows, _elements_Data[bindingOptions.currentView.element.id]);
+    renderControlRowsAndBoxes(bindingOptions, bindingOptions.currentView.rows, _elements_Data[bindingOptions.currentView.element.id].data);
     renderControlFooter(bindingOptions);
     _parameter_Window.addEventListener("resize", function() {
-      renderControlRowsAndBoxes(bindingOptions, bindingOptions.currentView.rows, _elements_Data[bindingOptions.currentView.element.id]);
+      renderControlRowsAndBoxes(bindingOptions, bindingOptions.currentView.rows, _elements_Data[bindingOptions.currentView.element.id].data);
     });
   }
   function renderControlTitleBar(bindingOptions) {
@@ -91,12 +93,7 @@
       if (bindingOptions.showCategorySelector) {
         var back = createElementWithHTML(controls, "button", "back", _configuration.backButtonText);
         back.onclick = function() {
-          if (bindingOptions.currentView.categoryIndex > 0) {
-            bindingOptions.currentView.categoryIndex--;
-            bindingOptions.currentView.category = bindingOptions.currentView.categories[bindingOptions.currentView.categoryIndex];
-            renderControlContainer(bindingOptions);
-            fireCustomTrigger(bindingOptions.onBackCategory, bindingOptions.currentView.category);
-          }
+          moveToPreviousCategory(bindingOptions);
         };
         bindingOptions.currentView.categoryText = createElementWithHTML(controls, "div", "category-text", bindingOptions.currentView.category);
         if (bindingOptions.showCategorySelectionDropDown) {
@@ -124,12 +121,7 @@
         }
         var next = createElementWithHTML(controls, "button", "next", _configuration.nextButtonText);
         next.onclick = function() {
-          if (bindingOptions.currentView.categoryIndex < categoriesLength - 1) {
-            bindingOptions.currentView.categoryIndex++;
-            bindingOptions.currentView.category = bindingOptions.currentView.categories[bindingOptions.currentView.categoryIndex];
-            renderControlContainer(bindingOptions);
-            fireCustomTrigger(bindingOptions.onNextCategory, bindingOptions.currentView.category);
-          }
+          moveToNextCategory(bindingOptions);
         };
       }
     }
@@ -149,6 +141,22 @@
       result = category;
     }
     return result;
+  }
+  function moveToPreviousCategory(bindingOptions) {
+    if (bindingOptions.currentView.categoryIndex > 0) {
+      bindingOptions.currentView.categoryIndex--;
+      bindingOptions.currentView.category = bindingOptions.currentView.categories[bindingOptions.currentView.categoryIndex];
+      renderControlContainer(bindingOptions);
+      fireCustomTrigger(bindingOptions.onBackCategory, bindingOptions.currentView.category);
+    }
+  }
+  function moveToNextCategory(bindingOptions) {
+    if (bindingOptions.currentView.categoryIndex < bindingOptions.currentView.categories.length - 1) {
+      bindingOptions.currentView.categoryIndex++;
+      bindingOptions.currentView.category = bindingOptions.currentView.categories[bindingOptions.currentView.categoryIndex];
+      renderControlContainer(bindingOptions);
+      fireCustomTrigger(bindingOptions.onNextCategory, bindingOptions.currentView.category);
+    }
   }
   function renderControlRows(bindingOptions) {
     bindingOptions.currentView.rows = createElement(bindingOptions.currentView.element, "div", "box-rows");
@@ -652,6 +660,18 @@
   var _elements_Type = {};
   var _elements_Data = {};
   var _attribute_Name_Options = "data-tree-options";
+  this.moveToPreviousCategory = function(elementId) {
+    if (isDefinedString(elementId) && _elements_Data.hasOwnProperty(elementId)) {
+      moveToPreviousCategory(_elements_Data[elementId].options);
+    }
+    return this;
+  };
+  this.moveToNextCategory = function(elementId) {
+    if (isDefinedString(elementId) && _elements_Data.hasOwnProperty(elementId)) {
+      moveToNextCategory(_elements_Data[elementId].options);
+    }
+    return this;
+  };
   this.setConfiguration = function(newConfiguration) {
     var propertyName;
     for (propertyName in newConfiguration) {

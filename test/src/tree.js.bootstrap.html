@@ -17,10 +17,14 @@
         </div>
 
         <div class="contents">
-            <div id="tree-map-1" data-tree-options="bindingOptions"></div>
+            <div id="tree-1" data-tree-options="bindingOptions"></div>
         </div>
 
         <div class="contents">
+            <h2>Manage Instances:</h2>
+            <button class="btn btn-primary" onclick="$tree.moveToPreviousCategory( 'tree-1' );">Move To Previous Category</button>
+            <button class="btn btn-primary" onclick="$tree.moveToNextCategory( 'tree-1' );">Move To Next Category</button>
+
             <h2>Configuration:</h2>
             <button class="btn btn-primary" onclick="setupConfiguration();">Set Configuration</button>
             <br />

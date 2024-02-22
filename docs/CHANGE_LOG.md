@@ -5,6 +5,10 @@
 #### **Binding Options:**
 - Added a new binding option called "useDecreasingHeightsForBoxes", which states if decreasing heights should be used for the boxes (defaults to true).
 
+#### **Public Functions:**
+- Added a new public function "moveToPreviousCategory()", which will move to the next category for a specific element and then refresh its UI.
+- Added a new public function "moveToNextCategory()", which will move to the previous category for a specific element and then refresh its UI.
+
 <br>
 
 
