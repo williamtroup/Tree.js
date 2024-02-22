@@ -7,6 +7,24 @@ Below is a list of all the public functions that can be called from the Tree.js 
 
 ## Manage Instances:
 
+### **refresh( *elementId* )**:
+Refreshes a Tree.js instance.
+<br>
+***Fires***:  onRefresh
+<br>
+***Parameter: elementId***: '*string*' - The Tree.js element ID that should be refreshed.
+<br>
+***Returns***: '*Object*' - The Tree.js class instance.
+<br>
+
+### **refreshAll()**:
+Refreshes all of the rendered Tree.js instances.
+<br>
+***Fires***:  onRefresh
+<br>
+***Returns***: '*Object*' - The Tree.js class instance.
+<br>
+
 ### **moveToPreviousCategory( *elementId* )**:
 Moves to the previous category.
 <br>

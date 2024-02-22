@@ -59,9 +59,9 @@
     if (!isDefinedString(bindingOptions.currentView.element.id)) {
       bindingOptions.currentView.element.id = newGuid();
     }
+    bindingOptions.currentView.element.className = "tree-js";
     bindingOptions.currentView.element.removeAttribute(_attribute_Name_Options);
     bindingOptions.currentView.rows = null;
-    bindingOptions.currentView.element.className = "tree-js";
     if (!_elements_Data.hasOwnProperty(bindingOptions.currentView.element.id)) {
       _elements_Data[bindingOptions.currentView.element.id] = {};
       _elements_Data[bindingOptions.currentView.element.id].options = bindingOptions;
@@ -469,6 +469,7 @@
     options.onBackCategory = getDefaultFunction(options.onBackCategory, null);
     options.onNextCategory = getDefaultFunction(options.onNextCategory, null);
     options.onSetCategory = getDefaultFunction(options.onSetCategory, null);
+    options.onRefresh = getDefaultFunction(options.onRefresh, null);
     return options;
   }
   function createElement(container, type, className) {
@@ -660,6 +661,25 @@
   var _elements_Type = {};
   var _elements_Data = {};
   var _attribute_Name_Options = "data-tree-options";
+  this.refresh = function(elementId) {
+    if (isDefinedString(elementId) && _elements_Data.hasOwnProperty(elementId)) {
+      var bindingOptions = _elements_Data[elementId].options;
+      renderControlContainer(bindingOptions);
+      fireCustomTrigger(bindingOptions.onRefresh, bindingOptions.currentView.element);
+    }
+    return this;
+  };
+  this.refreshAll = function() {
+    var elementId;
+    for (elementId in _elements_Data) {
+      if (_elements_Data.hasOwnProperty(elementId)) {
+        var bindingOptions = _elements_Data[elementId].options;
+        renderControlContainer(bindingOptions);
+        fireCustomTrigger(bindingOptions.onRefresh, bindingOptions.currentView.element);
+      }
+    }
+    return this;
+  };
   this.moveToPreviousCategory = function(elementId) {
     if (isDefinedString(elementId) && _elements_Data.hasOwnProperty(elementId)) {
       moveToPreviousCategory(_elements_Data[elementId].options);

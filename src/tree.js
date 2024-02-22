@@ -113,9 +113,9 @@
             bindingOptions.currentView.element.id = newGuid();
         }
 
+        bindingOptions.currentView.element.className = "tree-js";
         bindingOptions.currentView.element.removeAttribute( _attribute_Name_Options );
         bindingOptions.currentView.rows = null;
-        bindingOptions.currentView.element.className = "tree-js";
 
         if ( !_elements_Data.hasOwnProperty( bindingOptions.currentView.element.id ) ) {
             _elements_Data[ bindingOptions.currentView.element.id ] = {};
@@ -686,6 +686,7 @@
         options.onBackCategory = getDefaultFunction( options.onBackCategory, null );
         options.onNextCategory = getDefaultFunction( options.onNextCategory, null );
         options.onSetCategory = getDefaultFunction( options.onSetCategory, null );
+        options.onRefresh = getDefaultFunction( options.onRefresh, null );
 
         return options;
     }
@@ -956,6 +957,52 @@
      * Public Functions:  Manage Instances
      * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
      */
+
+    /**
+     * refresh().
+     * 
+     * Refreshes a Tree.js instance.
+     * 
+     * @public
+     * @fires       onRefresh
+     * 
+     * @param       {string}    elementId                                   The Tree.js element ID that should be refreshed.
+     * 
+     * @returns     {Object}                                                The Tree.js class instance.
+     */
+    this.refresh = function( elementId ) {
+        if ( isDefinedString( elementId ) && _elements_Data.hasOwnProperty( elementId ) ) {
+            var bindingOptions = _elements_Data[ elementId ].options;
+
+            renderControlContainer( bindingOptions );
+            fireCustomTrigger( bindingOptions.onRefresh, bindingOptions.currentView.element );
+        }
+
+        return this;
+    };
+
+    /**
+     * refreshAll().
+     * 
+     * Refreshes all of the rendered Tree.js instances.
+     * 
+     * @public
+     * @fires       onRefresh
+     * 
+     * @returns     {Object}                                                The Tree.js class instance.
+     */
+    this.refreshAll = function() {
+        for ( var elementId in _elements_Data ) {
+            if ( _elements_Data.hasOwnProperty( elementId ) ) {
+                var bindingOptions = _elements_Data[ elementId ].options;
+
+                renderControlContainer( bindingOptions );
+                fireCustomTrigger( bindingOptions.onRefresh, bindingOptions.currentView.element );
+            }
+        }
+
+        return this;
+    };
 
     /**
      * moveToPreviousCategory().

@@ -5,9 +5,14 @@
 #### **Binding Options:**
 - Added a new binding option called "useDecreasingHeightsForBoxes", which states if decreasing heights should be used for the boxes (defaults to true).
 
+#### **Binding Options - Custom Triggers:**
+- Added a new binding option custom trigger called "onRefresh", which states an event that should be triggered when a rendered element is refreshed.
+
 #### **Public Functions:**
 - Added a new public function "moveToPreviousCategory()", which will move to the next category for a specific element and then refresh its UI.
 - Added a new public function "moveToNextCategory()", which will move to the previous category for a specific element and then refresh its UI.
+- Added a new public function "refresh()", which which refresh the UI for a specific element.
+- Added a new public function "refreshAll()", which will refresh all the rendered elements.
 
 <br>
 
