@@ -27,6 +27,7 @@ Below are all the configuration options that can be passed to the "setConfigurat
 | *string* | noDataMessage | States the message that should be shown when there is no data (defaults to "There is currently no data to view."). |
 | *string* | expandToolTipText | States the tooltip that should be shown for the expand button (defaults to "Expand"). |
 | *string* | contractToolTipText | States the tooltip that should be shown for the contract button (defaults to "Contract"). |
+| *string* | refreshButtonText | The text that should be shown for the "Refresh" button. |
 
 <br/>
 

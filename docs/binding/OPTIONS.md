@@ -28,6 +28,7 @@ Below are all the JSON properties that can be passed in the "data-tree-options" 
 | *boolean* | showCategorySelector | States if the category selector (and buttons) is shown (defaults to true). |
 | *boolean* | showCategorySelectionDropDown | States if the category selection drop-down menu is shown (defaults to true). |
 | *boolean* | useDecreasingHeightsForBoxes | States if decreasing heights should be used for the boxes (defaults to true). |
+| *boolean* | showRefreshButton | States if the "Refresh" button should be shown (defaults to false). |
 
 <br/>
 

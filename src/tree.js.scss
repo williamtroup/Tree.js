@@ -199,6 +199,10 @@ div.tree-js {
 
             @include buttons;
 
+            button.back {
+                margin-left: calc( var(--tree-js-spacing) * 2 ) !important;
+            }
+
             div.category-text {
                 $category-margin: 5px;
     

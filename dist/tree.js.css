@@ -138,6 +138,9 @@ div.tree-js div.title-bar div.controls button.active {
   transition: var(--tree-js-transition);
   font-weight: var(--tree-js-text-bold-weight-active);
 }
+div.tree-js div.title-bar div.controls button.back {
+  margin-left: calc(var(--tree-js-spacing) * 2) !important;
+}
 div.tree-js div.title-bar div.controls div.category-text {
   margin-left: var(--tree-js-spacing);
   margin-right: var(--tree-js-spacing);

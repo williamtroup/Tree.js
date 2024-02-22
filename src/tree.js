@@ -162,6 +162,15 @@
         if ( bindingOptions.currentView.categories.length > 1 ) {
             var controls = createElement( titleBar, "div", "controls" );
 
+            if ( bindingOptions.showRefreshButton ) {
+                var refresh = createElementWithHTML( controls, "button", "refresh", _configuration.refreshButtonText );
+        
+                refresh.onclick = function() {
+                    renderControlContainer( bindingOptions );
+                    fireCustomTrigger( bindingOptions.onRefresh, bindingOptions.currentView.element );
+                };
+            }
+
             if ( bindingOptions.showCategorySelector ) {
                 var back = createElementWithHTML( controls, "button", "back", _configuration.backButtonText );
             
@@ -666,6 +675,7 @@
         options.showCategorySelector = getDefaultBoolean( options.showCategorySelector, true );
         options.showCategorySelectionDropDown = getDefaultBoolean( options.showCategorySelectionDropDown, true );
         options.useDecreasingHeightsForBoxes = getDefaultBoolean( options.useDecreasingHeightsForBoxes, true );
+        options.showRefreshButton = getDefaultBoolean( options.showRefreshButton, false );
 
         options = buildAttributeOptionCustomTriggers( options );
         options = buildAttributeOptionStrings( options );
@@ -1091,6 +1101,7 @@
         _configuration.noDataMessage = getDefaultString( _configuration.noDataMessage, "There is currently no data to view." );
         _configuration.expandToolTipText = getDefaultString( _configuration.expandToolTipText, "Expand" );
         _configuration.contractToolTipText = getDefaultString( _configuration.contractToolTipText, "Contract" );
+        _configuration.refreshButtonText = getDefaultString( _configuration.refreshButtonText, "Refresh" );
     }
 
 
