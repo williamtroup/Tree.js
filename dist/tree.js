@@ -1,4 +1,4 @@
-/*! Tree.js v0.3.0 | (c) Bunoon 2024 | MIT License */
+/*! Tree.js v0.4.0 | (c) Bunoon 2024 | MIT License */
 (function() {
   function render() {
     var tagTypes = _configuration.domElementTypes;
@@ -478,6 +478,7 @@
     options.onNextCategory = getDefaultFunction(options.onNextCategory, null);
     options.onSetCategory = getDefaultFunction(options.onSetCategory, null);
     options.onRefresh = getDefaultFunction(options.onRefresh, null);
+    options.onDestroy = getDefaultFunction(options.onDestroy, null);
     return options;
   }
   function createElement(container, type, className) {
@@ -701,6 +702,31 @@
     }
     return this;
   };
+  this.destroyAll = function() {
+    var elementId;
+    for (elementId in _elements_Data) {
+      if (_elements_Data.hasOwnProperty(elementId)) {
+        var bindingOptions = _elements_Data[elementId].options;
+        bindingOptions.currentView.element.innerHTML = _string.empty;
+        bindingOptions.currentView.element.className = _string.empty;
+        _parameter_Document.body.removeChild(bindingOptions.currentView.tooltip);
+        fireCustomTrigger(bindingOptions.onDestroy, bindingOptions.currentView.element);
+      }
+    }
+    _elements_Data = {};
+    return this;
+  };
+  this.destroy = function(elementId) {
+    if (isDefinedString(elementId) && _elements_Data.hasOwnProperty(elementId)) {
+      var bindingOptions = _elements_Data[elementId].options;
+      bindingOptions.currentView.element.innerHTML = _string.empty;
+      bindingOptions.currentView.element.className = _string.empty;
+      _parameter_Document.body.removeChild(bindingOptions.currentView.tooltip);
+      fireCustomTrigger(bindingOptions.onDestroy, bindingOptions.currentView.element);
+      delete _elements_Data[elementId];
+    }
+    return this;
+  };
   this.setConfiguration = function(newConfiguration) {
     var propertyName;
     for (propertyName in newConfiguration) {
@@ -711,8 +737,18 @@
     buildDefaultConfiguration(_configuration);
     return this;
   };
+  this.getIds = function() {
+    var result = [];
+    var elementId;
+    for (elementId in _elements_Data) {
+      if (_elements_Data.hasOwnProperty(elementId)) {
+        result.push(elementId);
+      }
+    }
+    return result;
+  };
   this.getVersion = function() {
-    return "0.3.0";
+    return "0.4.0";
   };
   (function(documentObject, windowObject, mathObject, jsonObject) {
     _parameter_Document = documentObject;

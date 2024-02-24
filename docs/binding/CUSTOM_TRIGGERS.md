@@ -13,6 +13,11 @@ Fires when a rendered element is refreshed.
 ***Parameter:*** element: '*Object*' - The element that was refreshed.
 <br>
 
+### options.onDestroy( *element* ):
+Fires when the element is destroyed (reverted to its original state).
+<br>
+***Parameter:*** element: '*object*' - The DOM element that was destroyed.
+
 ### options.onBeforeRenderComplete( *element* ):
 Fires before the rendering an element.
 <br>

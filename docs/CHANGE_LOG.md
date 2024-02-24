@@ -1,5 +1,18 @@
 # Tree.js - Change Log:
 
+## Version 0.4.0:
+
+#### **Binding Options - Custom Triggers:**
+- Added a new binding option custom trigger called "onDestroy", which states an event that should be triggered when an element is destroyed.
+
+#### **Public Functions:**
+- Added new public function "getIds()", which will return all the IDs for the elements that have been rendered.
+- Added new public function "destroy()", which will revert a rendered DOM element to its original state.
+- Added new public function "destroyAll()", which will revert all rendered DOM elements to their original state.
+
+<br>
+
+
 ## Version 0.3.0:
 
 #### **New Features:**

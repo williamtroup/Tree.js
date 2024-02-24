@@ -4,7 +4,7 @@
  * A lightweight JavaScript library that allows you to create responsive and customizable interactive tree diagrams from an array of JS objects.
  * 
  * @file        tree.js
- * @version     v0.3.0
+ * @version     v0.4.0
  * @author      Bunoon
  * @license     MIT License
  * @copyright   Bunoon 2024
@@ -697,6 +697,7 @@
         options.onNextCategory = getDefaultFunction( options.onNextCategory, null );
         options.onSetCategory = getDefaultFunction( options.onSetCategory, null );
         options.onRefresh = getDefaultFunction( options.onRefresh, null );
+        options.onDestroy = getDefaultFunction( options.onDestroy, null );
 
         return options;
     }
@@ -1057,6 +1058,71 @@
 
     /*
      * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     * Public Functions:  Destroying
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     */
+
+    /**
+     * destroyAll().
+     * 
+     * Reverts all rendered elements to their original state (without render attributes).
+     * 
+     * @public
+     * @fires       onDestroy
+     * 
+     * @returns     {Object}                                                The Tree.js class instance.
+     */
+    this.destroyAll = function() {
+        for ( var elementId in _elements_Data ) {
+            if ( _elements_Data.hasOwnProperty( elementId ) ) {
+                var bindingOptions = _elements_Data[ elementId ].options;
+
+                bindingOptions.currentView.element.innerHTML = _string.empty;
+                bindingOptions.currentView.element.className = _string.empty;
+
+                _parameter_Document.body.removeChild( bindingOptions.currentView.tooltip );
+
+                fireCustomTrigger( bindingOptions.onDestroy, bindingOptions.currentView.element );
+            }
+        }
+
+        _elements_Data = {};
+
+        return this;
+    };
+
+    /**
+     * destroy().
+     * 
+     * Reverts an element to its original state (without render attributes).
+     * 
+     * @public
+     * @fires       onDestroy
+     * 
+     * @param       {string}    elementId                                   The Tree.js element ID to destroy.
+     * 
+     * @returns     {Object}                                                The Tree.js class instance.
+     */
+    this.destroy = function( elementId ) {
+        if ( isDefinedString( elementId ) && _elements_Data.hasOwnProperty( elementId ) ) {
+            var bindingOptions = _elements_Data[ elementId ].options;
+
+            bindingOptions.currentView.element.innerHTML = _string.empty;
+            bindingOptions.currentView.element.className = _string.empty;
+
+            _parameter_Document.body.removeChild( bindingOptions.currentView.tooltip );
+
+            fireCustomTrigger( bindingOptions.onDestroy, bindingOptions.currentView.element );
+
+            delete _elements_Data[ elementId ];
+        }
+
+        return this;
+    };
+
+
+    /*
+     * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
      * Public Functions:  Configuration
      * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
      */
@@ -1112,6 +1178,27 @@
      */
 
     /**
+     * getIds().
+     * 
+     * Returns an array of element IDs that have been rendered.
+     * 
+     * @public
+     * 
+     * @returns     {string[]}                                              The element IDs that have been rendered.
+     */
+    this.getIds = function() {
+        var result = [];
+        
+        for ( var elementId in _elements_Data ) {
+            if ( _elements_Data.hasOwnProperty( elementId ) ) {
+                result.push( elementId );
+            }
+        }
+
+        return result;
+    };
+
+    /**
      * getVersion().
      * 
      * Returns the version of Tree.js.
@@ -1121,7 +1208,7 @@
      * @returns     {string}                                                The version number.
      */
     this.getVersion = function() {
-        return "0.3.0";
+        return "0.4.0";
     };
 
 

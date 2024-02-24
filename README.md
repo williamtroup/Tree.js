@@ -2,15 +2,15 @@
 Tree.js
 
 [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Tree.js%2C%20a%20free%20JavaScript%data%20tree&url=https://github.com/williamtroup/Tree.js&hashtags=javascript,tree,data)
-[![npm](https://img.shields.io/badge/npmjs-v0.3.0-blue)](https://www.npmjs.com/package/jtree.js)
-[![nuget](https://img.shields.io/badge/nuget-v0.3.0-purple)](https://www.nuget.org/packages/jTree.js/)
+[![npm](https://img.shields.io/badge/npmjs-v0.4.0-blue)](https://www.npmjs.com/package/jtree.js)
+[![nuget](https://img.shields.io/badge/nuget-v0.4.0-purple)](https://www.nuget.org/packages/jTree.js/)
 [![license](https://img.shields.io/badge/license-MIT-green)](https://github.com/williamtroup/Tree.js/blob/main/LICENSE.txt)
 [![discussions Welcome](https://img.shields.io/badge/discussions-Welcome-red)](https://github.com/williamtroup/Tree.js/discussions)
 [![coded by William Troup](https://img.shields.io/badge/coded_by-William_Troup-yellow)](https://william-troup.com/)
 </h1>
 
 > <p align="center">🌲 A lightweight JavaScript library that allows you to create responsive and customizable interactive tree diagrams from an array of JS objects.</p>
-> <p align="center">v0.3.0</p>
+> <p align="center">v0.4.0</p>
 <br />
 
 ![Tree.js - Gaps](docs/images/main-1.png)
