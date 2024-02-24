@@ -1,7 +1,9 @@
 # Tree.js - Change Log:
 
 ## Version 0.4.0:
-- 
+
+#### **Public Functions:**
+- Added new public function "getIds()", which will return all the IDs for the elements that have been rendered.
 
 <br>
 
