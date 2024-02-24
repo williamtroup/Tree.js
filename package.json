@@ -2,7 +2,7 @@
     "name": "jtree.js",
     "title": "Tree.js",
     "description": "A lightweight JavaScript library that allows you to create responsive and customizable interactive tree diagrams from an array of JS objects.",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "main": "dist/tree.js",
     "homepage": "https://www.william-troup.com/tree-js/",
     "author": {

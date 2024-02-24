@@ -4,7 +4,7 @@
  * A lightweight JavaScript library that allows you to create responsive and customizable interactive tree diagrams from an array of JS objects.
  * 
  * @file        tree.js
- * @version     v0.3.0
+ * @version     v0.4.0
  * @author      Bunoon
  * @license     MIT License
  * @copyright   Bunoon 2024
@@ -1121,7 +1121,7 @@
      * @returns     {string}                                                The version number.
      */
     this.getVersion = function() {
-        return "0.3.0";
+        return "0.4.0";
     };
 
 
