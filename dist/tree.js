@@ -478,6 +478,7 @@
     options.onNextCategory = getDefaultFunction(options.onNextCategory, null);
     options.onSetCategory = getDefaultFunction(options.onSetCategory, null);
     options.onRefresh = getDefaultFunction(options.onRefresh, null);
+    options.onDestroy = getDefaultFunction(options.onDestroy, null);
     return options;
   }
   function createElement(container, type, className) {
@@ -698,6 +699,31 @@
   this.moveToNextCategory = function(elementId) {
     if (isDefinedString(elementId) && _elements_Data.hasOwnProperty(elementId)) {
       moveToNextCategory(_elements_Data[elementId].options);
+    }
+    return this;
+  };
+  this.destroyAll = function() {
+    var elementId;
+    for (elementId in _elements_Data) {
+      if (_elements_Data.hasOwnProperty(elementId)) {
+        var bindingOptions = _elements_Data[elementId].options;
+        bindingOptions.currentView.element.innerHTML = _string.empty;
+        bindingOptions.currentView.element.className = _string.empty;
+        _parameter_Document.body.removeChild(bindingOptions.currentView.tooltip);
+        fireCustomTrigger(bindingOptions.onDestroy, bindingOptions.currentView.element);
+      }
+    }
+    _elements_Data = {};
+    return this;
+  };
+  this.destroy = function(elementId) {
+    if (isDefinedString(elementId) && _elements_Data.hasOwnProperty(elementId)) {
+      var bindingOptions = _elements_Data[elementId].options;
+      bindingOptions.currentView.element.innerHTML = _string.empty;
+      bindingOptions.currentView.element.className = _string.empty;
+      _parameter_Document.body.removeChild(bindingOptions.currentView.tooltip);
+      fireCustomTrigger(bindingOptions.onDestroy, bindingOptions.currentView.element);
+      delete _elements_Data[elementId];
     }
     return this;
   };
